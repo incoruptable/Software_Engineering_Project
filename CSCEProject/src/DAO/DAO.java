@@ -18,7 +18,7 @@ public class DAO {
 	public DAO() throws SQLException{
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			conn = DriverManager.getConnection("jdbc:sqlserver://192.168.0.13:1433;DatabaseName=SoftwareEngineeringProjectDB", "EngineeringGroup", "thisissecure");
+			conn = DriverManager.getConnection("jdbc:sqlserver://csce3613.database.windows.net:1433;database=SoftwareEngineeringProjectDB;user=EngineeringGroup@csce3613;password=Th1s1sS3cur3;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
 
 			paramNumber = 1;
 		} catch (ClassNotFoundException e) {

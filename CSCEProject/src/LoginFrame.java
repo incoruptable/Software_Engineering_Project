@@ -123,7 +123,7 @@ public class LoginFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				ResultSet rs;
 				try {
-					dao.setquery("SELECT Password FROM dbo.LoginPage WHERE Username = ?");
+					dao.setquery("SELECT password FROM dbo.LoginPage WHERE username = ?");
 					dao.SetParameter(userName.getText());
 					rs = dao.executeQuery();
 					while(rs.next()){
