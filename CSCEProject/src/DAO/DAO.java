@@ -13,12 +13,13 @@ public class DAO {
 	private String query;
 	private Connection conn;
 	private PreparedStatement stmt;
+	private boolean expectRS;
 	private ResultSet rs;
 	private int paramNumber;
 	public DAO() throws SQLException{
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-			conn = DriverManager.getConnection("jdbc:sqlserver://192.168.0.13:1433;DatabaseName=SoftwareEngineeringProjectDB", "EngineeringGroup", "thisissecure");
+			conn = DriverManager.getConnection("jdbc:sqlserver://csce3613.database.windows.net:1433;database=SoftwareEngineeringProjectDB;user=EngineeringGroup@csce3613;password=Th1s1sS3cur3;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
 
 			paramNumber = 1;
 		} catch (ClassNotFoundException e) {
@@ -32,6 +33,12 @@ public class DAO {
 	}
 	public void setresultSet(ResultSet rs){
 		this.rs = rs;
+	}
+	public boolean getExpectRS(){
+		return expectRS;
+	}
+	public void setExpectRS(boolean expectRS){
+		this.expectRS = expectRS;
 	}
 	
 	public String getquery(){
@@ -49,7 +56,12 @@ public class DAO {
 	
 	
 	public ResultSet executeQuery() throws SQLException{
-		rs = stmt.executeQuery();
+		if(expectRS == true) {
+			rs = stmt.executeQuery();
+		}
+		else
+			stmt.execute();
+		paramNumber = 1;
 		return rs;
 	}
 }

@@ -14,7 +14,6 @@ import java.awt.GridBagConstraints;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
-import java.awt.Window.Type;
 import java.awt.Insets;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
@@ -64,10 +63,10 @@ public class LoginFrame extends JFrame {
 	 */
 	public LoginFrame() throws SQLException {
 		
-		DAO dao = new DAO();
+		final DAO dao = new DAO();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 550, 400);
+		setBounds(100, 100, 568, 421);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,7 +96,7 @@ public class LoginFrame extends JFrame {
 		sign_in.setBackground(Color.WHITE);
 		sign_in.setBorder(new TitledBorder(null, "Sign in", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
-		sign_in.setBounds(26, 13, 454, 274);
+		sign_in.setBounds(26, 13, 486, 320);
 		panel.add(sign_in);
 		sign_in.setLayout(null);
 		
@@ -125,9 +124,10 @@ public class LoginFrame extends JFrame {
 				try {
 					dao.setquery("SELECT Password FROM dbo.LoginPage WHERE Username = ?");
 					dao.SetParameter(userName.getText());
+					dao.setExpectRS(true);
 					rs = dao.executeQuery();
 					while(rs.next()){
-							if(rs.getString(1).equals(passWord.getText()))
+							if(rs.getString(1).equals(passWord.getPassword()))
 								System.out.println("Account accepted");
 					}
 				} catch (SQLException e) {
@@ -138,8 +138,24 @@ public class LoginFrame extends JFrame {
 			
 			}
 		});
-		Login.setBounds(255, 206, 112, 32);
+		Login.setBounds(95, 206, 112, 32);
 		sign_in.add(Login);
+		
+		JButton forgotPassword = new JButton("Forgot Password?");
+		forgotPassword.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0)	{
+				ForgottenPassword fgpw;
+				try {
+					fgpw = new ForgottenPassword();
+					fgpw.popUp();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		forgotPassword.setBounds(242, 206, 143, 32);
+		sign_in.add(forgotPassword);
 		contentPane.setLayout(gl_contentPane);
 	}
 	private class SwingAction extends AbstractAction {
