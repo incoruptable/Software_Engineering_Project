@@ -127,14 +127,24 @@ public class LoginFrame extends JFrame {
 					dao.setExpectRS(true);
 					rs = dao.executeQuery();
 					while(rs.next()){
-							if(rs.getString(1).equals(passWord.getPassword()))
+							if(rs.getString(1).equals(String.valueOf(passWord.getPassword()))){
 								System.out.println("Account accepted");
+								JOptionPane.showMessageDialog(null, "Account Accepted", "", JOptionPane.INFORMATION_MESSAGE);
+								MainFrame mainframe;
+								mainframe = new MainFrame();
+								mainframe.mainWindow();
+								dispose();
+							}
+							else
+							{
+								JOptionPane.showMessageDialog(null, "Password Incorrect", "Please try again.", JOptionPane.ERROR_MESSAGE);
+							}
+							
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				JOptionPane.showMessageDialog(null, "Incorrect Password", "Please Login again", JOptionPane.ERROR_MESSAGE);	
 			
 			}
 		});

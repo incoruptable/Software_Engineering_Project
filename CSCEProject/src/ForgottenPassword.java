@@ -114,6 +114,9 @@ public class ForgottenPassword {
 										dao.SetParameter(username.getText());
 										dao.setExpectRS(false);
 										dao.executeQuery();
+										
+										JOptionPane.showMessageDialog(null, "Password Changed Successfully", "", JOptionPane.INFORMATION_MESSAGE);
+										frame.dispose();
 									}
 									else{
 										JOptionPane.showMessageDialog(null, "Passwords Don't Match", "Correct the new password and confirm password to match.", JOptionPane.ERROR_MESSAGE);
@@ -133,18 +136,23 @@ public class ForgottenPassword {
 				}
 			}
 		});
-		enterBtn.setBounds(213, 303, 128, 38);
+		enterBtn.setBounds(213, 303, 147, 40);
 		frame.getContentPane().add(enterBtn);
 		
 		usernamelbl = new JLabel("Username:");
 		usernamelbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		usernamelbl.setFont(new Font("Arial", Font.PLAIN, 13));
-		usernamelbl.setBounds(80, 101, 85, 14);
+		usernamelbl.setBounds(75, 75, 85, 14);
 		frame.getContentPane().add(usernamelbl);
 		
 		username = new JTextField();
-		username.setBounds(175, 88, 264, 40);
+		username.setBounds(175, 63, 264, 40);
 		frame.getContentPane().add(username);
 		username.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("What is your favorite animal?");
+		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+		lblNewLabel.setBounds(175, 114, 323, 14);
+		frame.getContentPane().add(lblNewLabel);
 	}
 }
