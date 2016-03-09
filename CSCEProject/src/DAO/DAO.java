@@ -53,7 +53,10 @@ public class DAO {
 		stmt.setString(paramNumber, param);
 		paramNumber++;
 	}
-	
+	public void SetParameter(int param) throws SQLException{
+		stmt.setInt(paramNumber, param);
+		paramNumber++;
+	}
 	
 	public ResultSet executeQuery() throws SQLException{
 		if(expectRS == true) {

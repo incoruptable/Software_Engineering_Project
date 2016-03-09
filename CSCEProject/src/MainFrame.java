@@ -7,6 +7,8 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+
 import javax.swing.border.TitledBorder;
 
 public class MainFrame {
@@ -54,6 +56,9 @@ public class MainFrame {
 		createAccount.setBounds(41, 268, 168, 57);
 		createAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CreateAccount ca;
+				ca = new CreateAccount();
+				ca.CreateAccountPopUp();
 			}
 		});
 		panel.setLayout(null);
