@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
@@ -19,6 +20,11 @@ import javax.swing.JButton;
 import DAO.DAO;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
 
 public class Profile {
 	private JFrame frmNewPatient;
@@ -204,10 +210,14 @@ public class Profile {
 		DOBlbl.setBounds(260, 106, 35, 20);
 		panel.add(DOBlbl);
 		
-		JComboBox dobMonth = new JComboBox();
-		dobMonth.setMaximumRowCount(12);
-		dobMonth.setBounds(305, 105, 50, 20);
-		panel.add(dobMonth);
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		panel.add(datePicker);
 		
 		JButton createBtn = new JButton("Create");
 		createBtn.setBounds(50, 540, 139, 38);

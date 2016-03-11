@@ -103,21 +103,32 @@ public class MainFrame {
 		JButton btnNewPatient = new JButton("New Patient");
 		btnNewPatient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			Profile p;
-			p = new Profile();
-			p.CreateProfilePopUp();
+				Profile p;
+				p = new Profile();
+				p.CreateProfilePopUp();
 			}
 		});
 		btnNewPatient.setBounds(50, 225, 150, 50);
 		panel.add(btnNewPatient);
 		
 		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginFrame l;
+				try{
+				l = new LoginFrame();
+				l.main(null);
+				frmMainMenu.dispose();
+				} catch(SQLException ex) {
+					ex.printStackTrace();
+				}
+			}	
+		});
 		btnLogout.setBounds(300, 425, 100, 25);
 		panel.add(btnLogout);
 		
 		JLabel logo = new JLabel("");
-		Image imgLogo = new ImageIcon(this.getClass().getResource("/LogoPlaceholder.png")).getImage();
-		logo.setIcon(new ImageIcon(imgLogo));
+		logo.setIcon(new ImageIcon("LogoPlaceholder.png"));
 		logo.setBackground(Color.LIGHT_GRAY);
 		logo.setBounds(25, 25, 400, 100);
 		panel.add(logo);
