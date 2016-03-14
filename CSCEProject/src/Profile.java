@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -18,12 +19,16 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
 import DAO.DAO;
+import DateFormatter.DateLabelFormatter;
+
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 
 public class Profile {
@@ -37,6 +42,7 @@ public class Profile {
 	private JTextField zipCode;
 	private JTextField phone;
 	private JTextField email;
+	JDatePickerImpl datePicker;
 	private DAO dao;
 	private JTextField altPhone;
 	private JFormattedTextField ssn;
@@ -192,7 +198,7 @@ public class Profile {
 		
 		email = new JTextField();
 		email.setColumns(10);
-		email.setBounds(121, 386, 183, 20);
+		email.setBounds(100, 386, 183, 20);
 		panel.add(email);
 		
 		JLabel SSNlbl = new JLabel("SSN:");
@@ -216,7 +222,9 @@ public class Profile {
 		p.put("text.month", "Month");
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.setBounds(new Rectangle(300, 99, 165, 25));
+		datePicker.setLocation(new Point(300, 104));
 		panel.add(datePicker);
 		
 		JButton createBtn = new JButton("Create");
@@ -254,20 +262,21 @@ public class Profile {
 			// Checking for empty fields
 			if(firstName != null) {
 						dao.setExpectRS(false);
-						dao.setquery("INSERT INTO dbo.LoginPage (username, password, userid, securityQst, lastName, firstName, middleName, address, city, state, zipCode, phone, eMail)" +
-								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-						//dao.SetParameter(username.getText());
-						//dao.SetParameter(String.valueOf(password.getPassword()));
-						//dao.SetParameter(Integer.parseInt(userId.getText()));
-						//dao.SetParameter(securityQst.getText());
-						dao.SetParameter(lastName.getText());
+						dao.setquery("INSERT INTO dbo.PatientTable (firstName, lastName, middleName, SSN, DOB, address, city, state, zipCode, phone, altPhone, email)" +
+								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 						dao.SetParameter(firstName.getText());
+						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
+						dao.SetParameter(Integer.parseInt(ssn.getText()));
+						java.util.Date utilDate = (Date) datePicker.getModel().getValue();
+						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+						dao.SetParameter(sqlDate);
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
-					//	dao.SetParameter(state.getText());
+						dao.SetParameter((String) state.getModel().getSelectedItem());
 						dao.SetParameter(Integer.parseInt(zipCode.getText()));
 						dao.SetParameter(phone.getText());
+						dao.SetParameter(altPhone.getText());
 						dao.SetParameter(email.getText());
 						
 						dao.executeQuery();
