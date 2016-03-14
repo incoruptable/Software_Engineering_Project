@@ -280,6 +280,7 @@ public class Profile {
 						dao.SetParameter(email.getText());
 						
 						dao.executeQuery();
+						frmNewPatient.dispose();
 						}
 			else{
 				//FIELDS EMPTY M8
