@@ -99,7 +99,7 @@ public class ForgottenPassword {
 			public void actionPerformed(ActionEvent arg0) {
 				ResultSet rs;
 				try {
-					if(username.getText() != null && String.valueOf(securityAnswerField.getPassword()) != null && String.valueOf(newPasswordField.getPassword()) != null && String.valueOf(confirmPasswordField.getPassword()) != null)
+					if(!username.getText().isEmpty() && !String.valueOf(securityAnswerField.getPassword()).isEmpty() && !String.valueOf(newPasswordField.getPassword()).isEmpty() && !String.valueOf(confirmPasswordField.getPassword()).isEmpty())
 					{
 							dao.setquery("SELECT Username, securityQst  FROM dbo.LoginPage WHERE Username = ?");
 							dao.SetParameter(username.getText());
