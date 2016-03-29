@@ -1,6 +1,7 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,6 +56,10 @@ public class DAO {
 	}
 	public void SetParameter(int param) throws SQLException{
 		stmt.setInt(paramNumber, param);
+		paramNumber++;
+	}
+	public void SetParameter(Date param) throws SQLException{
+		stmt.setDate(paramNumber, param);
 		paramNumber++;
 	}
 	

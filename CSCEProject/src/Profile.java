@@ -1,0 +1,317 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.Date;
+import java.sql.SQLException;
+import java.util.Properties;
+
+import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
+
+import DAO.DAO;
+import DateFormatter.DateLabelFormatter;
+
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+import java.awt.Point;
+import java.awt.Rectangle;
+
+
+public class Profile {
+	private JFrame frmNewPatient;
+	private JTextField firstName;
+	private JTextField lastName;
+	private JTextField middleName;
+	private JTextField address;
+	private JTextField city;
+	private JComboBox state;
+	private JFormattedTextField zipCode;
+	private JFormattedTextField phone;
+	private JTextField email;
+	private JDatePickerImpl datePicker;
+	private DAO dao;
+	private JFormattedTextField altPhone;
+	private JFormattedTextField ssn;
+
+	private MaskFormatter phoneFormatter;
+	private MaskFormatter zipFormatter;
+	private MaskFormatter ssnFormatter;
+	
+	/**
+	 * Launch the application.
+	 */
+	public void CreateProfilePopUp() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Profile window = new Profile();
+					window.frmNewPatient.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Profile() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		try {
+		dao = new DAO();
+		
+		frmNewPatient = new JFrame();
+		frmNewPatient.setResizable(false);
+		frmNewPatient.setBounds(100, 100, 700, 700);
+		frmNewPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		phoneFormatter = new MaskFormatter("##########");
+		phoneFormatter.setValidCharacters("0123456789");
+		zipFormatter = new MaskFormatter("#####");
+		zipFormatter.setValidCharacters("0123456789");
+		ssnFormatter = new MaskFormatter("#########");
+		ssnFormatter.setValidCharacters("0123456789");
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel.setForeground(Color.WHITE);
+		panel.setBackground(Color.WHITE);
+		frmNewPatient.getContentPane().add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JLabel lblProfileTitle = new JLabel("Patient Profile");
+		lblProfileTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProfileTitle.setBounds(300, 25, 100, 25);
+		panel.add(lblProfileTitle);
+		
+		JLabel FirstNamelbl = new JLabel("*First Name:");
+		FirstNamelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		FirstNamelbl.setBounds(50, 75, 75, 20);
+		panel.add(FirstNamelbl);
+		
+		firstName = new JTextField();
+		firstName.setColumns(10);
+		firstName.setBounds(130, 75, 100, 20);
+		panel.add(firstName);
+		
+		JLabel LastNamelbl = new JLabel("*Last Name:");
+		LastNamelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		LastNamelbl.setBounds(225, 75, 85, 20);
+		panel.add(LastNamelbl);
+		
+		lastName = new JTextField();
+		lastName.setColumns(10);
+		lastName.setBounds(320, 75, 100, 20);
+		panel.add(lastName);
+		
+		JLabel MiddleNamelbl = new JLabel("Middle Name:");
+		MiddleNamelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		MiddleNamelbl.setBounds(408, 75, 92, 20);
+		panel.add(MiddleNamelbl);
+		
+		middleName = new JTextField();
+		middleName.setColumns(10);
+		middleName.setBounds(510, 75, 100, 20);
+		panel.add(middleName);
+		
+		JLabel Addresslbl = new JLabel("*Address:");
+		Addresslbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Addresslbl.setBounds(50, 185, 75, 20);
+		panel.add(Addresslbl);
+		
+		address = new JTextField();
+		address.setColumns(10);
+		address.setBounds(130, 185, 200, 20);
+		panel.add(address);
+		
+		JLabel Citylbl = new JLabel("*City:");
+		Citylbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Citylbl.setBounds(85, 215, 40, 20);
+		panel.add(Citylbl);
+		
+		city = new JTextField();
+		city.setColumns(10);
+		city.setBounds(130, 215, 150, 20);
+		panel.add(city);
+		
+		JLabel Statelbl = new JLabel("*State:");
+		Statelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Statelbl.setBounds(270, 215, 50, 20);
+		panel.add(Statelbl);
+		
+		String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY",
+				"LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK",
+				"OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
+		
+		state = new JComboBox(states);
+		state.setSelectedIndex(0);
+		state.setMaximumRowCount(50);
+		state.setBounds(325, 215, 50, 20);
+		panel.add(state);
+		
+		JLabel ZipCodelbl = new JLabel("*Zip Code:");
+		ZipCodelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		ZipCodelbl.setBounds(380, 215, 60, 20);
+		panel.add(ZipCodelbl);
+		
+		zipCode = new JFormattedTextField(zipFormatter);
+		zipCode.setColumns(10);
+		zipCode.setBounds(450, 215, 40, 20);
+		panel.add(zipCode);
+		
+		JLabel Phonelbl = new JLabel("*Phone:");
+		Phonelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Phonelbl.setBounds(75, 245, 50, 20);
+		panel.add(Phonelbl);
+		
+		phone = new JFormattedTextField(phoneFormatter);
+		phone.setColumns(10);
+		phone.setBounds(130, 246, 75, 20);
+		panel.add(phone);
+		
+		JLabel altPhonelbl = new JLabel("Alt. Phone:");
+		altPhonelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		altPhonelbl.setBounds(200, 245, 65, 20);
+		panel.add(altPhonelbl);
+		
+		altPhone = new JFormattedTextField(phoneFormatter);
+		altPhone.setColumns(10);
+		altPhone.setBounds(270, 245, 75, 20);
+		panel.add(altPhone);
+		
+		JLabel Emaillbl = new JLabel("*Email:");
+		Emaillbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Emaillbl.setBounds(21, 389, 75, 14);
+		panel.add(Emaillbl);
+		
+		email = new JTextField();
+		email.setColumns(10);
+		email.setBounds(100, 386, 183, 20);
+		panel.add(email);
+		
+		JLabel SSNlbl = new JLabel("*SSN:");
+		SSNlbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		SSNlbl.setBounds(75, 105, 50, 20);
+		panel.add(SSNlbl);
+		
+		ssn = new JFormattedTextField(ssnFormatter);
+		ssn.setColumns(10);
+		ssn.setBounds(130, 105, 75, 20);
+		panel.add(ssn);
+		
+		JLabel DOBlbl = new JLabel("*D.O.B:");
+		DOBlbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		DOBlbl.setBounds(245, 106, 50, 20);
+		panel.add(DOBlbl);
+		
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.setBounds(new Rectangle(300, 99, 165, 25));
+		datePicker.setLocation(new Point(300, 104));
+		panel.add(datePicker);
+		
+		JButton createBtn = new JButton("Create");
+		createBtn.setBounds(50, 540, 139, 38);
+		panel.add(createBtn);
+		
+		JButton cancelBtn = new JButton("Cancel");
+		cancelBtn.setBounds(210, 540, 139, 38);
+		panel.add(cancelBtn);
+		
+		JLabel lblRequired = new JLabel("Required = *");
+		lblRequired.setBounds(36, 50, 75, 14);
+		panel.add(lblRequired);
+		
+		cancelBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frmNewPatient.dispose();
+			}
+		});
+		
+		createBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				createProfile();
+			}
+		});
+		} catch(SQLException es){
+			es.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/* The create function below needs to be specifically implemented for the fields contained within the patient
+	 * profile.  I don't know if the database is currently set up to handle these, nor do I know what order they
+	 * would even be in for so I am leaving it all commented out until we sort that out.
+	 */
+	
+	public void createProfile()
+	{
+		
+		System.out.println(phone.getText());
+		
+		try{
+			// Checking for empty fields
+			if(!firstName.getText().isEmpty() && !lastName.getText().isEmpty() && !ssn.getText().isEmpty() && datePicker.getModel().getValue() != null && !address.getText().isEmpty() && !city.getText().isEmpty() && state.getModel().getSelectedItem() != null && !zipCode.getText().isEmpty() && !phone.getText().isEmpty() && !email.getText().isEmpty()){
+						dao.setExpectRS(false);
+						dao.setquery("INSERT INTO dbo.PatientTable (firstName, lastName, middleName, SSN, DOB, address, city, state, zipCode, phone, altPhone, email)" +
+								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						dao.SetParameter(firstName.getText());
+						dao.SetParameter(lastName.getText());
+						dao.SetParameter(middleName.getText());
+						dao.SetParameter(Integer.parseInt(ssn.getText()));
+						java.util.Date utilDate = (Date) datePicker.getModel().getValue();
+						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+						dao.SetParameter(sqlDate);
+						dao.SetParameter(address.getText());
+						dao.SetParameter(city.getText());
+						dao.SetParameter((String) state.getModel().getSelectedItem());
+						dao.SetParameter(Integer.parseInt(zipCode.getText()));
+						dao.SetParameter(phone.getText());
+						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(email.getText());
+						dao.executeQuery();
+						frmNewPatient.dispose();
+			}
+			else{
+				//FIELDS EMPTY M8
+				JOptionPane.showMessageDialog(null, "Fields Incomplete", "Fill in empty feilds.", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+}
+
