@@ -21,7 +21,6 @@ import DAO.DAO;
 import javax.swing.JTextPane;
 import javax.swing.JFormattedTextField;
 
-import sun.org.mozilla.javascript.internal.json.JsonParser.ParseException;
 
 
 public class CreateAccount {

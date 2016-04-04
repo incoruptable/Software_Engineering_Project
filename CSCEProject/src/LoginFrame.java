@@ -122,24 +122,35 @@ public class LoginFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				ResultSet rs;
 				try {
-					dao.setquery("SELECT password FROM dbo.LoginPage WHERE username = ?");
+					dao.setquery("SELECT * FROM dbo.LoginPage WHERE username = ? AND password = ?");
 					dao.SetParameter(userName.getText());
+					dao.SetParameter(String.valueOf(passWord.getPassword()));
 					dao.setExpectRS(true);
 					rs = dao.executeQuery();
-					while(rs.next()){
-							if(rs.getString(1).equals(String.valueOf(passWord.getPassword()))){
-								System.out.println("Account accepted");
-								JOptionPane.showMessageDialog(null, "Account Accepted", "", JOptionPane.INFORMATION_MESSAGE);
-								MainFrame mainframe;
-								mainframe = new MainFrame();
-								mainframe.mainWindow();
-								dispose();
-							}
-							else
-							{
-								JOptionPane.showMessageDialog(null, "Password Incorrect", "Please try again.", JOptionPane.ERROR_MESSAGE);
-							}
-							
+					System.out.println("inside button function");
+					if(!rs.next())
+					{
+						JOptionPane.showMessageDialog(null, "Username or Password Incorrect", "Please try again.", JOptionPane.ERROR_MESSAGE);
+					}
+					else
+					{
+						do{
+							System.out.println("Inside while loop");
+								if(rs.getString(2).equals(String.valueOf(passWord.getPassword()))){
+									System.out.println("Account accepted");
+									JOptionPane.showMessageDialog(null, "Account Accepted", "", JOptionPane.INFORMATION_MESSAGE);
+									MainFrame mainframe;
+									mainframe = new MainFrame();
+									mainframe.mainWindow();
+									dispose();
+									return;
+								}
+								else
+								{
+									JOptionPane.showMessageDialog(null, "Username or Password Incorrect", "Please try again.", JOptionPane.ERROR_MESSAGE);
+								}
+								
+						} while(rs.next());
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
