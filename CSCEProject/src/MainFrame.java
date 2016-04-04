@@ -91,6 +91,9 @@ public class MainFrame {
 		JButton btnPatientSearch = new JButton("Patient Search");
 		btnPatientSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			PatientSearch ps;
+			ps = new PatientSearch();
+			ps.CreateProfilePopUp();
 			}
 		});
 		btnPatientSearch.setBounds(50, 150, 150, 50);

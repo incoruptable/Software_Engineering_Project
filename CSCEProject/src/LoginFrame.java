@@ -127,13 +127,7 @@ public class LoginFrame extends JFrame {
 					dao.SetParameter(String.valueOf(passWord.getPassword()));
 					dao.setExpectRS(true);
 					rs = dao.executeQuery();
-					System.out.println("inside button function");
-					if(!rs.next())
-					{
-						JOptionPane.showMessageDialog(null, "Username or Password Incorrect", "Please try again.", JOptionPane.ERROR_MESSAGE);
-					}
-					else
-					{
+					if(rs.next()) {
 						do{
 							System.out.println("Inside while loop");
 								if(rs.getString(2).equals(String.valueOf(passWord.getPassword()))){
@@ -152,6 +146,10 @@ public class LoginFrame extends JFrame {
 								
 						} while(rs.next());
 					}
+					else{
+						JOptionPane.showMessageDialog(null, "Username or Password Incorrect", "Please try again.", JOptionPane.ERROR_MESSAGE);
+					}
+					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
