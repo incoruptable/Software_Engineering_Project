@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 import DAO.DAO;
@@ -31,6 +32,15 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import java.awt.Point;
 import java.awt.Rectangle;
+import javax.swing.JSeparator;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextPane;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import java.awt.Font;
 
 
 public class Profile {
@@ -88,6 +98,7 @@ public class Profile {
 		frmNewPatient.setBounds(100, 100, 700, 700);
 		frmNewPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+		// Formatting masks for input fields
 		phoneFormatter = new MaskFormatter("##########");
 		phoneFormatter.setValidCharacters("0123456789");
 		zipFormatter = new MaskFormatter("#####");
@@ -102,12 +113,15 @@ public class Profile {
 		frmNewPatient.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
+		// Title Label
 		JLabel lblProfileTitle = new JLabel("Patient Profile");
+		lblProfileTitle.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblProfileTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblProfileTitle.setBounds(300, 25, 100, 25);
 		panel.add(lblProfileTitle);
 		
-		JLabel FirstNamelbl = new JLabel("*First Name:");
+		JLabel FirstNamelbl = new JLabel("* First Name:");
+		FirstNamelbl.setVerticalAlignment(SwingConstants.TOP);
 		FirstNamelbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		FirstNamelbl.setBounds(50, 75, 75, 20);
 		panel.add(FirstNamelbl);
@@ -117,102 +131,30 @@ public class Profile {
 		firstName.setBounds(130, 75, 100, 20);
 		panel.add(firstName);
 		
-		JLabel LastNamelbl = new JLabel("*Last Name:");
+		JLabel LastNamelbl = new JLabel("* Last Name:");
+		LastNamelbl.setVerticalAlignment(SwingConstants.TOP);
 		LastNamelbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		LastNamelbl.setBounds(225, 75, 85, 20);
+		LastNamelbl.setBounds(235, 75, 80, 20);
 		panel.add(LastNamelbl);
 		
 		lastName = new JTextField();
 		lastName.setColumns(10);
-		lastName.setBounds(320, 75, 100, 20);
+		lastName.setBounds(325, 75, 100, 20);
 		panel.add(lastName);
 		
 		JLabel MiddleNamelbl = new JLabel("Middle Name:");
+		MiddleNamelbl.setVerticalAlignment(SwingConstants.TOP);
 		MiddleNamelbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		MiddleNamelbl.setBounds(408, 75, 92, 20);
+		MiddleNamelbl.setBounds(420, 75, 90, 20);
 		panel.add(MiddleNamelbl);
 		
 		middleName = new JTextField();
 		middleName.setColumns(10);
-		middleName.setBounds(510, 75, 100, 20);
+		middleName.setBounds(515, 75, 100, 20);
 		panel.add(middleName);
 		
-		JLabel Addresslbl = new JLabel("*Address:");
-		Addresslbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		Addresslbl.setBounds(50, 185, 75, 20);
-		panel.add(Addresslbl);
-		
-		address = new JTextField();
-		address.setColumns(10);
-		address.setBounds(130, 185, 200, 20);
-		panel.add(address);
-		
-		JLabel Citylbl = new JLabel("*City:");
-		Citylbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		Citylbl.setBounds(85, 215, 40, 20);
-		panel.add(Citylbl);
-		
-		city = new JTextField();
-		city.setColumns(10);
-		city.setBounds(130, 215, 150, 20);
-		panel.add(city);
-		
-		JLabel Statelbl = new JLabel("*State:");
-		Statelbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		Statelbl.setBounds(270, 215, 50, 20);
-		panel.add(Statelbl);
-		
-		String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY",
-				"LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK",
-				"OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
-		
-		state = new JComboBox(states);
-		state.setSelectedIndex(0);
-		state.setMaximumRowCount(50);
-		state.setBounds(325, 215, 50, 20);
-		panel.add(state);
-		
-		JLabel ZipCodelbl = new JLabel("*Zip Code:");
-		ZipCodelbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		ZipCodelbl.setBounds(380, 215, 60, 20);
-		panel.add(ZipCodelbl);
-		
-		zipCode = new JFormattedTextField(zipFormatter);
-		zipCode.setColumns(10);
-		zipCode.setBounds(450, 215, 40, 20);
-		panel.add(zipCode);
-		
-		JLabel Phonelbl = new JLabel("*Phone:");
-		Phonelbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		Phonelbl.setBounds(75, 245, 50, 20);
-		panel.add(Phonelbl);
-		
-		phone = new JFormattedTextField(phoneFormatter);
-		phone.setColumns(10);
-		phone.setBounds(130, 246, 75, 20);
-		panel.add(phone);
-		
-		JLabel altPhonelbl = new JLabel("Alt. Phone:");
-		altPhonelbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		altPhonelbl.setBounds(200, 245, 65, 20);
-		panel.add(altPhonelbl);
-		
-		altPhone = new JFormattedTextField(phoneFormatter);
-		altPhone.setColumns(10);
-		altPhone.setBounds(270, 245, 75, 20);
-		panel.add(altPhone);
-		
-		JLabel Emaillbl = new JLabel("*Email:");
-		Emaillbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		Emaillbl.setBounds(21, 389, 75, 14);
-		panel.add(Emaillbl);
-		
-		email = new JTextField();
-		email.setColumns(10);
-		email.setBounds(100, 386, 183, 20);
-		panel.add(email);
-		
-		JLabel SSNlbl = new JLabel("*SSN:");
+		JLabel SSNlbl = new JLabel("* SSN:");
+		SSNlbl.setVerticalAlignment(SwingConstants.TOP);
 		SSNlbl.setHorizontalAlignment(SwingConstants.RIGHT);
 		SSNlbl.setBounds(75, 105, 50, 20);
 		panel.add(SSNlbl);
@@ -222,11 +164,6 @@ public class Profile {
 		ssn.setBounds(130, 105, 75, 20);
 		panel.add(ssn);
 		
-		JLabel DOBlbl = new JLabel("*D.O.B:");
-		DOBlbl.setHorizontalAlignment(SwingConstants.RIGHT);
-		DOBlbl.setBounds(245, 106, 50, 20);
-		panel.add(DOBlbl);
-		
 		UtilDateModel model = new UtilDateModel();
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -234,20 +171,177 @@ public class Profile {
 		p.put("text.year", "Year");
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
 		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		datePicker.setBounds(new Rectangle(300, 99, 165, 25));
-		datePicker.setLocation(new Point(300, 104));
+		datePicker.setBounds(new Rectangle(295, 105, 165, 25));
+		datePicker.setLocation(new Point(295, 105));
 		panel.add(datePicker);
 		
+		JLabel DOBlbl = new JLabel("* D.O.B:");
+		DOBlbl.setVerticalAlignment(SwingConstants.TOP);
+		DOBlbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		DOBlbl.setBounds(235, 105, 50, 20);
+		panel.add(DOBlbl);
+		
+		JLabel lblSex = new JLabel("* Sex:");
+		lblSex.setVerticalAlignment(SwingConstants.TOP);
+		lblSex.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSex.setBounds(475, 105, 35, 20);
+		panel.add(lblSex);
+		
+		String[] sexOptions = {"Male", "Female"};	
+		JComboBox sex = new JComboBox(sexOptions);
+		sex.setSelectedIndex(-1);
+		sex.setBounds(515, 105, 75, 20);
+		panel.add(sex);
+		
+		JSeparator separator1 = new JSeparator();
+		separator1.setBounds(50, 150, 600, 1);
+		panel.add(separator1);
+		
+		JLabel Addresslbl = new JLabel("* Address:");
+		Addresslbl.setVerticalAlignment(SwingConstants.TOP);
+		Addresslbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Addresslbl.setBounds(50, 175, 75, 20);
+		panel.add(Addresslbl);
+		
+		address = new JTextField();
+		address.setColumns(10);
+		address.setBounds(130, 175, 200, 20);
+		panel.add(address);
+		
+		JLabel Citylbl = new JLabel("* City:");
+		Citylbl.setVerticalAlignment(SwingConstants.TOP);
+		Citylbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Citylbl.setBounds(85, 205, 40, 20);
+		panel.add(Citylbl);
+		
+		city = new JTextField();
+		city.setColumns(10);
+		city.setBounds(130, 205, 150, 20);
+		panel.add(city);
+		
+		JLabel Statelbl = new JLabel("* State:");
+		Statelbl.setVerticalAlignment(SwingConstants.TOP);
+		Statelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Statelbl.setBounds(275, 205, 50, 20);
+		panel.add(Statelbl);
+		
+		String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY",
+				"LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK",
+				"OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
+		
+		state = new JComboBox(states);
+		state.setSelectedIndex(-1);
+		state.setMaximumRowCount(15);
+		state.setBounds(330, 205, 50, 20);
+		panel.add(state);
+		
+		JLabel ZipCodelbl = new JLabel("* Zip Code:");
+		ZipCodelbl.setVerticalAlignment(SwingConstants.TOP);
+		ZipCodelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		ZipCodelbl.setBounds(385, 205, 60, 20);
+		panel.add(ZipCodelbl);
+		
+		zipCode = new JFormattedTextField(zipFormatter);
+		zipCode.setColumns(10);
+		zipCode.setBounds(450, 205, 40, 20);
+		panel.add(zipCode);
+		
+		JLabel Phonelbl = new JLabel("* Phone:");
+		Phonelbl.setVerticalAlignment(SwingConstants.TOP);
+		Phonelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Phonelbl.setBounds(75, 235, 50, 20);
+		panel.add(Phonelbl);
+		
+		phone = new JFormattedTextField(phoneFormatter);
+		phone.setColumns(10);
+		phone.setBounds(130, 235, 75, 20);
+		panel.add(phone);
+		
+		JLabel altPhonelbl = new JLabel("Alt. Phone:");
+		altPhonelbl.setVerticalAlignment(SwingConstants.TOP);
+		altPhonelbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		altPhonelbl.setBounds(210, 235, 65, 20);
+		panel.add(altPhonelbl);
+		
+		altPhone = new JFormattedTextField(phoneFormatter);
+		altPhone.setColumns(10);
+		altPhone.setBounds(280, 235, 75, 20);
+		panel.add(altPhone);
+		
+		JLabel Emaillbl = new JLabel("* E-mail:");
+		Emaillbl.setVerticalAlignment(SwingConstants.TOP);
+		Emaillbl.setHorizontalAlignment(SwingConstants.RIGHT);
+		Emaillbl.setBounds(355, 235, 50, 20);
+		panel.add(Emaillbl);
+		
+		email = new JTextField();
+		email.setColumns(10);
+		email.setBounds(410, 235, 180, 20);
+		panel.add(email);
+		
+		JSeparator separator2 = new JSeparator();
+		separator2.setBounds(50, 280, 600, 1);
+		panel.add(separator2);
+				
+		JLabel lblDrugAllergies = new JLabel("Drug Allergies");
+		lblDrugAllergies.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblDrugAllergies.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDrugAllergies.setBounds(300, 300, 100, 20);
+		panel.add(lblDrugAllergies);
+		
+		JRadioButton rdbtnPenicillin = new JRadioButton("Penicillin");
+		rdbtnPenicillin.setBackground(new Color(255, 255, 255));
+		rdbtnPenicillin.setBounds(100, 330, 100, 20);
+		panel.add(rdbtnPenicillin);
+		
+		JRadioButton rdbtnSulfonamides = new JRadioButton("Sulfonamides");
+		rdbtnSulfonamides.setBackground(Color.WHITE);
+		rdbtnSulfonamides.setBounds(200, 330, 110, 20);
+		panel.add(rdbtnSulfonamides);
+		
+		JRadioButton rdbtnGelatin = new JRadioButton("Gelatin");
+		rdbtnGelatin.setBackground(Color.WHITE);
+		rdbtnGelatin.setBounds(315, 330, 85, 20);
+		panel.add(rdbtnGelatin);
+		
+		JRadioButton rdbtnNeomycin = new JRadioButton("Neomycin");
+		rdbtnNeomycin.setBackground(Color.WHITE);
+		rdbtnNeomycin.setBounds(400, 330, 100, 20);
+		panel.add(rdbtnNeomycin);
+		
+		JRadioButton rdbtnYeast = new JRadioButton("Yeast");
+		rdbtnYeast.setBackground(Color.WHITE);
+		rdbtnYeast.setBounds(500, 330, 100, 20);
+		panel.add(rdbtnYeast);
+		
+		JSeparator separator3 = new JSeparator();
+		separator3.setBounds(50, 370, 600, 1);
+		panel.add(separator3);
+		
+		JLabel lblNotes = new JLabel("Notes");
+		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNotes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNotes.setBounds(300, 390, 100, 20);
+		panel.add(lblNotes);
+		
+		JTextPane textPaneNotes = new JTextPane();
+		textPaneNotes.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textPaneNotes.setBackground(new Color(255, 255, 240));
+		textPaneNotes.setBounds(75, 420, 550, 120);
+		panel.add(textPaneNotes);
+		
 		JButton createBtn = new JButton("Create");
-		createBtn.setBounds(50, 540, 139, 38);
+		createBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		createBtn.setBounds(110, 600, 150, 50);
 		panel.add(createBtn);
 		
 		JButton cancelBtn = new JButton("Cancel");
-		cancelBtn.setBounds(210, 540, 139, 38);
+		cancelBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		cancelBtn.setBounds(440, 600, 150, 50);
 		panel.add(cancelBtn);
 		
-		JLabel lblRequired = new JLabel("Required = *");
-		lblRequired.setBounds(36, 50, 75, 14);
+		JLabel lblRequired = new JLabel("* Required Fields");
+		lblRequired.setBounds(75, 570, 120, 20);
 		panel.add(lblRequired);
 		
 		cancelBtn.addActionListener(new ActionListener() {
@@ -312,6 +406,5 @@ public class Profile {
 			e.printStackTrace();
 		}
 	}
-	
 }
 
