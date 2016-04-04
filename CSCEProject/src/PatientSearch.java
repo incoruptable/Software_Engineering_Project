@@ -15,8 +15,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
 import javax.swing.Box;
+import java.awt.Container;
+import java.awt.Component;
 
 import DAO.DAO;
+import javax.swing.JTextPane;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import java.awt.List;
 
 public class PatientSearch {
 
@@ -25,6 +31,8 @@ public class PatientSearch {
 	private JTextField searchTextField;
 	private String[] searchParam = {"Last Name", "SSN"};
 	private JComboBox searchComboBox;
+	private Box resultsBox;
+	private List patientList = new List();
 
 	/**
 	 * Launch the application.
@@ -95,6 +103,13 @@ public class PatientSearch {
 		resultsBox.setBorder(new LineBorder(new Color(0, 0, 0)));
 		resultsBox.setBounds(50, 75, 600, 550);
 		panel.add(resultsBox);
+		resultsBox.add(patientList);
+		
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				search();
+			}
+		});
 		
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -113,9 +128,16 @@ public class PatientSearch {
 		}
 	}
 	// The search function - presumably will have a single parameter to be passed to the database and queried upon
-	private void search(String param){
-		String p = param;
+	private void search(){
+		patientList.removeAll();
+		String param = searchTextField.getText();
+		addPatient(param);
+		// For each returning true query create a new patient in the box
 		
+	}
+	
+	private void addPatient(String pInfo){
+		patientList.add(pInfo);
 	}
 	
 	// A full reset of all fields
@@ -123,7 +145,7 @@ public class PatientSearch {
 	private void sReset(){
 		pReset();
 		searchTextField.setText("");
-		
+		patientList.removeAll();
 	}
 	
 	// Resets the dropdown selection to a non-selectable descriptor option
