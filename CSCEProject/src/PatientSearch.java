@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.border.TitledBorder;
@@ -16,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
 import javax.swing.Box;
+import java.awt.Container;
+import java.awt.Component;
 
 import DAO.DAO;
 import javax.swing.JTable;
@@ -30,6 +33,8 @@ public class PatientSearch {
 	private String[] searchParam = {"Last Name", "SSN"};
 	private JComboBox searchComboBox;
 	private JTable resultTable;
+	private String firstname, lastname, SSN, DOB, address, phone, email;
+	private Model model;
 
 	/**
 	 * Launch the application.
@@ -45,6 +50,17 @@ public class PatientSearch {
 				}
 			}
 		});
+	}
+	
+	public class Model extends DefaultTableModel {
+		
+		Model(Object[][] data, String[] columnNames) {
+			super(data, columnNames);
+		}
+		
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
 	}
 
 	/**
@@ -101,17 +117,30 @@ public class PatientSearch {
 		panel.add(scrollPane);
 		
 		resultTable = new JTable();
+		model = new Model(
+				new Object[][] {
+				},
+				new String[] {
+					"First Name", "Last Name", "SSN", "DOB", "Address", "Phone", "E-Mail"
+				}
+			);
 		scrollPane.setViewportView(resultTable);
-		resultTable.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"First Name", "Last Name", "SSN", "DOB", "Address", "Phone", "E-Mail"
+		resultTable.setModel(model);
+
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					search(searchTextField.getText());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		));
+		});
 		
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				pReset();
 				sReset();
 			}
 		});
@@ -127,8 +156,9 @@ public class PatientSearch {
 		}
 	}
 	// The search function - presumably will have a single parameter to be passed to the database and queried upon
-	private void search(String param){
+	private void search(String param) throws SQLException{
 		String p = param;
+		sReset();
 		if("Last Name".equals(String.valueOf(searchComboBox.getSelectedItem()))) {
 			searchOnLastName(param);
 		}
@@ -139,33 +169,74 @@ public class PatientSearch {
 			JOptionPane.showMessageDialog(null, "Must select a search parameter first", "Select a search parameter", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	private void searchOnLastName(String param) {
+
+	private void searchOnLastName(String param) throws SQLException {
+		ResultSet rs;
 		if(!param.isEmpty()){
-			
+			dao.setquery("SELECT firstName, lastName, SSN, DOB, address, phone, email FROM dbo.PatientTable WHERE lastName = ?");
+			dao.SetParameter(param);
+			dao.setExpectRS(true);
+			rs = dao.executeQuery();
+			if(rs.next()){
+				do{
+					this.firstname= rs.getString(1);
+					this.lastname= rs.getString(2);
+					this.SSN = rs.getString(3);
+					this.DOB = rs.getString(4);
+					this.address = rs.getString(5);
+					this.phone = rs.getString(6);
+					this.email = rs.getString(7);
+					
+					model.addRow(new Object[]{this.firstname, this.lastname, this.SSN, this.DOB, this.address, this.phone, this.email});
+				}while(rs.next());
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "No Patients found with this Last Name", "", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
 		else{
 			JOptionPane.showMessageDialog(null, "Please fill the parameter field", "Must insert a Last Name", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
-	private void searchOnSSN(String param) {
-		
+	private void searchOnSSN(String param) throws SQLException {
+		ResultSet rs;
+		if(!param.isEmpty()){
+			dao.setquery("SELECT firstName, lastName, SSN, DOB, address, phone, email FROM dbo.PatientTable WHERE SSN = ?");
+			dao.SetParameter(Integer.parseInt(param));
+			dao.setExpectRS(true);
+			rs = dao.executeQuery();
+			if(rs.next()){
+				do{
+					this.firstname= rs.getString(1);
+					this.lastname= rs.getString(2);
+					this.SSN = rs.getString(3);
+					this.DOB = rs.getString(4);
+					this.address = rs.getString(5);
+					this.phone = rs.getString(6);
+					this.email = rs.getString(7);
+					
+					model.addRow(new Object[]{this.firstname, this.lastname, this.SSN, this.DOB, this.address, this.phone, this.email});
+				}while(rs.next());
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "No Patients found with this SSN", "", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "Please fill the parameter field", "Must insert a SSN", JOptionPane.ERROR_MESSAGE);
+		}
 	}
-
-	// A full reset of all fields
-	// Currently only resets the parameter dropdown and the text field but will eventually get rid of all the previous search results as well
-	private void sReset(){
-		pReset();
-		searchTextField.setText("");
-		
-	}
-	
 	// Resets the dropdown selection to a non-selectable descriptor option
 	private void pReset(){
 		searchComboBox.setEditable(true);
 		searchComboBox.setSelectedItem("Search Parameter");
 		searchComboBox.setEditable(false);
+	}
+	private void sReset(){
+		for(int i = model.getRowCount()-1; i >= 0; i--){
+			model.removeRow(i);
+		}
 	}
 }
 
