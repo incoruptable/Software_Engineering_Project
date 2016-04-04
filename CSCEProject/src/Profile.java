@@ -16,9 +16,7 @@ import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 import DAO.DAO;
@@ -34,11 +32,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextPane;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.Font;
 
