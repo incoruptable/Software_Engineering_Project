@@ -19,7 +19,7 @@ import DAO.DAO;
 public class Reports {
 
 	private JFrame frmReports;
-	private DAO dao;  // Won't do anything until we implement the actual server queries
+	private DAO dao;  // Won't do anything until we implement the actual server queries.
 	// Reports will need to be decided on, these are for demo purpose
 	private String[] reportList = {"Call List", "Report Type 2", "Report Type 3"};
 
