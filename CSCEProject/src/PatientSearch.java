@@ -196,7 +196,6 @@ public class PatientSearch {
 	}
 	// The search function - presumably will have a single parameter to be passed to the database and queried upon
 	private void search(String param) throws SQLException{
-		String p = param;
 		sReset();
 		if("Last Name".equals(String.valueOf(searchComboBox.getSelectedItem()))) {
 			searchOnLastName(param);

@@ -83,6 +83,9 @@ public class MainFrame {
 		JButton btnReports = new JButton("Reports");
 		btnReports.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Reports r;
+				r = new Reports();
+				r.CreateProfilePopUp();
 			}
 		});
 		btnReports.setBounds(250, 150, 150, 50);
@@ -100,6 +103,13 @@ public class MainFrame {
 		panel.add(btnPatientSearch);
 		
 		JButton btnManageInventory = new JButton("Manage Inventory");
+		btnManageInventory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Inventory i;
+				i = new Inventory();
+				i.CreateProfilePopUp();
+			}
+		});
 		btnManageInventory.setBounds(250, 225, 150, 50);
 		panel.add(btnManageInventory);
 		
