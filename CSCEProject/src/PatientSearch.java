@@ -118,7 +118,7 @@ public class PatientSearch {
 		panel.add(btnExit);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 61, 600, 600);
+		scrollPane.setBounds(50, 60, 600, 570);
 		panel.add(scrollPane);
 		
 		resultTable = new JTable();

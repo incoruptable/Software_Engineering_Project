@@ -80,6 +80,7 @@ public class MainFrame {
 		panel.setLayout(null);
 		panel.add(createAccount);
 		
+		// Reports Button
 		JButton btnReports = new JButton("Reports");
 		btnReports.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

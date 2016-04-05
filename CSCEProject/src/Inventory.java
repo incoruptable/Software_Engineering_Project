@@ -23,7 +23,7 @@ import java.awt.ScrollPane;
 public class Inventory {
 
 	private JFrame frmInventory;
-	private DAO dao;  // Won't do anything until we implement the actual server queries
+	private DAO dao;  // Won't do anything until we implement the actual server queries.
 	// locations will need to be dynamically created for Deliverable 3, this is for demo purpose
 	private String[] locations = {"Store 1", "Store 2", "Store 3"};
 
