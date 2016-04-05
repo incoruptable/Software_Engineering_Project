@@ -52,6 +52,13 @@ public class Profile {
 	private DAO dao;
 	private JFormattedTextField altPhone;
 	private JFormattedTextField ssn;
+	private JTextPane notes;
+	private JRadioButton rdbtnPenicillin;
+	private JRadioButton rdbtnSulfonamides;
+	private JRadioButton rdbtnGelatin;
+	private JRadioButton rdbtnNeomycin;
+	private JRadioButton rdbtnYeast;
+	private String allergyList = "";
 
 	private MaskFormatter phoneFormatter;
 	private MaskFormatter zipFormatter;
@@ -283,27 +290,27 @@ public class Profile {
 		lblDrugAllergies.setBounds(300, 300, 100, 20);
 		panel.add(lblDrugAllergies);
 		
-		JRadioButton rdbtnPenicillin = new JRadioButton("Penicillin");
+		rdbtnPenicillin = new JRadioButton("Penicillin");
 		rdbtnPenicillin.setBackground(new Color(255, 255, 255));
 		rdbtnPenicillin.setBounds(100, 330, 100, 20);
 		panel.add(rdbtnPenicillin);
 		
-		JRadioButton rdbtnSulfonamides = new JRadioButton("Sulfonamides");
+		rdbtnSulfonamides = new JRadioButton("Sulfonamides");
 		rdbtnSulfonamides.setBackground(Color.WHITE);
 		rdbtnSulfonamides.setBounds(200, 330, 110, 20);
 		panel.add(rdbtnSulfonamides);
 		
-		JRadioButton rdbtnGelatin = new JRadioButton("Gelatin");
+		rdbtnGelatin = new JRadioButton("Gelatin");
 		rdbtnGelatin.setBackground(Color.WHITE);
 		rdbtnGelatin.setBounds(315, 330, 85, 20);
 		panel.add(rdbtnGelatin);
 		
-		JRadioButton rdbtnNeomycin = new JRadioButton("Neomycin");
+		rdbtnNeomycin = new JRadioButton("Neomycin");
 		rdbtnNeomycin.setBackground(Color.WHITE);
 		rdbtnNeomycin.setBounds(400, 330, 100, 20);
 		panel.add(rdbtnNeomycin);
 		
-		JRadioButton rdbtnYeast = new JRadioButton("Yeast");
+		rdbtnYeast = new JRadioButton("Yeast");
 		rdbtnYeast.setBackground(Color.WHITE);
 		rdbtnYeast.setBounds(500, 330, 100, 20);
 		panel.add(rdbtnYeast);
@@ -318,11 +325,11 @@ public class Profile {
 		lblNotes.setBounds(300, 390, 100, 20);
 		panel.add(lblNotes);
 		
-		JTextPane textPaneNotes = new JTextPane();
-		textPaneNotes.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPaneNotes.setBackground(new Color(255, 255, 240));
-		textPaneNotes.setBounds(75, 420, 550, 120);
-		panel.add(textPaneNotes);
+		notes = new JTextPane();
+		notes.setBorder(new LineBorder(new Color(0, 0, 0)));
+		notes.setBackground(new Color(255, 255, 240));
+		notes.setBounds(75, 420, 550, 120);
+		panel.add(notes);
 		
 		JButton createBtn = new JButton("Create");
 		createBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -346,9 +353,11 @@ public class Profile {
 		
 		createBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
+				generateAllergyList();
 				createProfile();
 			}
 		});
+		
 		} catch(SQLException es){
 			es.printStackTrace();
 		} catch (ParseException e) {
@@ -356,6 +365,35 @@ public class Profile {
 			e.printStackTrace();
 		}
 	}
+	
+	// Creating a string of patient allergies
+	private void generateAllergyList(){
+		boolean isSelected = rdbtnPenicillin.isSelected();
+		if (isSelected){
+			allergyList += "Penicillin, ";
+		}
+		isSelected = rdbtnSulfonamides.isSelected();
+		if (isSelected){
+			allergyList += "Sulfonamides, ";
+		}
+		isSelected = rdbtnGelatin.isSelected();
+		if (isSelected){
+			allergyList += "Gelatin, ";
+		}
+		isSelected = rdbtnNeomycin.isSelected();
+		if (isSelected){
+			allergyList += "Neomycin, ";
+		}
+		isSelected = rdbtnYeast.isSelected();
+		if (isSelected){
+			allergyList += "Yeast, ";
+		}
+		// Removes last space and comma if a string has been created of any length
+		if (allergyList.length() > 0){
+			allergyList = allergyList.substring(0,allergyList.length()-2);
+		}
+	}
+
 	
 	/* The create function below needs to be specifically implemented for the fields contained within the patient
 	 * profile.  I don't know if the database is currently set up to handle these, nor do I know what order they
@@ -371,8 +409,8 @@ public class Profile {
 			// Checking for empty fields
 			if(!firstName.getText().isEmpty() && !lastName.getText().isEmpty() && !ssn.getText().isEmpty() && datePicker.getModel().getValue() != null && !address.getText().isEmpty() && !city.getText().isEmpty() && state.getModel().getSelectedItem() != null && !zipCode.getText().isEmpty() && !phone.getText().isEmpty() && !email.getText().isEmpty()){
 						dao.setExpectRS(false);
-						dao.setquery("INSERT INTO dbo.PatientTable (firstName, lastName, middleName, SSN, DOB, address, city, state, zipCode, phone, altPhone, email)" +
-								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						dao.setquery("INSERT INTO dbo.PatientTable (firstName, lastName, middleName, SSN, DOB, address, city, state, zipCode, phone, altPhone, email, allergies, notes)" +
+								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
@@ -387,6 +425,8 @@ public class Profile {
 						dao.SetParameter(phone.getText());
 						dao.SetParameter(altPhone.getText());
 						dao.SetParameter(email.getText());
+						dao.SetParameter(allergyList);
+						dao.SetParameter(notes.getText());
 						dao.executeQuery();
 						frmNewPatient.dispose();
 			}
@@ -401,4 +441,3 @@ public class Profile {
 		}
 	}
 }
-
