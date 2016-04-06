@@ -15,13 +15,17 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import DAO.DAO;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
+import java.awt.ScrollPane;
 
-public class Reports {
+public class Inventory {
 
-	private JFrame frmReports;
-	private DAO dao;  // Won't do anything until we implement the actual server queries
-	// Reports will need to be decided on, these are for demo purpose
-	private String[] reportList = {"Call List", "Report Type 2", "Report Type 3"};
+	private JFrame frmInventory;
+	private DAO dao;  // Won't do anything until we implement the actual server queries.
+	// locations will need to be dynamically created for Deliverable 3, this is for demo purpose
+	private String[] locations = {"Store 1", "Store 2", "Store 3"};
 
 	/**
 	 * Launch the application.
@@ -30,8 +34,8 @@ public class Reports {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Reports window = new Reports();
-					window.frmReports.setVisible(true);
+					Inventory window = new Inventory();
+					window.frmInventory.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,7 +46,7 @@ public class Reports {
 	/**
 	 * Create the application.
 	 */
-	public Reports() {
+	public Inventory() {
 		initialize();
 	}
 
@@ -53,36 +57,37 @@ public class Reports {
 		try {
 		dao = new DAO();
 		
-		frmReports = new JFrame();
-		frmReports.setResizable(false);
-		frmReports.setBounds(100, 100, 500, 200);
-		frmReports.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frmInventory = new JFrame();
+		frmInventory.setResizable(false);
+		frmInventory.setBounds(100, 100, 500, 500);
+		frmInventory.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(Color.WHITE);
-		frmReports.getContentPane().add(panel, BorderLayout.CENTER);
+		frmInventory.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JComboBox invComboBox = new JComboBox(reportList);
+		JComboBox invComboBox = new JComboBox(locations);
 		invComboBox.setEditable(true);
-		invComboBox.setSelectedItem("Select Report");
+		invComboBox.setSelectedItem("Select Location");
 		invComboBox.setEditable(false);
 		invComboBox.setBounds(50, 25, 200, 20);
 		panel.add(invComboBox);
 		
-		JButton btnGenerate = new JButton("Generate");
-		btnGenerate.setBounds(265, 25, 100, 20);
-		panel.add(btnGenerate);
-		
 		JButton btnExit = new JButton("Exit");
 		btnExit.setBounds(375, 25, 75, 20);
 		panel.add(btnExit);
-				
+		
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setBounds(50, 60, 400, 360);
+		panel.add(scrollPane);
+		
+		
 		btnExit.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {
-				frmReports.dispose();
+				frmInventory.dispose();
 			}
 		});
 				
@@ -90,7 +95,11 @@ public class Reports {
 			es.printStackTrace();
 		}
 	}
-
+	
+	// Retrieves the list of locations from the database
+	private void getLocations() {
+		
+	}
 }
 
 
