@@ -56,6 +56,13 @@ public class Profile {
 	private DAO dao;
 	private JFormattedTextField altPhone;
 	private JFormattedTextField ssn;
+	private String allergyList = "";
+	private JRadioButton rdbtnPenicillin;
+	private JRadioButton rdbtnSulfonamides;
+	private JRadioButton rdbtnGelatin;
+	private JRadioButton rdbtnNeomycin;
+	private JRadioButton rdbtnYeast;
+	private JTextPane notes;
 
 	private MaskFormatter phoneFormatter;
 	private MaskFormatter zipFormatter;
@@ -601,7 +608,7 @@ public class Profile {
 		lblDrugAllergies.setBounds(300, 300, 100, 20);
 		panel.add(lblDrugAllergies);
 		
-		JRadioButton rdbtnPenicillin = new JRadioButton("Penicillin");
+		rdbtnPenicillin = new JRadioButton("Penicillin");
 		rdbtnPenicillin.setBackground(new Color(255, 255, 255));
 		rdbtnPenicillin.setBounds(100, 330, 100, 20);
 		panel.add(rdbtnPenicillin);
@@ -609,7 +616,7 @@ public class Profile {
 			rdbtnPenicillin.setSelected(true);
 		}
 		
-		JRadioButton rdbtnSulfonamides = new JRadioButton("Sulfonamides");
+		rdbtnSulfonamides = new JRadioButton("Sulfonamides");
 		rdbtnSulfonamides.setBackground(Color.WHITE);
 		rdbtnSulfonamides.setBounds(200, 330, 110, 20);
 		panel.add(rdbtnSulfonamides);
@@ -617,7 +624,7 @@ public class Profile {
 			rdbtnSulfonamides.setSelected(true);
 		}
 		
-		JRadioButton rdbtnGelatin = new JRadioButton("Gelatin");
+		rdbtnGelatin = new JRadioButton("Gelatin");
 		rdbtnGelatin.setBackground(Color.WHITE);
 		rdbtnGelatin.setBounds(315, 330, 85, 20);
 		panel.add(rdbtnGelatin);
@@ -625,7 +632,7 @@ public class Profile {
 			rdbtnGelatin.setSelected(true);
 		}
 		
-		JRadioButton rdbtnNeomycin = new JRadioButton("Neomycin");
+		rdbtnNeomycin = new JRadioButton("Neomycin");
 		rdbtnNeomycin.setBackground(Color.WHITE);
 		rdbtnNeomycin.setBounds(400, 330, 100, 20);
 		panel.add(rdbtnNeomycin);
@@ -633,7 +640,7 @@ public class Profile {
 			rdbtnNeomycin.setSelected(true);
 		}
 		
-		JRadioButton rdbtnYeast = new JRadioButton("Yeast");
+		rdbtnYeast = new JRadioButton("Yeast");
 		rdbtnYeast.setBackground(Color.WHITE);
 		rdbtnYeast.setBounds(500, 330, 100, 20);
 		panel.add(rdbtnYeast);
@@ -651,14 +658,14 @@ public class Profile {
 		lblNotes.setBounds(300, 390, 100, 20);
 		panel.add(lblNotes);
 		
-		JTextPane textPaneNotes = new JTextPane();
-		textPaneNotes.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPaneNotes.setBackground(new Color(255, 255, 240));
-		textPaneNotes.setBounds(75, 420, 550, 120);
-		panel.add(textPaneNotes);
-		textPaneNotes.setText(patient.getNotes());
+		notes = new JTextPane();
+		notes.setBorder(new LineBorder(new Color(0, 0, 0)));
+		notes.setBackground(new Color(255, 255, 240));
+		notes.setBounds(75, 420, 550, 120);
+		panel.add(notes);
+		notes.setText(patient.getNotes());
 		
-		JButton createBtn = new JButton("Create");
+		JButton createBtn = new JButton("Edit");
 		createBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		createBtn.setBounds(110, 600, 150, 50);
 		panel.add(createBtn);
@@ -680,7 +687,8 @@ public class Profile {
 		
 		createBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				createProfile();
+				generateAllergyList();
+				editProfile();
 			}
 		});
 		} catch(SQLException es){
@@ -695,6 +703,34 @@ public class Profile {
 	 * would even be in for so I am leaving it all commented out until we sort that out.
 	 */
 	
+	private void generateAllergyList(){
+		boolean isSelected = rdbtnPenicillin.isSelected();
+		if (isSelected){
+			allergyList += "Penicillin, ";
+		}
+		isSelected = rdbtnSulfonamides.isSelected();
+		if (isSelected){
+			allergyList += "Sulfonamides, ";
+		}
+		isSelected = rdbtnGelatin.isSelected();
+		if (isSelected){
+			allergyList += "Gelatin, ";
+		}
+		isSelected = rdbtnNeomycin.isSelected();
+		if (isSelected){
+			allergyList += "Neomycin, ";
+		}
+		isSelected = rdbtnYeast.isSelected();
+		if (isSelected){
+			allergyList += "Yeast, ";
+		}
+		// Removes last space and comma if a string has been created of any length
+		if (allergyList.length() > 0){
+			allergyList = allergyList.substring(0,allergyList.length()-2);
+		}
+	}
+
+	
 	public void createProfile()
 	{
 		
@@ -704,8 +740,8 @@ public class Profile {
 			// Checking for empty fields
 			if(!firstName.getText().isEmpty() && !lastName.getText().isEmpty() && !ssn.getText().isEmpty() && datePicker.getModel().getValue() != null && !address.getText().isEmpty() && !city.getText().isEmpty() && state.getModel().getSelectedItem() != null && !zipCode.getText().isEmpty() && !phone.getText().isEmpty() && !email.getText().isEmpty()){
 						dao.setExpectRS(false);
-						dao.setquery("INSERT INTO dbo.PatientTable (firstName, lastName, middleName, SSN, DOB, address, city, state, zipCode, phone, altPhone, email)" +
-								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						dao.setquery("INSERT INTO dbo.PatientTable (firstName, lastName, middleName, SSN, DOB, address, city, state, zipCode, phone, altPhone, email, allergies, notes)" +
+								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
@@ -720,7 +756,47 @@ public class Profile {
 						dao.SetParameter(phone.getText());
 						dao.SetParameter(altPhone.getText());
 						dao.SetParameter(email.getText());
+						dao.SetParameter(allergyList);
+						dao.SetParameter(notes.getText());
 						dao.executeQuery();
+						frmNewPatient.dispose();
+			}
+			else{
+				//FIELDS EMPTY M8
+				JOptionPane.showMessageDialog(null, "Fields Incomplete", "Fill in empty feilds.", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public void editProfile()
+	{
+
+		try{
+			// Checking for empty fields
+			if(!firstName.getText().isEmpty() && !lastName.getText().isEmpty() && !ssn.getText().isEmpty() && !address.getText().isEmpty() && !city.getText().isEmpty() && state.getModel().getSelectedItem() != null && !zipCode.getText().isEmpty() && !phone.getText().isEmpty() && !email.getText().isEmpty()){
+						dao.setExpectRS(false);
+						dao.setquery("UPDATE dbo.PatientTable SET firstName=?, lastName=?, middleName=?, SSN=?, DOB=?, address=?, city=?, state=?, zipCode=?, phone=?, altPhone=?, email=?, allergies=?, notes=? WHERE lastName = ? AND firstName = ? AND middleName = ?");
+						dao.SetParameter(firstName.getText());
+						dao.SetParameter(lastName.getText());
+						dao.SetParameter(middleName.getText());
+						dao.SetParameter(Integer.parseInt(ssn.getText()));
+						dao.SetParameter(DOBfield.getText());
+						dao.SetParameter(address.getText());
+						dao.SetParameter(city.getText());
+						dao.SetParameter((String) state.getModel().getSelectedItem());
+						dao.SetParameter(Integer.parseInt(zipCode.getText()));
+						dao.SetParameter(phone.getText());
+						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(email.getText());
+						dao.SetParameter(allergyList);
+						dao.SetParameter(notes.getText());
+						dao.SetParameter(lastName.getText());
+						dao.SetParameter(firstName.getText());
+						dao.SetParameter(middleName.getText());
+						dao.executeQuery();			
 						frmNewPatient.dispose();
 			}
 			else{

@@ -145,50 +145,46 @@ public class PatientSearch {
 			}
 		});
 		
-		resultTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent lse) {
-				try {
-					ResultSet rs;
-					dao.setquery("SELECT * FROM dbo.PatientTable WHERE lastName = ? AND SSN = ? AND phone = ?");
-					dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString());
-					dao.SetParameter(Integer.parseInt(resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString()));
-					dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 5).toString());
-					dao.setExpectRS(true);
-					
-					rs = dao.executeQuery();
-					
-					if(rs.next()) {
-						selectedPatient.setFirstName(rs.getString(1));
-						selectedPatient.setLastName(rs.getString(2));
-						selectedPatient.setMiddleName(rs.getString(3));
-						selectedPatient.setSSN(rs.getString(4));
-						selectedPatient.setDOB(rs.getDate(5));
-						selectedPatient.setAddress(rs.getString(6));
-						selectedPatient.setCity(rs.getString(7));
-						selectedPatient.setState(rs.getString(8));
-						selectedPatient.setZipCode(rs.getString(9));
-						selectedPatient.setPhone(rs.getString(10));
-						selectedPatient.setAltPhone(rs.getString(11));
-						selectedPatient.setEmail(rs.getString(12));
-						selectedPatient.setAllergies(rs.getString(13));
-						selectedPatient.setNotes(rs.getString(14));
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "The selected row does not exist", "That's very weird Sorry M8", JOptionPane.ERROR_MESSAGE);
-					}
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
 		
 		resultTable.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {
 				if(me.getClickCount() == 2){
-					Profile profile = new Profile(selectedPatient);
-					profile.CreateProfilePopUpWithPatient(selectedPatient);
+					try {
+						ResultSet rs;
+						dao.setquery("SELECT * FROM dbo.PatientTable WHERE lastName = ? AND SSN = ? AND phone = ?");
+						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString());
+						dao.SetParameter(Integer.parseInt(resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString()));
+						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 5).toString());
+						dao.setExpectRS(true);
+						
+						rs = dao.executeQuery();
+						
+						if(rs.next()) {
+							selectedPatient.setFirstName(rs.getString(1));
+							selectedPatient.setLastName(rs.getString(2));
+							selectedPatient.setMiddleName(rs.getString(3));
+							selectedPatient.setSSN(rs.getString(4));
+							selectedPatient.setDOB(rs.getDate(5));
+							selectedPatient.setAddress(rs.getString(6));
+							selectedPatient.setCity(rs.getString(7));
+							selectedPatient.setState(rs.getString(8));
+							selectedPatient.setZipCode(rs.getString(9));
+							selectedPatient.setPhone(rs.getString(10));
+							selectedPatient.setAltPhone(rs.getString(11));
+							selectedPatient.setEmail(rs.getString(12));
+							selectedPatient.setAllergies(rs.getString(13));
+							selectedPatient.setNotes(rs.getString(14));
+							Profile profile = new Profile(selectedPatient);
+							profile.CreateProfilePopUpWithPatient(selectedPatient);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "The selected row does not exist", "That's very weird Sorry M8", JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});
