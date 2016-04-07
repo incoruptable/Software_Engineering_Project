@@ -310,27 +310,27 @@ public class Profile {
 		lblDrugAllergies.setBounds(300, 300, 100, 20);
 		panel.add(lblDrugAllergies);
 		
-		JRadioButton rdbtnPenicillin = new JRadioButton("Penicillin");
+		rdbtnPenicillin = new JRadioButton("Penicillin");
 		rdbtnPenicillin.setBackground(new Color(255, 255, 255));
 		rdbtnPenicillin.setBounds(100, 330, 100, 20);
 		panel.add(rdbtnPenicillin);
 		
-		JRadioButton rdbtnSulfonamides = new JRadioButton("Sulfonamides");
+		rdbtnSulfonamides = new JRadioButton("Sulfonamides");
 		rdbtnSulfonamides.setBackground(Color.WHITE);
 		rdbtnSulfonamides.setBounds(200, 330, 110, 20);
 		panel.add(rdbtnSulfonamides);
 		
-		JRadioButton rdbtnGelatin = new JRadioButton("Gelatin");
+		rdbtnGelatin = new JRadioButton("Gelatin");
 		rdbtnGelatin.setBackground(Color.WHITE);
 		rdbtnGelatin.setBounds(315, 330, 85, 20);
 		panel.add(rdbtnGelatin);
 		
-		JRadioButton rdbtnNeomycin = new JRadioButton("Neomycin");
+		rdbtnNeomycin = new JRadioButton("Neomycin");
 		rdbtnNeomycin.setBackground(Color.WHITE);
 		rdbtnNeomycin.setBounds(400, 330, 100, 20);
 		panel.add(rdbtnNeomycin);
 		
-		JRadioButton rdbtnYeast = new JRadioButton("Yeast");
+		rdbtnYeast = new JRadioButton("Yeast");
 		rdbtnYeast.setBackground(Color.WHITE);
 		rdbtnYeast.setBounds(500, 330, 100, 20);
 		panel.add(rdbtnYeast);
@@ -345,11 +345,11 @@ public class Profile {
 		lblNotes.setBounds(300, 390, 100, 20);
 		panel.add(lblNotes);
 		
-		JTextPane textPaneNotes = new JTextPane();
-		textPaneNotes.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPaneNotes.setBackground(new Color(255, 255, 240));
-		textPaneNotes.setBounds(75, 420, 550, 120);
-		panel.add(textPaneNotes);
+		notes = new JTextPane();
+		notes.setBorder(new LineBorder(new Color(0, 0, 0)));
+		notes.setBackground(new Color(255, 255, 240));
+		notes.setBounds(75, 420, 550, 120);
+		panel.add(notes);
 		
 		JButton createBtn = new JButton("Create");
 		createBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -393,11 +393,11 @@ public class Profile {
 		frmNewPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		// Formatting masks for input fields
-		phoneFormatter = new MaskFormatter("##########");
+		phoneFormatter = new MaskFormatter("**********");
 		phoneFormatter.setValidCharacters("0123456789");
-		zipFormatter = new MaskFormatter("#####");
+		zipFormatter = new MaskFormatter("*****");
 		zipFormatter.setValidCharacters("0123456789");
-		ssnFormatter = new MaskFormatter("#########");
+		ssnFormatter = new MaskFormatter("*********");
 		ssnFormatter.setValidCharacters("0123456789");
 		
 		JPanel panel = new JPanel();
@@ -745,14 +745,14 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(Integer.parseInt(ssn.getText()));
+						dao.SetParameter(ssn.getText());
 						java.util.Date utilDate = (Date) datePicker.getModel().getValue();
 						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 						dao.SetParameter(sqlDate);
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(Integer.parseInt(zipCode.getText()));
+						dao.SetParameter(zipCode.getText());
 						dao.SetParameter(phone.getText());
 						dao.SetParameter(altPhone.getText());
 						dao.SetParameter(email.getText());
@@ -782,12 +782,12 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(Integer.parseInt(ssn.getText()));
+						dao.SetParameter(ssn.getText());
 						dao.SetParameter(DOBfield.getText());
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(Integer.parseInt(zipCode.getText()));
+						dao.SetParameter(zipCode.getText());
 						dao.SetParameter(phone.getText());
 						dao.SetParameter(altPhone.getText());
 						dao.SetParameter(email.getText());
