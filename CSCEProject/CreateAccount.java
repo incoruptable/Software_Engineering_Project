@@ -298,6 +298,8 @@ public class CreateAccount {
 						dao.SetParameter(email.getText());
 						
 						dao.executeQuery();
+						
+						frame.dispose();
 						}
 					else
 						JOptionPane.showMessageDialog(null, "Emails Don't Match", "Make emails match.", JOptionPane.ERROR_MESSAGE);

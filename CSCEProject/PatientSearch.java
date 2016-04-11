@@ -6,11 +6,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -35,6 +39,7 @@ public class PatientSearch {
 	private JTable resultTable;
 	private String firstname, lastname, SSN, DOB, address, phone, email;
 	private Model model;
+	private Patient selectedPatient;
 
 	/**
 	 * Launch the application.
@@ -82,6 +87,8 @@ public class PatientSearch {
 		frmPatientSearch.setBounds(100, 100, 700, 700);
 		frmPatientSearch.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
+		selectedPatient = new Patient();
+		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setForeground(Color.WHITE);
@@ -91,7 +98,6 @@ public class PatientSearch {
 		
 		// Search Parameter ComboBox information
 		searchComboBox = new JComboBox(searchParam);
-		pReset();
 		searchComboBox.setBounds(50, 30, 150, 20);
 		panel.add(searchComboBox);
 				
@@ -99,6 +105,7 @@ public class PatientSearch {
 		searchTextField.setBounds(210, 30, 180, 20);
 		panel.add(searchTextField);
 		searchTextField.setColumns(10);
+		pReset();
 		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setBounds(400, 30, 75, 20);
@@ -113,7 +120,7 @@ public class PatientSearch {
 		panel.add(btnExit);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 61, 600, 600);
+		scrollPane.setBounds(50, 60, 600, 570);
 		panel.add(scrollPane);
 		
 		resultTable = new JTable();
@@ -138,6 +145,52 @@ public class PatientSearch {
 			}
 		});
 		
+		
+		resultTable.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent me) {
+				if(me.getClickCount() == 2){
+					try {
+						ResultSet rs;
+						dao.setquery("SELECT * FROM dbo.PatientTable WHERE lastName = ? AND SSN = ? AND phone = ?");
+						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString());
+						dao.SetParameter(Integer.parseInt(resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString()));
+						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 5).toString());
+						dao.setExpectRS(true);
+						
+						rs = dao.executeQuery();
+						
+						if(rs.next()) {
+							selectedPatient.setFirstName(rs.getString(1));
+							selectedPatient.setLastName(rs.getString(2));
+							selectedPatient.setMiddleName(rs.getString(3));
+							selectedPatient.setSSN(rs.getString(4));
+							selectedPatient.setDOB(rs.getDate(5));
+							selectedPatient.setAddress(rs.getString(6));
+							selectedPatient.setCity(rs.getString(7));
+							selectedPatient.setState(rs.getString(8));
+							selectedPatient.setZipCode(rs.getString(9));
+							selectedPatient.setPhone(rs.getString(10));
+							selectedPatient.setAltPhone(rs.getString(11));
+							selectedPatient.setEmail(rs.getString(12));
+							selectedPatient.setAllergies(rs.getString(13));
+							selectedPatient.setNotes(rs.getString(14));
+							Profile profile = new Profile(selectedPatient);
+							profile.CreateProfilePopUpWithPatient(selectedPatient);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "The selected row does not exist", "That's very weird Sorry M8", JOptionPane.ERROR_MESSAGE);
+						}
+						
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		
+		
+		
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				pReset();
@@ -157,7 +210,6 @@ public class PatientSearch {
 	}
 	// The search function - presumably will have a single parameter to be passed to the database and queried upon
 	private void search(String param) throws SQLException{
-		String p = param;
 		sReset();
 		if("Last Name".equals(String.valueOf(searchComboBox.getSelectedItem()))) {
 			searchOnLastName(param);
@@ -232,6 +284,7 @@ public class PatientSearch {
 		searchComboBox.setEditable(true);
 		searchComboBox.setSelectedItem("Search Parameter");
 		searchComboBox.setEditable(false);
+		searchTextField.setText("");
 	}
 	private void sReset(){
 		for(int i = model.getRowCount()-1; i >= 0; i--){
