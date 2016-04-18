@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.sql.ResultSet;
@@ -21,6 +22,8 @@ import DAO.DAO;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.NumberFormatter;
+import javax.swing.text.PlainDocument;
 import javax.swing.JScrollPane;
 import java.awt.ScrollPane;
 
@@ -38,11 +41,12 @@ public class Inventory {
 	private ArrayList<String> shotNames;
 	private ArrayList<Shot> shots;
 	private Shot selectedShot;
-	private JFormattedTextField quantity;
-	private MaskFormatter quantityFormatter;
+	private JTextField quantity;
 	private JLabel manufacturer;
 	private JLabel vendor;
 	private JTextPane notes;
+	private JButton updateBtn;
+	private JPanel panel;
 	/**
 	 * Launch the application.
 	 */
@@ -85,13 +89,6 @@ public class Inventory {
 		dao = new DAO();
 		shots = new ArrayList<Shot>();
 		shotNames = new ArrayList<String>();
-		try {
-			quantityFormatter = new MaskFormatter("#########");
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		quantityFormatter.setValidCharacters("0123456789");
 		
 		this.getShots();
 		
@@ -100,7 +97,7 @@ public class Inventory {
 		frmInventory.setBounds(100, 100, 506, 352);
 		frmInventory.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(Color.WHITE);
@@ -109,7 +106,7 @@ public class Inventory {
 		
 		JComboBox invComboBox = new JComboBox(shotNames.toArray(new String[shotNames.size()]));
 		invComboBox.setEditable(true);
-		invComboBox.setSelectedItem("Select Shot");
+		invComboBox.setSelectedItem("Select a Shot");
 		invComboBox.setEditable(false);
 		invComboBox.setBounds(50, 25, 200, 20);
 		panel.add(invComboBox);
@@ -119,11 +116,15 @@ public class Inventory {
 						JComboBox comboBox = (JComboBox)e.getSource();
 						selectedShot = new Shot();
 						selectedShot = shots.get(comboBox.getSelectedIndex());
+						System.out.print(comboBox.getSelectedIndex());
+						System.out.print(shots.size());
 						if(selectedShot != null) {
 							manufacturer.setText(selectedShot.getManufacturer());
 							vendor.setText(selectedShot.getVendor());
 							quantity.setText(String.valueOf(selectedShot.getQuantity()));
 							notes.setText(selectedShot.getNotes());
+							panel.add(updateBtn);
+							frmInventory.repaint();
 						}
 					}
 				});
@@ -152,23 +153,15 @@ public class Inventory {
 		lblQuantity.setBounds(50, 91, 53, 14);
 		panel.add(lblQuantity);
 		
-		quantity = new JFormattedTextField(quantityFormatter);
+		quantity = new JTextField();
 		quantity.setBounds(135, 88, 86, 20);
 		panel.add(quantity);
 		quantity.setColumns(10);
-		quantity.setFocusLostBehavior(JFormattedTextField.PERSIST);
-		quantity.addFocusListener(new FocusListener(){
-		 
-		            public void focusGained(FocusEvent e) 
-		            {
-		                quantity.setText(quantity.getText().trim());
-		            }
-		 
-		            public void focusLost(FocusEvent e) {
-		                // TODO Auto-generated method stub
-		                 
-		            }});
 		
+		PlainDocument doc = (PlainDocument) quantity.getDocument();
+		doc.setDocumentFilter(new IntegerFilter());
+		
+
 		JLabel lblNotes = new JLabel("Notes:");
 		lblNotes.setBounds(50, 134, 46, 14);
 		panel.add(lblNotes);
@@ -179,9 +172,8 @@ public class Inventory {
 		notes.setBounds(135, 119, 323, 130);
 		panel.add(notes);
 		
-		JButton updateBtn = new JButton("Update");
+		updateBtn = new JButton("Update");
 		updateBtn.setBounds(198, 260, 112, 43);
-		panel.add(updateBtn);
 		
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -215,8 +207,8 @@ public class Inventory {
 		dao.setquery("SELECT * FROM dbo.SHOTS WHERE active = 1");
 		dao.setExpectRS(true);
 		ResultSet rs = dao.executeQuery();
-		Shot shot = new Shot();
 		while(rs.next()){
+			Shot shot = new Shot();
 			shot.setShotID(rs.getString(1));
 			shot.setManufacturer(rs.getString(2));
 			shot.setManufacturerPN(rs.getString(3));
@@ -238,7 +230,7 @@ public class Inventory {
 	
 	private void updateShot() throws SQLException {
 		dao.setquery("UPDATE dbo.SHOTS SET qty = ?, notes = ? WHERE shotID = ?");
-		dao.SetParameter(Integer.parseInt(quantity.getText().trim()));
+		dao.SetParameter(Integer.parseInt(quantity.getText()));
 		dao.SetParameter(notes.getText());
 		dao.SetParameter(selectedShot.getShotID());
 		dao.setExpectRS(false);

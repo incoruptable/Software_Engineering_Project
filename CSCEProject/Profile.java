@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -28,7 +29,7 @@ import DAO.DAO;
 import DateFormatter.DateLabelFormatter;
 
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -50,14 +51,14 @@ public class Profile {
 	private JTextField address;
 	private JTextField city;
 	private JComboBox state;
-	private JFormattedTextField zipCode;
-	private JFormattedTextField phone;
+	private JTextField zipCode;
+	private JTextField phone;
 	private JTextField email;
 	private JDatePickerImpl datePicker;
 	private JTextField DOBfield;
 	private DAO dao;
-	private JFormattedTextField altPhone;
-	private JFormattedTextField ssn;
+	private JTextField altPhone;
+	private JTextField ssn;
 	private String allergyList = "";
 	private JRadioButton rdbtnPenicillin;
 	private JRadioButton rdbtnSulfonamides;
@@ -120,13 +121,6 @@ public class Profile {
 		frmNewPatient.setBounds(100, 100, 700, 700);
 		frmNewPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		// Formatting masks for input fields
-		phoneFormatter = new MaskFormatter("##########");
-		phoneFormatter.setValidCharacters("0123456789");
-		zipFormatter = new MaskFormatter("#####");
-		zipFormatter.setValidCharacters("0123456789");
-		ssnFormatter = new MaskFormatter("#########");
-		ssnFormatter.setValidCharacters("0123456789");
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -181,7 +175,7 @@ public class Profile {
 		SSNlbl.setBounds(75, 105, 50, 20);
 		panel.add(SSNlbl);
 		
-		ssn = new JFormattedTextField(ssnFormatter);
+		ssn = new JTextField();
 		ssn.setColumns(10);
 		ssn.setBounds(130, 105, 75, 20);
 		panel.add(ssn);
@@ -263,7 +257,7 @@ public class Profile {
 		ZipCodelbl.setBounds(385, 205, 60, 20);
 		panel.add(ZipCodelbl);
 		
-		zipCode = new JFormattedTextField(zipFormatter);
+		zipCode = new JTextField();
 		zipCode.setColumns(10);
 		zipCode.setBounds(450, 205, 40, 20);
 		panel.add(zipCode);
@@ -274,7 +268,7 @@ public class Profile {
 		Phonelbl.setBounds(75, 235, 50, 20);
 		panel.add(Phonelbl);
 		
-		phone = new JFormattedTextField(phoneFormatter);
+		phone = new JTextField();
 		phone.setColumns(10);
 		phone.setBounds(130, 235, 75, 20);
 		panel.add(phone);
@@ -285,7 +279,7 @@ public class Profile {
 		altPhonelbl.setBounds(210, 235, 65, 20);
 		panel.add(altPhonelbl);
 		
-		altPhone = new JFormattedTextField(phoneFormatter);
+		altPhone = new JTextField();
 		altPhone.setColumns(10);
 		altPhone.setBounds(280, 235, 75, 20);
 		panel.add(altPhone);
@@ -379,10 +373,18 @@ public class Profile {
 		});
 		} catch(SQLException es){
 			es.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		PlainDocument ssndoc = (PlainDocument) ssn.getDocument();
+		ssndoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument zipdoc = (PlainDocument) zipCode.getDocument();
+		zipdoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument phonedoc = (PlainDocument) phone.getDocument();
+		phonedoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument altphonedoc = (PlainDocument) altPhone.getDocument();
+		altphonedoc.setDocumentFilter(new IntegerFilter());
 	}
 	private void initialize(Patient patient) {
 		try {
@@ -460,7 +462,7 @@ public class Profile {
 		SSNlbl.setBounds(75, 105, 50, 20);
 		panel.add(SSNlbl);
 		
-		ssn = new JFormattedTextField(ssnFormatter);
+		ssn = new JTextField();
 		ssn.setColumns(10);
 		ssn.setBounds(130, 105, 75, 20);
 		panel.add(ssn);
@@ -557,7 +559,7 @@ public class Profile {
 		ZipCodelbl.setBounds(385, 205, 60, 20);
 		panel.add(ZipCodelbl);
 		
-		zipCode = new JFormattedTextField(zipFormatter);
+		zipCode = new JTextField();
 		zipCode.setColumns(10);
 		zipCode.setBounds(450, 205, 40, 20);
 		panel.add(zipCode);
@@ -569,7 +571,7 @@ public class Profile {
 		Phonelbl.setBounds(75, 235, 50, 20);
 		panel.add(Phonelbl);
 		
-		phone = new JFormattedTextField(phoneFormatter);
+		phone = new JTextField();
 		phone.setColumns(10);
 		phone.setBounds(130, 235, 75, 20);
 		panel.add(phone);
@@ -581,7 +583,7 @@ public class Profile {
 		altPhonelbl.setBounds(210, 235, 65, 20);
 		panel.add(altPhonelbl);
 		
-		altPhone = new JFormattedTextField(phoneFormatter);
+		altPhone = new JTextField();
 		altPhone.setColumns(10);
 		altPhone.setBounds(280, 235, 75, 20);
 		panel.add(altPhone);
@@ -695,10 +697,22 @@ public class Profile {
 		});
 		} catch(SQLException es){
 			es.printStackTrace();
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		PlainDocument ssndoc = (PlainDocument) ssn.getDocument();
+		ssndoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument zipdoc = (PlainDocument) zipCode.getDocument();
+		zipdoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument phonedoc = (PlainDocument) phone.getDocument();
+		phonedoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument altphonedoc = (PlainDocument) altPhone.getDocument();
+		altphonedoc.setDocumentFilter(new IntegerFilter());
 	}
 	/* The create function below needs to be specifically implemented for the fields contained within the patient
 	 * profile.  I don't know if the database is currently set up to handle these, nor do I know what order they
@@ -747,16 +761,16 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(String.valueOf(ssn.getValue()));
+						dao.SetParameter(String.valueOf(ssn.getText()));
 						java.util.Date utilDate = (Date) datePicker.getModel().getValue();
 						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 						dao.SetParameter(sqlDate);
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(String.valueOf(zipCode.getValue()));
-						dao.SetParameter(String.valueOf(phone.getValue()));
-						dao.SetParameter(String.valueOf(altPhone.getValue()));
+						dao.SetParameter(String.valueOf(zipCode.getText()));
+						dao.SetParameter(String.valueOf(phone.getText()));
+						dao.SetParameter(String.valueOf(altPhone.getText()));
 						dao.SetParameter(email.getText());
 						dao.SetParameter(allergyList);
 						dao.SetParameter(notes.getText());
@@ -784,14 +798,14 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(String.valueOf(ssn.getValue()));
+						dao.SetParameter(String.valueOf(ssn.getText()));
 						dao.SetParameter(DOBfield.getText());
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(String.valueOf(zipCode.getValue()));
-						dao.SetParameter(String.valueOf(phone.getValue()));
-						dao.SetParameter(String.valueOf(altPhone.getValue()));
+						dao.SetParameter(String.valueOf(zipCode.getText()));
+						dao.SetParameter(String.valueOf(phone.getText()));
+						dao.SetParameter(String.valueOf(altPhone.getText()));
 						dao.SetParameter(email.getText());
 						dao.SetParameter(allergyList);
 						dao.SetParameter(notes.getText());
