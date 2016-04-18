@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,9 +70,8 @@ public class Profile {
 	private MaskFormatter zipFormatter;
 	private MaskFormatter ssnFormatter;
 	
-	/**
-	 * Launch the application.
-	 */
+	
+
 	public void CreateProfilePopUp() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -98,7 +99,7 @@ public class Profile {
 	}
 
 	/**
-	 * Create the application.
+	 * @wbp.parser.constructor
 	 */
 	public Profile() {
 		initialize();
@@ -586,6 +587,7 @@ public class Profile {
 		panel.add(altPhone);
 		altPhone.setText(patient.getAltPhone());
 		
+		
 		JLabel Emaillbl = new JLabel("* E-mail:");
 		Emaillbl.setVerticalAlignment(SwingConstants.TOP);
 		Emaillbl.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -745,16 +747,16 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(ssn.getText());
+						dao.SetParameter(String.valueOf(ssn.getValue()));
 						java.util.Date utilDate = (Date) datePicker.getModel().getValue();
 						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 						dao.SetParameter(sqlDate);
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(zipCode.getText());
-						dao.SetParameter(phone.getText());
-						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(String.valueOf(zipCode.getValue()));
+						dao.SetParameter(String.valueOf(phone.getValue()));
+						dao.SetParameter(String.valueOf(altPhone.getValue()));
 						dao.SetParameter(email.getText());
 						dao.SetParameter(allergyList);
 						dao.SetParameter(notes.getText());
@@ -782,14 +784,14 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(ssn.getText());
+						dao.SetParameter(String.valueOf(ssn.getValue()));
 						dao.SetParameter(DOBfield.getText());
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(zipCode.getText());
-						dao.SetParameter(phone.getText());
-						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(String.valueOf(zipCode.getValue()));
+						dao.SetParameter(String.valueOf(phone.getValue()));
+						dao.SetParameter(String.valueOf(altPhone.getValue()));
 						dao.SetParameter(email.getText());
 						dao.SetParameter(allergyList);
 						dao.SetParameter(notes.getText());
