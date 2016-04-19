@@ -386,7 +386,8 @@ public class Profile {
 		PlainDocument altphonedoc = (PlainDocument) altPhone.getDocument();
 		altphonedoc.setDocumentFilter(new IntegerFilter());
 	}
-	private void initialize(Patient patient) {
+	
+	private void initialize(final Patient patient) {
 		try {
 		dao = new DAO();
 		
@@ -674,6 +675,11 @@ public class Profile {
 		createBtn.setBounds(110, 600, 150, 50);
 		panel.add(createBtn);
 		
+		JButton launchSurvey = new JButton("Survey");
+		launchSurvey.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		launchSurvey.setBounds(275, 600, 150, 50);
+		panel.add(launchSurvey);
+		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelBtn.setBounds(440, 600, 150, 50);
@@ -682,6 +688,14 @@ public class Profile {
 		JLabel lblRequired = new JLabel("* Required Fields");
 		lblRequired.setBounds(75, 570, 120, 20);
 		panel.add(lblRequired);
+		
+		launchSurvey.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				Survey s;
+				s = new Survey(patient);
+				s.CreateProfilePopUp();
+			}
+		});
 		
 		cancelBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

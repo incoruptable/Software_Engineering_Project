@@ -19,8 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.border.LineBorder;
-import javax.swing.Box;
 import java.awt.Container;
 import java.awt.Component;
 
@@ -133,6 +131,17 @@ public class PatientSearch {
 			);
 		scrollPane.setViewportView(resultTable);
 		resultTable.setModel(model);
+		
+		// Action listener to allow user to hit enter to initiate search with current value of the text field
+		searchTextField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0){
+				try {
+					search(searchTextField.getText());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
