@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -19,7 +20,7 @@ import javax.swing.JButton;
 
 import DAO.DAO;
 import javax.swing.JTextPane;
-import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 
 
 
@@ -39,8 +40,8 @@ public class CreateAccount {
 	private JTextField state;
 	private JTextField email;
 	private JTextField emailVerify;
-	private JFormattedTextField zipCode;
-	private JFormattedTextField phone;
+	private JTextField zipCode;
+	private JTextField phone;
 	private DAO dao;
 	private MaskFormatter phoneformatter;
 	private MaskFormatter zipformatter;
@@ -78,11 +79,6 @@ public class CreateAccount {
 		frame.setBounds(100, 100, 458, 627);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		phoneformatter = new MaskFormatter("##########");
-		phoneformatter.setValidCharacters("0123456789");
-		zipformatter = new MaskFormatter("#####");
-		zipformatter.setValidCharacters("0123456789");
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Create Account", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -253,13 +249,19 @@ public class CreateAccount {
 		panel.add(lblRequired);
 		
 		
-		phone = new JFormattedTextField(phoneformatter);
+		phone = new JTextField();
 		phone.setBounds(118, 439, 183, 20);
 		panel.add(phone);
 		
-		zipCode = new JFormattedTextField(zipformatter);
+		zipCode = new JTextField();
 		zipCode.setBounds(118, 408, 183, 20);
 		panel.add(zipCode);
+		
+		PlainDocument zipdoc = (PlainDocument) zipCode.getDocument();
+		zipdoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument phonedoc = (PlainDocument) phone.getDocument();
+		phonedoc.setDocumentFilter(new IntegerFilter());
 		
 		createBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -268,8 +270,6 @@ public class CreateAccount {
 		});
 		} catch(SQLException es){
 			es.printStackTrace();
-		} catch (java.text.ParseException e) {
-			e.printStackTrace();
 		}
 	}
 	

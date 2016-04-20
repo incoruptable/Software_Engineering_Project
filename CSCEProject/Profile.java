@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +18,7 @@ import java.util.Properties;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.text.PlainDocument;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -26,7 +29,7 @@ import DAO.DAO;
 import DateFormatter.DateLabelFormatter;
 
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -48,14 +51,14 @@ public class Profile {
 	private JTextField address;
 	private JTextField city;
 	private JComboBox state;
-	private JFormattedTextField zipCode;
-	private JFormattedTextField phone;
+	private JTextField zipCode;
+	private JTextField phone;
 	private JTextField email;
 	private JDatePickerImpl datePicker;
 	private JTextField DOBfield;
 	private DAO dao;
-	private JFormattedTextField altPhone;
-	private JFormattedTextField ssn;
+	private JTextField altPhone;
+	private JTextField ssn;
 	private String allergyList = "";
 	private JRadioButton rdbtnPenicillin;
 	private JRadioButton rdbtnSulfonamides;
@@ -68,9 +71,8 @@ public class Profile {
 	private MaskFormatter zipFormatter;
 	private MaskFormatter ssnFormatter;
 	
-	/**
-	 * Launch the application.
-	 */
+	
+
 	public void CreateProfilePopUp() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -98,7 +100,7 @@ public class Profile {
 	}
 
 	/**
-	 * Create the application.
+	 * @wbp.parser.constructor
 	 */
 	public Profile() {
 		initialize();
@@ -119,13 +121,6 @@ public class Profile {
 		frmNewPatient.setBounds(100, 100, 700, 700);
 		frmNewPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		// Formatting masks for input fields
-		phoneFormatter = new MaskFormatter("##########");
-		phoneFormatter.setValidCharacters("0123456789");
-		zipFormatter = new MaskFormatter("#####");
-		zipFormatter.setValidCharacters("0123456789");
-		ssnFormatter = new MaskFormatter("#########");
-		ssnFormatter.setValidCharacters("0123456789");
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -180,7 +175,7 @@ public class Profile {
 		SSNlbl.setBounds(75, 105, 50, 20);
 		panel.add(SSNlbl);
 		
-		ssn = new JFormattedTextField(ssnFormatter);
+		ssn = new JTextField();
 		ssn.setColumns(10);
 		ssn.setBounds(130, 105, 75, 20);
 		panel.add(ssn);
@@ -262,7 +257,7 @@ public class Profile {
 		ZipCodelbl.setBounds(385, 205, 60, 20);
 		panel.add(ZipCodelbl);
 		
-		zipCode = new JFormattedTextField(zipFormatter);
+		zipCode = new JTextField();
 		zipCode.setColumns(10);
 		zipCode.setBounds(450, 205, 40, 20);
 		panel.add(zipCode);
@@ -273,7 +268,7 @@ public class Profile {
 		Phonelbl.setBounds(75, 235, 50, 20);
 		panel.add(Phonelbl);
 		
-		phone = new JFormattedTextField(phoneFormatter);
+		phone = new JTextField();
 		phone.setColumns(10);
 		phone.setBounds(130, 235, 75, 20);
 		panel.add(phone);
@@ -284,7 +279,7 @@ public class Profile {
 		altPhonelbl.setBounds(210, 235, 65, 20);
 		panel.add(altPhonelbl);
 		
-		altPhone = new JFormattedTextField(phoneFormatter);
+		altPhone = new JTextField();
 		altPhone.setColumns(10);
 		altPhone.setBounds(280, 235, 75, 20);
 		panel.add(altPhone);
@@ -310,27 +305,27 @@ public class Profile {
 		lblDrugAllergies.setBounds(300, 300, 100, 20);
 		panel.add(lblDrugAllergies);
 		
-		JRadioButton rdbtnPenicillin = new JRadioButton("Penicillin");
+		rdbtnPenicillin = new JRadioButton("Penicillin");
 		rdbtnPenicillin.setBackground(new Color(255, 255, 255));
 		rdbtnPenicillin.setBounds(100, 330, 100, 20);
 		panel.add(rdbtnPenicillin);
 		
-		JRadioButton rdbtnSulfonamides = new JRadioButton("Sulfonamides");
+		rdbtnSulfonamides = new JRadioButton("Sulfonamides");
 		rdbtnSulfonamides.setBackground(Color.WHITE);
 		rdbtnSulfonamides.setBounds(200, 330, 110, 20);
 		panel.add(rdbtnSulfonamides);
 		
-		JRadioButton rdbtnGelatin = new JRadioButton("Gelatin");
+		rdbtnGelatin = new JRadioButton("Gelatin");
 		rdbtnGelatin.setBackground(Color.WHITE);
 		rdbtnGelatin.setBounds(315, 330, 85, 20);
 		panel.add(rdbtnGelatin);
 		
-		JRadioButton rdbtnNeomycin = new JRadioButton("Neomycin");
+		rdbtnNeomycin = new JRadioButton("Neomycin");
 		rdbtnNeomycin.setBackground(Color.WHITE);
 		rdbtnNeomycin.setBounds(400, 330, 100, 20);
 		panel.add(rdbtnNeomycin);
 		
-		JRadioButton rdbtnYeast = new JRadioButton("Yeast");
+		rdbtnYeast = new JRadioButton("Yeast");
 		rdbtnYeast.setBackground(Color.WHITE);
 		rdbtnYeast.setBounds(500, 330, 100, 20);
 		panel.add(rdbtnYeast);
@@ -345,11 +340,11 @@ public class Profile {
 		lblNotes.setBounds(300, 390, 100, 20);
 		panel.add(lblNotes);
 		
-		JTextPane textPaneNotes = new JTextPane();
-		textPaneNotes.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPaneNotes.setBackground(new Color(255, 255, 240));
-		textPaneNotes.setBounds(75, 420, 550, 120);
-		panel.add(textPaneNotes);
+		notes = new JTextPane();
+		notes.setBorder(new LineBorder(new Color(0, 0, 0)));
+		notes.setBackground(new Color(255, 255, 240));
+		notes.setBounds(75, 420, 550, 120);
+		panel.add(notes);
 		
 		JButton createBtn = new JButton("Create");
 		createBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -378,12 +373,21 @@ public class Profile {
 		});
 		} catch(SQLException es){
 			es.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		PlainDocument ssndoc = (PlainDocument) ssn.getDocument();
+		ssndoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument zipdoc = (PlainDocument) zipCode.getDocument();
+		zipdoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument phonedoc = (PlainDocument) phone.getDocument();
+		phonedoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument altphonedoc = (PlainDocument) altPhone.getDocument();
+		altphonedoc.setDocumentFilter(new IntegerFilter());
 	}
-	private void initialize(Patient patient) {
+	
+	private void initialize(final Patient patient) {
 		try {
 		dao = new DAO();
 		
@@ -393,11 +397,11 @@ public class Profile {
 		frmNewPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		// Formatting masks for input fields
-		phoneFormatter = new MaskFormatter("##########");
+		phoneFormatter = new MaskFormatter("**********");
 		phoneFormatter.setValidCharacters("0123456789");
-		zipFormatter = new MaskFormatter("#####");
+		zipFormatter = new MaskFormatter("*****");
 		zipFormatter.setValidCharacters("0123456789");
-		ssnFormatter = new MaskFormatter("#########");
+		ssnFormatter = new MaskFormatter("*********");
 		ssnFormatter.setValidCharacters("0123456789");
 		
 		JPanel panel = new JPanel();
@@ -459,7 +463,7 @@ public class Profile {
 		SSNlbl.setBounds(75, 105, 50, 20);
 		panel.add(SSNlbl);
 		
-		ssn = new JFormattedTextField(ssnFormatter);
+		ssn = new JTextField();
 		ssn.setColumns(10);
 		ssn.setBounds(130, 105, 75, 20);
 		panel.add(ssn);
@@ -556,7 +560,7 @@ public class Profile {
 		ZipCodelbl.setBounds(385, 205, 60, 20);
 		panel.add(ZipCodelbl);
 		
-		zipCode = new JFormattedTextField(zipFormatter);
+		zipCode = new JTextField();
 		zipCode.setColumns(10);
 		zipCode.setBounds(450, 205, 40, 20);
 		panel.add(zipCode);
@@ -568,7 +572,7 @@ public class Profile {
 		Phonelbl.setBounds(75, 235, 50, 20);
 		panel.add(Phonelbl);
 		
-		phone = new JFormattedTextField(phoneFormatter);
+		phone = new JTextField();
 		phone.setColumns(10);
 		phone.setBounds(130, 235, 75, 20);
 		panel.add(phone);
@@ -580,11 +584,12 @@ public class Profile {
 		altPhonelbl.setBounds(210, 235, 65, 20);
 		panel.add(altPhonelbl);
 		
-		altPhone = new JFormattedTextField(phoneFormatter);
+		altPhone = new JTextField();
 		altPhone.setColumns(10);
 		altPhone.setBounds(280, 235, 75, 20);
 		panel.add(altPhone);
 		altPhone.setText(patient.getAltPhone());
+		
 		
 		JLabel Emaillbl = new JLabel("* E-mail:");
 		Emaillbl.setVerticalAlignment(SwingConstants.TOP);
@@ -670,6 +675,11 @@ public class Profile {
 		createBtn.setBounds(110, 600, 150, 50);
 		panel.add(createBtn);
 		
+		JButton launchSurvey = new JButton("Survey");
+		launchSurvey.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		launchSurvey.setBounds(275, 600, 150, 50);
+		panel.add(launchSurvey);
+		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		cancelBtn.setBounds(440, 600, 150, 50);
@@ -678,6 +688,14 @@ public class Profile {
 		JLabel lblRequired = new JLabel("* Required Fields");
 		lblRequired.setBounds(75, 570, 120, 20);
 		panel.add(lblRequired);
+		
+		launchSurvey.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				Survey s;
+				s = new Survey(patient);
+				s.CreateProfilePopUp();
+			}
+		});
 		
 		cancelBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -693,10 +711,22 @@ public class Profile {
 		});
 		} catch(SQLException es){
 			es.printStackTrace();
+			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		PlainDocument ssndoc = (PlainDocument) ssn.getDocument();
+		ssndoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument zipdoc = (PlainDocument) zipCode.getDocument();
+		zipdoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument phonedoc = (PlainDocument) phone.getDocument();
+		phonedoc.setDocumentFilter(new IntegerFilter());
+		
+		PlainDocument altphonedoc = (PlainDocument) altPhone.getDocument();
+		altphonedoc.setDocumentFilter(new IntegerFilter());
 	}
 	/* The create function below needs to be specifically implemented for the fields contained within the patient
 	 * profile.  I don't know if the database is currently set up to handle these, nor do I know what order they
@@ -745,16 +775,16 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(Integer.parseInt(ssn.getText()));
+						dao.SetParameter(String.valueOf(ssn.getText()));
 						java.util.Date utilDate = (Date) datePicker.getModel().getValue();
 						java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 						dao.SetParameter(sqlDate);
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(Integer.parseInt(zipCode.getText()));
-						dao.SetParameter(phone.getText());
-						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(String.valueOf(zipCode.getText()));
+						dao.SetParameter(String.valueOf(phone.getText()));
+						dao.SetParameter(String.valueOf(altPhone.getText()));
 						dao.SetParameter(email.getText());
 						dao.SetParameter(allergyList);
 						dao.SetParameter(notes.getText());
@@ -782,14 +812,14 @@ public class Profile {
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
-						dao.SetParameter(Integer.parseInt(ssn.getText()));
+						dao.SetParameter(String.valueOf(ssn.getText()));
 						dao.SetParameter(DOBfield.getText());
 						dao.SetParameter(address.getText());
 						dao.SetParameter(city.getText());
 						dao.SetParameter((String) state.getModel().getSelectedItem());
-						dao.SetParameter(Integer.parseInt(zipCode.getText()));
-						dao.SetParameter(phone.getText());
-						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(String.valueOf(zipCode.getText()));
+						dao.SetParameter(String.valueOf(phone.getText()));
+						dao.SetParameter(String.valueOf(altPhone.getText()));
 						dao.SetParameter(email.getText());
 						dao.SetParameter(allergyList);
 						dao.SetParameter(notes.getText());

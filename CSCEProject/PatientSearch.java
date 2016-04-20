@@ -19,8 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.border.LineBorder;
-import javax.swing.Box;
 import java.awt.Container;
 import java.awt.Component;
 
@@ -133,6 +131,17 @@ public class PatientSearch {
 			);
 		scrollPane.setViewportView(resultTable);
 		resultTable.setModel(model);
+		
+		// Action listener to allow user to hit enter to initiate search with current value of the text field
+		searchTextField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0){
+				try {
+					search(searchTextField.getText());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -153,7 +162,7 @@ public class PatientSearch {
 						ResultSet rs;
 						dao.setquery("SELECT * FROM dbo.PatientTable WHERE lastName = ? AND SSN = ? AND phone = ?");
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString());
-						dao.SetParameter(Integer.parseInt(resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString()));
+						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString());
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 5).toString());
 						dao.setExpectRS(true);
 						
@@ -255,7 +264,7 @@ public class PatientSearch {
 		ResultSet rs;
 		if(!param.isEmpty()){
 			dao.setquery("SELECT firstName, lastName, SSN, DOB, address, phone, email FROM dbo.PatientTable WHERE SSN = ?");
-			dao.SetParameter(Integer.parseInt(param));
+			dao.SetParameter(param);
 			dao.setExpectRS(true);
 			rs = dao.executeQuery();
 			if(rs.next()){
