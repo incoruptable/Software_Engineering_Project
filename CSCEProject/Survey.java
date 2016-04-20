@@ -37,6 +37,8 @@ public class Survey {
 	private JPanel panel;
 	private JButton btnExit;
 	private JButton btnGenerate;
+	private JButton btnComplete;
+	private JButton btnCancel;
 	private DAO dao;
 	
 	/**
@@ -121,6 +123,11 @@ public class Survey {
 		btnExit.setBounds(387, 25, 75, 20);
 		panel.add(btnExit);
 		
+		btnComplete = new JButton("Complete");
+
+		btnCancel = new JButton("Cancel");
+
+		
 		btnGenerate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -128,6 +135,12 @@ public class Survey {
 				} catch (Exception e){
 					e.printStackTrace();
 				}
+				btnComplete.setBounds(252, frmSurvey.getHeight() - 25, 125, 20);
+				btnCancel.setBounds(387, frmSurvey.getHeight() - 25, 75, 20);
+				panel.add(btnComplete);
+				panel.add(btnCancel);
+				btnGenerate.setEnabled(false);
+				btnExit.setEnabled(false);
 				resizeFrame(sCount);
 			}
 		});
@@ -137,6 +150,22 @@ public class Survey {
 				frmSurvey.dispose();
 			}
 		});
+		
+		btnComplete.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent arg0) {
+				// This will make all the checks for whether a shot should be administered (Check Allergies)
+			}
+		});
+		
+		btnCancel.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent arg0) {
+				panel.remove(btnComplete);
+				panel.remove(btnCancel);
+				frmSurvey.repaint();
+				btnGenerate.setEnabled(true);
+				btnExit.setEnabled(true);
+			}
+		});
 				
 		} catch(SQLException es){
 			es.printStackTrace();
@@ -144,7 +173,7 @@ public class Survey {
 	}
 	
 	private void resizeFrame(int c){
-		frmSurvey.setBounds(100, 100, 500, 100 + 100 * c);
+		frmSurvey.setBounds(100, 100, 500, 200 + 100 * c);
 		frmSurvey.repaint();
 	}
 	
