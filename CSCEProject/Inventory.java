@@ -32,6 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
 
 public class Inventory {
 
@@ -94,7 +95,7 @@ public class Inventory {
 		
 		frmInventory = new JFrame();
 		frmInventory.setResizable(false);
-		frmInventory.setBounds(100, 100, 506, 352);
+		frmInventory.setBounds(100, 100, 500, 400);
 		frmInventory.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		panel = new JPanel();
@@ -134,27 +135,30 @@ public class Inventory {
 		panel.add(btnExit);
 		
 		JLabel lblManufacturer = new JLabel("Manufacturer:");
-		lblManufacturer.setBounds(50, 66, 86, 14);
+		lblManufacturer.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblManufacturer.setBounds(50, 60, 85, 20);
 		panel.add(lblManufacturer);
 		
 		manufacturer = new JLabel("");
-		manufacturer.setBounds(135, 66, 46, 14);
+		manufacturer.setBounds(140, 60, 310, 20);
 		panel.add(manufacturer);
 		
 		JLabel lblVendor = new JLabel("Vendor:");
-		lblVendor.setBounds(264, 66, 46, 14);
+		lblVendor.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblVendor.setBounds(50, 85, 85, 20);
 		panel.add(lblVendor);
 		
 		vendor = new JLabel("");
-		vendor.setBounds(320, 66, 46, 14);
+		vendor.setBounds(140, 85, 310, 20);
 		panel.add(vendor);
 		
 		JLabel lblQuantity = new JLabel("Quantity:");
-		lblQuantity.setBounds(50, 91, 53, 14);
+		lblQuantity.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblQuantity.setBounds(50, 110, 85, 20);
 		panel.add(lblQuantity);
 		
 		quantity = new JTextField();
-		quantity.setBounds(135, 88, 86, 20);
+		quantity.setBounds(140, 110, 80, 20);
 		panel.add(quantity);
 		quantity.setColumns(10);
 		
@@ -162,18 +166,19 @@ public class Inventory {
 		doc.setDocumentFilter(new IntegerFilter());
 		
 
-		JLabel lblNotes = new JLabel("Notes:");
-		lblNotes.setBounds(50, 134, 46, 14);
+		JLabel lblNotes = new JLabel("Notes");
+		lblNotes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNotes.setBounds(50, 150, 400, 20);
 		panel.add(lblNotes);
 		
 		notes = new JTextPane();
 		notes.setBorder(new LineBorder(new Color(0, 0, 0)));
 		notes.setBackground(new Color(255, 255, 240));
-		notes.setBounds(135, 119, 323, 130);
+		notes.setBounds(50, 170, 400, 100);
 		panel.add(notes);
 		
 		updateBtn = new JButton("Update");
-		updateBtn.setBounds(198, 260, 112, 43);
+		updateBtn.setBounds(200, 300, 100, 40);
 		
 		updateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
