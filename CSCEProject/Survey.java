@@ -3,6 +3,7 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
@@ -33,6 +34,7 @@ public class Survey {
 	private ArrayList<String> shotNames;
 	private ArrayList<Shot> shots;
 	private ArrayList<JLabel> questions;
+	private ArrayList<YesorNoBox> boxes;
 	private Shot selectedShot;
 	
 	private JFrame frmSurvey;
@@ -47,16 +49,43 @@ public class Survey {
 	class YesorNoBox {
 		
 		private ArrayList<JRadioButton> buttons;
+		private JRadioButton yesButton;
+		private JRadioButton noButton;
 		
 		public YesorNoBox(int height){
 			buttons = new ArrayList<JRadioButton>();
-			JRadioButton yesButton = new JRadioButton("Yes");
+			yesButton = new JRadioButton("Yes");
 			yesButton.setBackground(Color.WHITE);
 			yesButton.setBounds(10, height + 50, 100, 20);
+			yesButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(yesButton.isSelected()){
+						noButton.setSelected(false);
+					}
+					else
+						yesButton.setSelected(true);
+				}
+				
+			});
 			
-			JRadioButton noButton = new JRadioButton("No");
+			noButton = new JRadioButton("No");
 			noButton.setBackground(Color.WHITE);
 			noButton.setBounds(110, height + 50, 100, 20);
+			noButton.setSelected(true);
+			noButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(noButton.isSelected()){
+						yesButton.setSelected(false);
+					}
+					else
+						noButton.setSelected(true);
+				}
+				
+			});
 			
 			buttons.add(yesButton);
 			buttons.add(noButton);
@@ -104,6 +133,7 @@ public class Survey {
 		shots = new ArrayList<Shot>();
 		shotNames = new ArrayList<String>();
 		questions = new ArrayList<JLabel>();
+		boxes = new ArrayList<YesorNoBox>();
 		
 		this.setQCount();
 		this.getShots();
@@ -180,21 +210,25 @@ public class Survey {
 		
 		btnComplete.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {
-				// This will make all the checks for whether a shot should be administered (Check Allergies)
+				surveyDone();
+				for(YesorNoBox box: boxes){
+					if(box.getYesButton().isSelected()){
+						JOptionPane.showMessageDialog(null, "Patient can't receive shot. One or more questions have been answered yes.", "Patient Incompatible", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+				try {
+					dao.setquery("");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
 		btnCancel.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {
-				for(JLabel question: questions){
-					panel.remove(question);
-				}
-				panel.remove(btnComplete);
-				panel.remove(btnCancel);
-				resizeFrame(0);
-				frmSurvey.repaint();
-				btnGenerate.setEnabled(true);
-				btnExit.setEnabled(true);
+				surveyDone();
 			}
 		});
 				
@@ -297,20 +331,35 @@ public class Survey {
 					questions.add(question);
 					YesorNoBox box = new YesorNoBox(75 + offset);
 					
+					boxes.add(box);
 					panel.add(box.getYesButton());
 					panel.add(box.getNoButton());
-					panel.add(questions.get(i-1));
+					panel.add(question);
 					
 					offset += 75;
 				}
-				btnComplete.setBounds(252, frmSurvey.getHeight() - 25 + offset, 125, 20);
-				btnCancel.setBounds(387, frmSurvey.getHeight() - 25 + offset, 75, 20);
-				panel.add(btnComplete);
-				panel.add(btnCancel);
+				
 			}
-		
+			btnComplete.setBounds(252, boxes.get(boxes.size()-1).getYesButton().getY() + 50, 125, 20);
+			btnCancel.setBounds(387, boxes.get(boxes.size()-1).getYesButton().getY() + 50, 75, 20);
+			panel.add(btnComplete);
+			panel.add(btnCancel);
 		}
 	} 	
-
+	private void surveyDone(){
+		for(JLabel question: questions){
+			panel.remove(question);
+		}
+		for(YesorNoBox box: boxes){
+			panel.remove(box.getYesButton());
+			panel.remove(box.getNoButton());
+		}
+		panel.remove(btnComplete);
+		panel.remove(btnCancel);
+		resizeFrame(0);
+		frmSurvey.repaint();
+		btnGenerate.setEnabled(true);
+		btnExit.setEnabled(true);
+	}
 }
 

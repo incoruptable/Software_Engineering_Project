@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -45,6 +46,7 @@ import java.awt.Font;
 
 public class Profile {
 	private JFrame frmNewPatient;
+	private JPanel panel;
 	private JTextField firstName;
 	private JTextField lastName;
 	private JTextField middleName;
@@ -60,11 +62,8 @@ public class Profile {
 	private JTextField altPhone;
 	private JTextField ssn;
 	private String allergyList = "";
-	private JRadioButton rdbtnPenicillin;
-	private JRadioButton rdbtnSulfonamides;
-	private JRadioButton rdbtnGelatin;
-	private JRadioButton rdbtnNeomycin;
-	private JRadioButton rdbtnYeast;
+	private ArrayList<JRadioButton> allergenButtons;
+	private ArrayList<Allergen> allergens;
 	private JTextPane notes;
 
 	private MaskFormatter phoneFormatter;
@@ -115,6 +114,10 @@ public class Profile {
 	private void initialize() {
 		try {
 		dao = new DAO();
+		allergens = new ArrayList<Allergen>();
+		allergenButtons = new ArrayList<JRadioButton>();
+		
+		getAllergens();
 		
 		frmNewPatient = new JFrame();
 		frmNewPatient.setResizable(false);
@@ -122,7 +125,7 @@ public class Profile {
 		frmNewPatient.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(Color.WHITE);
@@ -304,60 +307,37 @@ public class Profile {
 		lblDrugAllergies.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDrugAllergies.setBounds(300, 300, 100, 20);
 		panel.add(lblDrugAllergies);
-		
-		rdbtnPenicillin = new JRadioButton("Penicillin");
-		rdbtnPenicillin.setBackground(new Color(255, 255, 255));
-		rdbtnPenicillin.setBounds(100, 330, 100, 20);
-		panel.add(rdbtnPenicillin);
-		
-		rdbtnSulfonamides = new JRadioButton("Sulfonamides");
-		rdbtnSulfonamides.setBackground(Color.WHITE);
-		rdbtnSulfonamides.setBounds(200, 330, 110, 20);
-		panel.add(rdbtnSulfonamides);
-		
-		rdbtnGelatin = new JRadioButton("Gelatin");
-		rdbtnGelatin.setBackground(Color.WHITE);
-		rdbtnGelatin.setBounds(315, 330, 85, 20);
-		panel.add(rdbtnGelatin);
-		
-		rdbtnNeomycin = new JRadioButton("Neomycin");
-		rdbtnNeomycin.setBackground(Color.WHITE);
-		rdbtnNeomycin.setBounds(400, 330, 100, 20);
-		panel.add(rdbtnNeomycin);
-		
-		rdbtnYeast = new JRadioButton("Yeast");
-		rdbtnYeast.setBackground(Color.WHITE);
-		rdbtnYeast.setBounds(500, 330, 100, 20);
-		panel.add(rdbtnYeast);
+	
+		addAllergiesButtons();
 		
 		JSeparator separator3 = new JSeparator();
-		separator3.setBounds(50, 370, 600, 1);
+		separator3.setBounds(50, allergenButtons.get(allergenButtons.size()-1).getY() + 40, 600, 1);
 		panel.add(separator3);
 		
 		JLabel lblNotes = new JLabel("Notes");
 		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNotes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNotes.setBounds(300, 390, 100, 20);
+		lblNotes.setBounds(300, separator3.getY() + 20, 100, 20);
 		panel.add(lblNotes);
 		
 		notes = new JTextPane();
 		notes.setBorder(new LineBorder(new Color(0, 0, 0)));
 		notes.setBackground(new Color(255, 255, 240));
-		notes.setBounds(75, 420, 550, 120);
+		notes.setBounds(75, lblNotes.getY() + 30, 550, 120);
 		panel.add(notes);
 		
 		JButton createBtn = new JButton("Create");
 		createBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		createBtn.setBounds(110, 600, 150, 50);
+		createBtn.setBounds(110, notes.getY() + 180, 150, 50);
 		panel.add(createBtn);
 		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		cancelBtn.setBounds(440, 600, 150, 50);
+		cancelBtn.setBounds(440, notes.getY() + 180, 150, 50);
 		panel.add(cancelBtn);
 		
 		JLabel lblRequired = new JLabel("* Required Fields");
-		lblRequired.setBounds(75, 570, 120, 20);
+		lblRequired.setBounds(75, notes.getY() + 150, 120, 20);
 		panel.add(lblRequired);
 		
 		cancelBtn.addActionListener(new ActionListener() {
@@ -374,6 +354,9 @@ public class Profile {
 		} catch(SQLException es){
 			es.printStackTrace();
 		}
+		
+		
+		
 		PlainDocument ssndoc = (PlainDocument) ssn.getDocument();
 		ssndoc.setDocumentFilter(new IntegerFilter());
 		
@@ -390,6 +373,10 @@ public class Profile {
 	private void initialize(final Patient patient) {
 		try {
 		dao = new DAO();
+		allergens = new ArrayList<Allergen>();
+		allergenButtons = new ArrayList<JRadioButton>();
+		
+		getAllergens();
 		
 		frmNewPatient = new JFrame();
 		frmNewPatient.setResizable(false);
@@ -613,80 +600,42 @@ public class Profile {
 		lblDrugAllergies.setBounds(300, 300, 100, 20);
 		panel.add(lblDrugAllergies);
 		
-		rdbtnPenicillin = new JRadioButton("Penicillin");
-		rdbtnPenicillin.setBackground(new Color(255, 255, 255));
-		rdbtnPenicillin.setBounds(100, 330, 100, 20);
-		panel.add(rdbtnPenicillin);
-		if(patient.getAllergies().contains("Penicillin")) {
-			rdbtnPenicillin.setSelected(true);
-		}
-		
-		rdbtnSulfonamides = new JRadioButton("Sulfonamides");
-		rdbtnSulfonamides.setBackground(Color.WHITE);
-		rdbtnSulfonamides.setBounds(200, 330, 110, 20);
-		panel.add(rdbtnSulfonamides);
-		if(patient.getAllergies().contains("Sulfonamides")) {
-			rdbtnSulfonamides.setSelected(true);
-		}
-		
-		rdbtnGelatin = new JRadioButton("Gelatin");
-		rdbtnGelatin.setBackground(Color.WHITE);
-		rdbtnGelatin.setBounds(315, 330, 85, 20);
-		panel.add(rdbtnGelatin);
-		if(patient.getAllergies().contains("Gelatin")) {
-			rdbtnGelatin.setSelected(true);
-		}
-		
-		rdbtnNeomycin = new JRadioButton("Neomycin");
-		rdbtnNeomycin.setBackground(Color.WHITE);
-		rdbtnNeomycin.setBounds(400, 330, 100, 20);
-		panel.add(rdbtnNeomycin);
-		if(patient.getAllergies().contains("Neomycin")) {
-			rdbtnNeomycin.setSelected(true);
-		}
-		
-		rdbtnYeast = new JRadioButton("Yeast");
-		rdbtnYeast.setBackground(Color.WHITE);
-		rdbtnYeast.setBounds(500, 330, 100, 20);
-		panel.add(rdbtnYeast);
-		if(patient.getAllergies().contains("Yeast")) {
-			rdbtnYeast.setSelected(true);
-		}
+		addAllergiesButtons();
 		
 		JSeparator separator3 = new JSeparator();
-		separator3.setBounds(50, 370, 600, 1);
+		separator3.setBounds(50, allergenButtons.get(allergenButtons.size()-1).getY() + 40, 600, 1);
 		panel.add(separator3);
 		
 		JLabel lblNotes = new JLabel("Notes");
 		lblNotes.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNotes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNotes.setBounds(300, 390, 100, 20);
+		lblNotes.setBounds(300, separator3.getY() + 30, 100, 20);
 		panel.add(lblNotes);
 		
 		notes = new JTextPane();
 		notes.setBorder(new LineBorder(new Color(0, 0, 0)));
 		notes.setBackground(new Color(255, 255, 240));
-		notes.setBounds(75, 420, 550, 120);
+		notes.setBounds(75, lblNotes.getY() + 20, 550, 120);
 		panel.add(notes);
 		notes.setText(patient.getNotes());
 		
 		JButton createBtn = new JButton("Edit");
 		createBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		createBtn.setBounds(110, 600, 150, 50);
+		createBtn.setBounds(110, notes.getY() + 180, 150, 50);
 		panel.add(createBtn);
 		
 		JButton launchSurvey = new JButton("Survey");
 		launchSurvey.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		launchSurvey.setBounds(275, 600, 150, 50);
+		launchSurvey.setBounds(275, notes.getY() + 180, 150, 50);
 		panel.add(launchSurvey);
 		
 		JButton cancelBtn = new JButton("Cancel");
 		cancelBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		cancelBtn.setBounds(440, 600, 150, 50);
+		cancelBtn.setBounds(440, notes.getY() + 180, 150, 50);
 		panel.add(cancelBtn);
 		
 		JLabel lblRequired = new JLabel("* Required Fields");
-		lblRequired.setBounds(75, 570, 120, 20);
+		lblRequired.setBounds(75, notes.getY() + 150, 120, 20);
 		panel.add(lblRequired);
 		
 		launchSurvey.addActionListener(new ActionListener(){
@@ -705,7 +654,6 @@ public class Profile {
 		
 		createBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				generateAllergyList();
 				editProfile();
 			}
 		});
@@ -716,6 +664,7 @@ public class Profile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		PlainDocument ssndoc = (PlainDocument) ssn.getDocument();
 		ssndoc.setDocumentFilter(new IntegerFilter());
 		
@@ -732,33 +681,6 @@ public class Profile {
 	 * profile.  I don't know if the database is currently set up to handle these, nor do I know what order they
 	 * would even be in for so I am leaving it all commented out until we sort that out.
 	 */
-	
-	private void generateAllergyList(){
-		boolean isSelected = rdbtnPenicillin.isSelected();
-		if (isSelected){
-			allergyList += "Penicillin, ";
-		}
-		isSelected = rdbtnSulfonamides.isSelected();
-		if (isSelected){
-			allergyList += "Sulfonamides, ";
-		}
-		isSelected = rdbtnGelatin.isSelected();
-		if (isSelected){
-			allergyList += "Gelatin, ";
-		}
-		isSelected = rdbtnNeomycin.isSelected();
-		if (isSelected){
-			allergyList += "Neomycin, ";
-		}
-		isSelected = rdbtnYeast.isSelected();
-		if (isSelected){
-			allergyList += "Yeast, ";
-		}
-		// Removes last space and comma if a string has been created of any length
-		if (allergyList.length() > 0){
-			allergyList = allergyList.substring(0,allergyList.length()-2);
-		}
-	}
 
 	
 	public void createProfile()
@@ -801,6 +723,7 @@ public class Profile {
 			e.printStackTrace();
 		}
 	}
+	
 	public void editProfile()
 	{
 
@@ -837,6 +760,55 @@ public class Profile {
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}
+	}
+	
+	public void getAllergens(){
+		try {
+			dao.setquery("SELECT allergenID, allergenName FROM dbo.PATIENT_ALLERGEN_MAP WHERE active = 1");
+			dao.setExpectRS(true);
+			ResultSet rs = dao.executeQuery();
+			while(rs.next()){
+				Allergen allergen = new Allergen();
+				allergen.setAllergenID(rs.getInt(1));
+				allergen.setAllergenName(rs.getString(2));
+				
+				allergens.add(allergen);
+			}
+	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public void addAllergiesButtons(){
+		int Xoffset = 0;
+		int Yoffset = 0;
+		for(int i = 0; i < allergens.size(); i++){
+			JRadioButton button = new JRadioButton(allergens.get(i).getAllergenName());
+			button.setBackground(Color.WHITE);
+			button.setBounds(75 + Xoffset, 330 + Yoffset, 120, 20);
+			Xoffset += 120;
+			if(i % 4 == 0 && i != 0){
+				Xoffset = 0;
+				Yoffset += 30;
+			}
+			allergenButtons.add(button);
+			panel.add(button);
+			
+		}
+		frmNewPatient.setBounds(100, 100, 700, 700 + Yoffset);
+	}
+	
+	public void getAllergyList(){
+		allergyList = "";
+		for(JRadioButton allergenButton: allergenButtons){
+			if(allergenButton.isSelected()){
+				allergyList += allergenButton.getText();
+			}
 		}
 	}
 }
