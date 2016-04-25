@@ -42,22 +42,45 @@ public class Survey {
 	private JButton btnComplete;
 	private JButton btnCancel;
 	private DAO dao;
+	private ArrayList<YesorNoBox> yesOrNoBoxes;
 	
 	
 	class YesorNoBox {
 		
 		private ArrayList<JRadioButton> buttons;
+		private JRadioButton yesButton;
+		private JRadioButton noButton;
 		
 		public YesorNoBox(int height){
 			buttons = new ArrayList<JRadioButton>();
-			JRadioButton yesButton = new JRadioButton("Yes");
+			yesButton = new JRadioButton("Yes");
 			yesButton.setBackground(Color.WHITE);
 			yesButton.setBounds(10, height + 50, 100, 20);
+			yesButton.setSelected(true);
+			yesButton.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					if(yesButton.isSelected()){
+						noButton.setSelected(false);
+					}
+					else
+						yesButton.setSelected(true);
+				}
+				
+			});
 			
-			JRadioButton noButton = new JRadioButton("No");
+			noButton = new JRadioButton("No");
 			noButton.setBackground(Color.WHITE);
 			noButton.setBounds(110, height + 50, 100, 20);
-			
+			noButton.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					if(noButton.isSelected()){
+						yesButton.setSelected(false);
+					}
+					else
+						noButton.setSelected(true);
+				}
+				
+			});
 			buttons.add(yesButton);
 			buttons.add(noButton);
 		}
@@ -104,6 +127,7 @@ public class Survey {
 		shots = new ArrayList<Shot>();
 		shotNames = new ArrayList<String>();
 		questions = new ArrayList<JLabel>();
+		yesOrNoBoxes = new ArrayList<YesorNoBox>();
 		
 		this.setQCount();
 		this.getShots();
@@ -188,6 +212,10 @@ public class Survey {
 			public void actionPerformed(ActionEvent arg0) {
 				for(JLabel question: questions){
 					panel.remove(question);
+				}
+				for(YesorNoBox box: yesOrNoBoxes){
+					panel.remove(box.getNoButton());
+					panel.remove(box.getYesButton());
 				}
 				panel.remove(btnComplete);
 				panel.remove(btnCancel);
@@ -296,18 +324,18 @@ public class Survey {
 					question.setBounds(10, 75 + offset, 400 , 45);
 					questions.add(question);
 					YesorNoBox box = new YesorNoBox(75 + offset);
-					
+					yesOrNoBoxes.add(box);
 					panel.add(box.getYesButton());
 					panel.add(box.getNoButton());
-					panel.add(questions.get(i-1));
+					panel.add(question);
 					
 					offset += 75;
 				}
-				btnComplete.setBounds(252, frmSurvey.getHeight() - 25 + offset, 125, 20);
-				btnCancel.setBounds(387, frmSurvey.getHeight() - 25 + offset, 75, 20);
-				panel.add(btnComplete);
-				panel.add(btnCancel);
 			}
+			btnComplete.setBounds(252, yesOrNoBoxes.get(yesOrNoBoxes.size()-1).getYesButton().getY() + 50, 125, 20);
+			btnCancel.setBounds(387, yesOrNoBoxes.get(yesOrNoBoxes.size()-1).getYesButton().getY() + 50, 75, 20);
+			panel.add(btnComplete);
+			panel.add(btnCancel);
 		
 		}
 	} 	
