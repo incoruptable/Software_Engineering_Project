@@ -1,0 +1,1114 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x000000006dcee5e7, pid=5944, tid=7644
+#
+# JRE version: 6.0_23-b05
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (19.0-b09 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# V  [jvm.dll+0x45e5e7]
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000062f800):  VMThread [stack: 0x0000000006640000,0x0000000006740000] [id=7644]
+
+siginfo: ExceptionCode=0xc0000005, reading address 0x0000000000000000
+
+Registers:
+RAX=0x0000000000000000, RBX=0x000000000673f1b0, RCX=0x000000000673f1b0, RDX=0x0000000000000000
+RSP=0x000000000673f040, RBP=0x00000000000000b6, RSI=0x0000000000000000, RDI=0x000000000673f850
+R8=0x0000000000000000, R9=0x0000000000007d3f, R10=0x000000077d4a57a0, R11=0x000000006de10aa0
+R12=0x00000000000001d2, R13=0x000000000810dfd0, R14=0x000000006d890000, R15=0x0000000000000000
+RIP=0x000000006dcee5e7, EFLAGS=0x0000000000010202
+
+Register to memory mapping:
+
+RAX=0x0000000000000000
+0x0000000000000000 is pointing to unknown location
+
+RBX=0x000000000673f1b0
+0x000000000673f1b0 is pointing to unknown location
+
+RCX=0x000000000673f1b0
+0x000000000673f1b0 is pointing to unknown location
+
+RDX=0x0000000000000000
+0x0000000000000000 is pointing to unknown location
+
+RSP=0x000000000673f040
+0x000000000673f040 is pointing to unknown location
+
+RBP=0x00000000000000b6
+0x00000000000000b6 is pointing to unknown location
+
+RSI=0x0000000000000000
+0x0000000000000000 is pointing to unknown location
+
+RDI=0x000000000673f850
+0x000000000673f850 is pointing to unknown location
+
+R8 =0x0000000000000000
+0x0000000000000000 is pointing to unknown location
+
+R9 =0x0000000000007d3f
+0x0000000000007d3f is pointing to unknown location
+
+R10=0x000000077d4a57a0
+{constant pool} 
+ - klass: {other class}
+ - cache: 0x000000077d4a76c8
+ -   1 :  : 'Profile'
+ -   2 :  : 'Profile'
+ -   3 :  : 'java/lang/Object'
+ -   4 :  : 'java/lang/Object'
+ -   5 :  : 'frmNewPatient'
+ -   6 :  : 'Ljavax/swing/JFrame;'
+ -   7 :  : 'panel'
+ -   8 :  : 'Ljavax/swing/JPanel;'
+ -   9 :  : 'firstName'
+ -  10 :  : 'Ljavax/swing/JTextField;'
+ -  11 :  : 'lastName'
+ -  12 :  : 'middleName'
+ -  13 :  : 'address'
+ -  14 :  : 'city'
+ -  15 :  : 'state'
+ -  16 :  : 'Ljavax/swing/JComboBox;'
+ -  17 :  : 'zipCode'
+ -  18 :  : 'phone'
+ -  19 :  : 'email'
+ -  20 :  : 'datePicker'
+ -  21 :  : 'Lorg/jdatepicker/impl/JDatePickerImpl;'
+ -  22 :  : 'DOBfield'
+ -  23 :  : 'dao'
+ -  24 :  : 'LDAO/DAO;'
+ -  25 :  : 'altPhone'
+ -  26 :  : 'ssn'
+ -  27 :  : 'allergyList'
+ -  28 :  : 'Ljava/lang/String;'
+ -  29 :  : 'allergenButtons'
+ -  30 :  : 'Ljava/util/ArrayList;'
+ -  31 :  : 'Signature'
+ -  32 :  : 'Ljava/util/ArrayList<Ljavax/swing/JRadioButton;>;'
+ -  33 :  : 'allergens'
+ -  34 :  : 'Ljava/util/ArrayList<LAllergen;>;'
+ -  35 :  : 'notes'
+ -  36 :  : 'Ljavax/swing/JTextPane;'
+ -  37 :  : 'allergenIDs'
+ -  38 :  : 'Ljava/util/ArrayList<Ljava/lang/Integer;>;'
+ -  39 :  : 'patientAllergens'
+ -  40 :  : 'phoneFormatter'
+ -  41 :  : 'Ljavax/swing/text/MaskFormatter;'
+ -  42 :  : 'zipFormatter'
+ -  43 :  : 'ssnFormatter'
+ -  44 :  : 'CreateProfilePopUp'
+ -  45 :  : '()V'
+ -  46 :  : 'Code'
+ -  47 :  : 'Profile$1'
+ -  48 :  : 'Profile$1'
+ -  49 :  : klass_index=47 name_and_type_index=50
+ -  50 :  : name_index=51 signature_index=52
+ -  51 :  : '<init>'
+ -  52 :  : '(LProfile;)V'
+ -  53 :  : klass_index=54 name_and_type_index=56
+ -  54 :  : 'java/awt/EventQueue'
+ -  55 :  : 'java/awt/EventQueue'
+ -  56 :  : name_index=57 signature_index=58
+ -  57 :  : 'invokeLater'
+ -  58 :  : '(Ljava/lang/Runnable;)V'
+ -  59 :  : 'LineNumberTable'
+ -  60 :  : 'LocalVariableTable'
+ -  61 :  : 'this'
+ -  62 :  : 'LProfile;'
+ -  63 :  : 'CreateProfilePopUpWithPatient'
+ -  64 :  : '(LPatient;)V'
+ -  65 :  : 'Profile$2'
+ -  66 :  : 'Profile$2'
+ -  67 :  : klass_index=65 name_and_type_index=68
+ -  68 :  : name_index=51 signature_index=69
+ -  69 :  : '(LProfile;LPatient;)V'
+ -  70 :  : 'patient'
+ -  71 :  : 'LPatient;'
+ -  72 :  : klass_index=3 name_and_type_index=73
+ -  73 :  : name_index=51 signature_index=45
+ -  74 :  : "" {0x7c2d9698}
+ -  75 :  : ''
+ -  76 :  : klass_index=1 name_and_type_index=77
+ -  77 :  : name_index=27 signature_index=28
+ -  78 :  : klass_index=1 name_and_type_index=79
+ -  79 :  : name_index=80 signature_index=45
+ -  80 :  : 'initialize'
+ -  81 :  : klass_index=1 name_and_type_index=82
+ -  82 :  : name_index=80 signature_index=64
+ -  83 :  : 'DAO/DAO'
+ -  84 :  : 'DAO/DAO'
+ -  85 :  : klass_index=83 name_and_type_index=73
+ -  86 :  : klass_index=1 name_and_type_index=87
+ -  87 :  : name_index=23 signature_index=24
+ -  88 :  : 'java/util/ArrayList'
+ -  89 :  : 'java/util/ArrayList'
+ -  90 :  : klass_index=88 name_and_type_index=73
+ -  91 :  : klass_index=1 name_and_type_index=92
+ -  92 :  : name_index=33 signature_index=30
+ -  93 :  : klass_index=1 name_and_type_index=94
+ -  94 :  : name_index=29 signature_index=30
+ -  95 :  : klass_index=1 name_and_type_index=96
+ -  96 :  : name_index=37 signature_index=30
+ -  97 :  : klass_index=1 name_and_type_index=98
+ -  98 :  : name_index=99 signature_index=45
+ -  99 :  : 'getAllergens'
+ - 100 :  : 'javax/swing/JFrame'
+ - 101 :  : 'javax/swing/JFrame'
+ - 102 :  : klass_index=100 name_and_type_index=73
+ - 103 :  : klass_index=1 name_and_type_index=104
+ - 104 :  : name_index=5 signature_index=6
+ - 105 :  : klass_index=100 name_and_type_index=106
+ - 106 :  : name_index=107 signature_index=108
+ - 107 :  : 'setResizable'
+ - 108 :  : '(Z)V'
+ - 109 :  : klass_index=100 name_and_type_index=110
+ - 110 :  : name_index=111 signature_index=112
+ - 111 :  : 'setBounds'
+ - 112 :  : '(IIII)V'
+ - 113 :  : klass_index=100 name_and_type_index=114
+ - 114 :  : name_index=115 signature_index=116
+ - 115 :  : 'setDefaultCloseOperation'
+ - 116 :  : '(I)V'
+ - 117 :  : 'javax/swing/JPanel'
+ - 118 :  : 'javax/swing/JPanel'
+ - 119 :  : klass_index=117 name_and_type_index=73
+ - 120 :  : klass_index=1 name_and_type_index=121
+ - 121 :  : name_index=7 signature_index=8
+ - 122 :  : 'javax/swing/border/TitledBorder'
+ - 123 :  : 'javax/swing/border/TitledBorder'
+ - 124 :  : klass_index=122 name_and_type_index=125
+ - 125 :  : name_index=51 signature_index=126
+ - 126 :  : '(Ljavax/swing/border/Border;Ljava/lang/String;IILjava/awt/Font;Ljava/awt/Color;)V'
+ - 127 :  : klass_index=117 name_and_type_index=128
+ - 128 :  : name_index=129 signature_index=130
+ - 129 :  : 'setBorder'
+ - 130 :  : '(Ljavax/swing/border/Border;)V'
+ - 131 :  : klass_index=132 name_and_type_index=134
+ - 132 :  : 'java/awt/Color'
+ - 133 :  : 'java/awt/Color'
+ - 134 :  : name_index=135 signature_index=136
+ - 135 :  : 'WHITE'
+ - 136 :  : 'Ljava/awt/Color;'
+ - 137 :  : klass_index=117 name_and_type_index=138
+ - 138 :  : name_index=139 signature_index=140
+ - 139 :  : 'setForeground'
+ - 140 :  : '(Ljava/awt/Color;)V'
+ - 141 :  : klass_index=117 name_and_type_index=142
+ - 142 :  : name_index=143 signature_index=140
+ - 143 :  : 'setBackground'
+ - 144 :  : klass_index=100 name_and_type_index=145
+ - 145 :  : name_index=146 signature_index=147
+ - 146 :  : 'getContentPane'
+ - 147 :  : '()Ljava/awt/Container;'
+ - 148 :  : "Center" {0x7c76c7f8}
+ - 149 :  : 'Center'
+ - 150 :  : klass_index=151 name_and_type_index=153
+ - 151 :  : 'java/awt/Container'
+ - 152 :  : 'java/awt/Container'
+ - 153 :  : name_index=154 signature_index=155
+ - 154 :  : 'add'
+ - 155 :  : '(Ljava/awt/Component;Ljava/lang/Object;)V'
+ - 156 :  : klass_index=117 name_and_type_index=157
+ - 157 :  : name_index=158 signature_index=159
+ - 158 :  : 'setLayout'
+ - 159 :  : '(Ljava/awt/LayoutManager;)V'
+ - 160 :  : 'javax/swing/JLabel'
+ - 161 :  : 'javax/swing/JLabel'
+ - 162 :  : "Patient Profile" {0x7d421f30}
+ - 163 :  : 'Patient Profile'
+ - 164 :  : klass_index=160 name_and_type_index=165
+ - 165 :  : name_index=51 signature_index=166
+ - 166 :  : '(Ljava/lang/String;)V'
+ - 167 :  : 'java/awt/Font'
+ - 168 :  : 'java/awt/Font'
+ - 169 :  : "Tahoma" {0x7cfd6210}
+ - 170 :  : 'Tahoma'
+ - 171 :  : klass_index=167 name_and_type_index=172
+ - 172 :  : name_index=51 signature_index=173
+ - 173 :  : '(Ljava/lang/String;II)V'
+ - 174 :  : klass_index=160 name_and_type_index=175
+ - 175 :  : name_index=176 signature_index=177
+ - 176 :  : 'setFont'
+ - 177 :  : '(Ljava/awt/Font;)V'
+ - 178 :  : klass_index=160 name_and_type_index=179
+ - 179 :  : name_index=180 signature_index=116
+ - 180 :  : 'setHorizontalAlignment'
+ - 181 :  : klass_index=160 name_and_type_index=110
+ - 182 :  : klass_index=117 name_and_type_index=183
+ - 183 :  : name_index=154 signature_index=184
+ - 184 :  : '(Ljava/awt/Component;)Ljava/awt/Component;'
+ - 185 :  : "* First Name:" {0x7d421f80}
+ - 186 :  : '* First Name:'
+ - 187 :  : klass_index=160 name_and_type_index=188
+ - 188 :  : name_index=189 signature_index=116
+ - 189 :  : 'setVerticalAlignment'
+ - 190 :  : 'javax/swing/JTextField'
+ - 191 :  : 'javax/swing/JTextField'
+ - 192 :  : klass_index=190 name_and_type_index=73
+ - 193 :  : klass_index=1 name_and_type_index=194
+ - 194 :  : name_index=9 signature_index=10
+ - 195 :  : klass_index=190 name_and_type_index=196
+ - 196 :  : name_index=197 signature_index=116
+ - 197 :  : 'setColumns'
+ - 198 :  : klass_index=190 name_and_type_index=110
+ - 199 :  : "* Last Name:" {0x7d4220f8}
+ - 200 :  : '* Last Name:'
+ - 201 :  : klass_index=1 name_and_type_index=202
+ - 202 :  : name_index=11 signature_index=10
+ - 203 :  : "Middle Name:" {0x7d422140}
+ - 204 :  : 'Middle Name:'
+ - 205 :  : klass_index=1 name_and_type_index=206
+ - 206 :  : name_index=12 signature_index=10
+ - 207 :  : "* SSN:" {0x7d422188}
+ - 208 :  : '* SSN:'
+ - 209 :  : klass_index=1 name_and_type_index=210
+ - 210 :  : name_index=26 signature_index=10
+ - 211 :  : 'org/jdatepicker/impl/UtilDateModel'
+ - 212 :  : 'org/jdatepicker/impl/UtilDateModel'
+ - 213 :  : klass_index=211 name_and_type_index=73
+ - 214 :  : 'java/util/Properties'
+ - 215 :  : 'java/util/Properties'
+ - 216 :  : klass_index=214 name_and_type_index=73
+ - 217 :  : "text.today" {0x7d4abbf8}
+ - 218 :  : 'text.today'
+ - 219 :  : "Today" {0x7d4abc40}
+ - 220 :  : 'Today'
+ - 221 :  : klass_index=214 name_and_type_index=222
+ - 222 :  : name_index=223 signature_index=224
+ - 223 :  : 'put'
+ - 224 :  : '(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;'
+ - 225 :  : "text.month" {0x7d4abc80}
+ - 226 :  : 'text.month'
+ - 227 :  : "Month" {0x7d4abcc8}
+ - 228 :  : 'Month'
+ - 229 :  : "text.year" {0x7d4abd08}
+ - 230 :  : 'text.year'
+ - 231 :  : "Year" {0x7d4abd50}
+ - 232 :  : 'Year'
+ - 233 :  : 'org/jdatepicker/impl/JDatePanelImpl'
+ - 234 :  : 'org/jdatepicker/impl/JDatePanelImpl'
+ - 235 :  : klass_index=233 name_and_type_index=236
+ - 236 :  : name_index=51 signature_index=237
+ - 237 :  : '(Lorg/jdatepicker/DateModel;Ljava/util/Properties;)V'
+ - 238 :  : 'org/jdatepicker/impl/JDatePickerImpl'
+ - 239 :  : 'org/jdatepicker/impl/JDatePickerImpl'
+ - 240 :  : 'DateFormatter/DateLabelFormatter'
+ - 241 :  : 'DateFormatter/DateLabelFormatter'
+ - 242 :  : klass_index=240 name_and_type_index=73
+ - 243 :  : klass_index=238 name_and_type_index=244
+ - 244 :  : name_index=51 signature_index=245
+ - 245 :  : '(Lorg/jdatepicker/impl/JDatePanelImpl;Ljavax/swing/JFormattedTextField$AbstractFormatter;)V'
+ - 246 :  : klass_index=1 name_and_type_index=247
+ - 247 :  : name_index=20 signature_index=21
+ - 248 :  : 'java/awt/Rectangle'
+ - 249 :  : 'java/awt/Rectangle'
+ - 250 :  : klass_index=248 name_and_type_index=251
+ - 251 :  : name_index=51 signature_index=112
+ - 252 :  : klass_index=238 name_and_type_index=253
+ - 253 :  : name_index=111 signature_index=254
+ - 254 :  : '(Ljava/awt/Rectangle;)V'
+ - 255 :  : 'java/awt/Point'
+ - 256 :  : 'java/awt/Point'
+ - 257 :  : klass_index=255 name_and_type_index=258
+ - 258 :  : name_index=51 signature_index=259
+ - 259 :  : '(II)V'
+ - 260 :  : klass_index=238 name_and_type_index=261
+ - 261 :  : name_index=262 signature_index=263
+ - 262 :  : 'setLocation'
+ - 263 :  : '(Ljava/awt/Point;)V'
+ - 264 :  : "* D.O.B:" {0x7d422210}
+ - 265 :  : '* D.O.B:'
+ - 266 :  : "* Sex:" {0x7d422250}
+ - 267 :  : '* Sex:'
+ - 268 :  : 'java/lang/String'
+ - 269 :  : 'java/lang/String'
+ - 270 :  : "Male" {0x7d422290}
+ - 271 :  : 'Male'
+ - 272 :  : "Female" {0x7d4222c8}
+ - 273 :  : 'Female'
+ - 274 :  : 'javax/swing/JComboBox'
+ - 275 :  : 'javax/swing/JComboBox'
+ - 276 :  : klass_index=274 name_and_type_index=277
+ - 277 :  : name_index=51 signature_index=278
+ - 278 :  : '([Ljava/lang/Object;)V'
+ - 279 :  : klass_index=274 name_and_type_index=280
+ - 280 :  : name_index=281 signature_index=116
+ - 281 :  : 'setSelectedIndex'
+ - 282 :  : klass_index=274 name_and_type_index=110
+ - 283 :  : 'javax/swing/JSeparator'
+ - 284 :  : 'javax/swing/JSeparator'
+ - 285 :  : klass_index=283 name_and_type_index=73
+ - 286 :  : klass_index=283 name_and_type_index=110
+ - 287 :  : "* Address:" {0x7d424e98}
+ - 288 :  : '* Address:'
+ - 289 :  : klass_index=1 name_and_type_index=290
+ - 290 :  : name_index=13 signature_index=10
+ - 291 :  : "* City:" {0x7d424f68}
+ - 292 :  : '* City:'
+ - 293 :  : klass_index=1 name_and_type_index=294
+ - 294 :  : name_index=14 signature_index=10
+ - 295 :  : "* State:" {0x7d4257e8}
+ - 296 :  : '* State:'
+ - 297 :  : "AL" {0x7d425828}
+ - 298 :  : 'AL'
+ - 299 :  : "AK" {0x7d425860}
+ - 300 :  : 'AK'
+ - 301 :  : "AZ" {0x7d425898}
+ - 302 :  : 'AZ'
+ - 303 :  : "AR" {0x7d4258d0}
+ - 304 :  : 'AR'
+ - 305 :  : "CA" {0x7c407b70}
+ - 306 :  : 'CA'
+ - 307 :  : "CO" {0x7d425908}
+ - 308 :  : 'CO'
+ - 309 :  : "CT" {0x7d425940}
+ - 310 :  : 'CT'
+ - 311 :  : "DE" {0x7c4078a0}
+ - 312 :  : 'DE'
+ - 313 :  : "FL" {0x7d425978}
+ - 314 :  : 'FL'
+ - 315 :  : "GA" {0x7d4259b0}
+ - 316 :  : 'GA'
+ - 317 :  : "HI" {0x7d4259e8}
+ - 318 :  : 'HI'
+ - 319 :  : "ID" {0x7d425a20}
+ - 320 :  : 'ID'
+ - 321 :  : "IL" {0x7d425a58}
+ - 322 :  : 'IL'
+ - 323 :  : "IN" {0x7d425a90}
+ - 324 :  : 'IN'
+ - 325 :  : "IA" {0x7d425ac8}
+ - 326 :  : 'IA'
+ - 327 :  : "KS" {0x7d425b00}
+ - 328 :  : 'KS'
+ - 329 :  : "KY" {0x7d425b38}
+ - 330 :  : 'KY'
+ - 331 :  : "LA" {0x7d425b70}
+ - 332 :  : 'LA'
+ - 333 :  : "ME" {0x7d425ba8}
+ - 334 :  : 'ME'
+ - 335 :  : "MD" {0x7d425be0}
+ - 336 :  : 'MD'
+ - 337 :  : "MA" {0x7d425c18}
+ - 338 :  : 'MA'
+ - 339 :  : "MI" {0x7d425c50}
+ - 340 :  : 'MI'
+ - 341 :  : "MN" {0x7d425c88}
+ - 342 :  : 'MN'
+ - 343 :  : "MS" {0x7d425cc0}
+ - 344 :  : 'MS'
+ - 345 :  : "MO" {0x7d425cf8}
+ - 346 :  : 'MO'
+ - 347 :  : "MT" {0x7d425d30}
+ - 348 :  : 'MT'
+ - 349 :  : "NE" {0x7d425d68}
+ - 350 :  : 'NE'
+ - 351 :  : "NV" {0x7d425da0}
+ - 352 :  : 'NV'
+ - 353 :  : "NH" {0x7d425dd8}
+ - 354 :  : 'NH'
+ - 355 :  : "NJ" {0x7d425e10}
+ - 356 :  : 'NJ'
+ - 357 :  : "NM" {0x7d425e48}
+ - 358 :  : 'NM'
+ - 359 :  : "NY" {0x7d425e80}
+ - 360 :  : 'NY'
+ - 361 :  : "NC" {0x7d425eb8}
+ - 362 :  : 'NC'
+ - 363 :  : "ND" {0x7d425ef0}
+ - 364 :  : 'ND'
+ - 365 :  : "OH" {0x7d425f28}
+ - 366 :  : 'OH'
+ - 367 :  : "OK" {0x7c873388}
+ - 368 :  : 'OK'
+ - 369 :  : "OR" {0x7d425f60}
+ - 370 :  : 'OR'
+ - 371 :  : "PA" {0x7d425f98}
+ - 372 :  : 'PA'
+ - 373 :  : "RI" {0x7d425fd0}
+ - 374 :  : 'RI'
+ - 375 :  : "SC" {0x7d426008}
+ - 376 :  : 'SC'
+ - 377 :  : "SD" {0x7d426040}
+ - 378 :  : 'SD'
+ - 379 :  : "TN" {0x7d426078}
+ - 380 :  : 'TN'
+ - 381 :  : "TX" {0x7d4260b0}
+ - 382 :  : 'TX'
+ - 383 :  : "UT" {0x7d4260e8}
+ - 384 :  : 'UT'
+ - 385 :  : "VT" {0x7d426120}
+ - 386 :  : 'VT'
+ - 387 :  : "VA" {0x7d426158}
+ - 388 :  : 'VA'
+ - 389 :  : "WA" {0x7d426190}
+ - 390 :  : 'WA'
+ - 391 :  : "WV" {0x7d4261c8}
+ - 392 :  : 'WV'
+ - 393 :  : "WI" {0x7d426200}
+ - 394 :  : 'WI'
+ - 395 :  : "WY" {0x7d426238}
+ - 396 :  : 'WY'
+ - 397 :  : klass_index=1 name_and_type_index=398
+ - 398 :  : name_index=15 signature_index=16
+ - 399 :  : klass_index=274 name_and_type_index=400
+ - 400 :  : name_index=401 signature_index=116
+ - 401 :  : 'setMaximumRowCount'
+ - 402 :  : "* Zip Code:" {0x7d426270}
+ - 403 :  : '* Zip Code:'
+ - 404 :  : klass_index=1 name_and_type_index=405
+ - 405 :  : name_index=17 signature_index=10
+ - 406 :  : "* Phone:" {0x7d4262b8}
+ - 407 :  : '* Phone:'
+ - 408 :  : klass_index=1 name_and_type_index=409
+ - 409 :  : name_index=18 signature_index=10
+ - 410 :  : "Alt. Phone:" {0x7d4262f8}
+ - 411 :  : 'Alt. Phone:'
+ - 412 :  : klass_index=1 name_and_type_index=413
+ - 413 :  : name_index=25 signature_index=10
+ - 414 :  : "* E-mail:" {0x7d4264c0}
+ - 415 :  : '* E-mail:'
+ - 416 :  : klass_index=1 name_and_type_index=417
+ - 417 :  : name_index=19 signature_index=10
+ - 418 :  : "Drug Allergies" {0x7d426508}
+ - 419 :  : 'Drug Allergies'
+ - 420 :  : klass_index=1 name_and_type_index=421
+ - 421 :  : name_index=422 signature_index=45
+ - 422 :  : 'addAllergiesButtons'
+ - 423 :  : klass_index=88 name_and_type_index=424
+ - 424 :  : name_index=425 signature_index=426
+ - 425 :  : 'size'
+ - 426 :  : '()I'
+ - 427 :  : klass_index=88 name_and_type_index=428
+ - 428 :  : name_index=429 signature_index=430
+ - 429 :  : 'get'
+ - 430 :  : '(I)Ljava/lang/Object;'
+ - 431 :  : 'javax/swing/JRadioButton'
+ - 432 :  : 'javax/swing/JRadioButton'
+ - 433 :  : klass_index=431 name_and_type_index=434
+ - 434 :  : name_index=435 signature_index=426
+ - 435 :  : 'getY'
+ - 436 :  : "Notes" {0x7d4377b0}
+ - 437 :  : 'Notes'
+ - 438 :  : klass_index=283 name_and_type_index=434
+ - 439 :  : 'javax/swing/JTextPane'
+ - 440 :  : 'javax/swing/JTextPane'
+ - 441 :  : klass_index=439 name_and_type_index=73
+ - 442 :  : klass_index=1 name_and_type_index=443
+ - 443 :  : name_index=35 signature_index=36
+ - 444 :  : 'javax/swing/border/LineBorder'
+ - 445 :  : 'javax/swing/border/LineBorder'
+ - 446 :  : klass_index=132 name_and_type_index=447
+ - 447 :  : name_index=51 signature_index=448
+ - 448 :  : '(III)V'
+ - 449 :  : klass_index=444 name_and_type_index=450
+ - 450 :  : name_index=51 signature_index=140
+ - 451 :  : klass_index=439 name_and_type_index=128
+ - 452 :  : klass_index=439 name_and_type_index=142
+ - 453 :  : klass_index=160 name_and_type_index=434
+ - 454 :  : klass_index=439 name_and_type_index=110
+ - 455 :  : 'javax/swing/JButton'
+ - 456 :  : 'javax/swing/JButton'
+ - 457 :  : "Create" {0x7d4abd88}
+ - 458 :  : 'Create'
+ - 459 :  : klass_index=455 name_and_type_index=165
+ - 460 :  : klass_index=455 name_and_type_index=175
+ - 461 :  : klass_index=439 name_and_type_index=434
+ - 462 :  : klass_index=455 name_and_type_index=110
+ - 463 :  : "Cancel" {0x7c69af58}
+ - 464 :  : 'Cancel'
+ - 465 :  : "* Required Fields" {0x7d47c848}
+ - 466 :  : '* Required Fields'
+ - 467 :  : 'Profile$3'
+ - 468 :  : 'Profile$3'
+ - 469 :  : klass_index=467 name_and_type_index=50
+ - 470 :  : klass_index=455 name_and_type_index=471
+ - 471 :  : name_index=472 signature_index=473
+ - 472 :  : 'addActionListener'
+ - 473 :  : '(Ljava/awt/event/ActionListener;)V'
+ - 474 :  : 'Profile$4'
+ - 475 :  : 'Profile$4'
+ - 476 :  : klass_index=474 name_and_type_index=50
+ - 477 :  : klass_index=478 name_and_type_index=480
+ - 478 :  : 'java/sql/SQLException'
+ - 479 :  : 'java/sql/SQLException'
+ - 480 :  : name_index=481 signature_index=45
+ - 481 :  : 'printStackTrace'
+ - 482 :  : klass_index=190 name_and_type_index=483
+ - 483 :  : name_index=484 signature_index=485
+ - 484 :  : 'getDocument'
+ - 485 :  : '()Ljavax/swing/text/Document;'
+ - 486 :  : 'javax/swing/text/PlainDocument'
+ - 487 :  : 'javax/swing/text/PlainDocument'
+ - 488 :  : 'IntegerFilter'
+ - 489 :  : 'IntegerFilter'
+ - 490 :  : klass_index=488 name_and_type_index=73
+ - 491 :  : klass_index=486 name_and_type_index=492
+ - 492 :  : name_index=493 signature_index=494
+ - 493 :  : 'setDocumentFilter'
+ - 494 :  : '(Ljavax/swing/text/DocumentFilter;)V'
+ - 495 :  : 'lblProfileTitle'
+ - 496 :  : 'Ljavax/swing/JLabel;'
+ - 497 :  : 'FirstNamelbl'
+ - 498 :  : 'LastNamelbl'
+ - 499 :  : 'MiddleNamelbl'
+ - 500 :  : 'SSNlbl'
+ - 501 :  : 'model'
+ - 502 :  : 'Lorg/jdatepicker/impl/UtilDateModel;'
+ - 503 :  : 'p'
+ - 504 :  : 'Ljava/util/Properties;'
+ - 505 :  : 'datePanel'
+ - 506 :  : 'Lorg/jdatepicker/impl/JDatePanelImpl;'
+ - 507 :  : 'DOBlbl'
+ - 508 :  : 'lblSex'
+ - 509 :  : 'sexOptions'
+ - 510 :  : '[Ljava/lang/String;'
+ - 511 :  : 'sex'
+ - 512 :  : 'separator1'
+ - 513 :  : 'Ljavax/swing/JSeparator;'
+ - 514 :  : 'Addresslbl'
+ - 515 :  : 'Citylbl'
+ - 516 :  : 'Statelbl'
+ - 517 :  : 'states'
+ - 518 :  : 'ZipCodelbl'
+ - 519 :  : 'Phonelbl'
+ - 520 :  : 'altPhonelbl'
+ - 521 :  : 'Emaillbl'
+ - 522 :  : 'separator2'
+ - 523 :  : 'lblDrugAllergies'
+ - 524 :  : 'separator3'
+ - 525 :  : 'lblNotes'
+ - 526 :  : 'createBtn'
+ - 527 :  : 'Ljavax/swing/JButton;'
+ - 528 :  : 'cancelBtn'
+ - 529 :  : 'lblRequired'
+ - 530 :  : 'es'
+ - 531 :  : 'Ljava/sql/SQLException;'
+ - 532 :  : 'ssndoc'
+ - 533 :  : 'Ljavax/swing/text/PlainDocument;'
+ - 534 :  : 'zipdoc'
+ - 535 :  : 'phonedoc'
+ - 536 :  : 'altphonedoc'
+ - 537 :  : 'StackMapTable'
+ - 538 :  : 'javax/swing/text/MaskFormatter'
+ - 539 :  : 'javax/swing/text/MaskFormatter'
+ - 540 :  : "**********" {0x7d421b90}
+ - 541 :  : '**********'
+ - 542 :  : klass_index=538 name_and_type_index=165
+ - 543 :  : klass_index=1 name_and_type_index=544
+ - 544 :  : name_index=40 signature_index=41
+ - 545 :  : "0123456789" {0x7d421e60}
+ - 546 :  : '0123456789'
+ - 547 :  : klass_index=538 name_and_type_index=548
+ - 548 :  : name_index=549 signature_index=166
+ - 549 :  : 'setValidCharacters'
+ - 550 :  : "*****" {0x7d421ea8}
+ - 551 :  : '*****'
+ - 552 :  : klass_index=1 name_and_type_index=553
+ - 553 :  : name_index=42 signature_index=41
+ - 554 :  : "*********" {0x7d421ee8}
+ - 555 :  : '*********'
+ - 556 :  : klass_index=1 name_and_type_index=557
+ - 557 :  : name_index=43 signature_index=41
+ - 558 :  : klass_index=559 name_and_type_index=561
+ - 559 :  : 'Patient'
+ - 560 :  : 'Patient'
+ - 561 :  : name_index=562 signature_index=563
+ - 562 :  : 'getFirstName'
+ - 563 :  : '()Ljava/lang/String;'
+ - 564 :  : klass_index=190 name_and_type_index=565
+ - 565 :  : name_index=566 signature_index=166
+ - 566 :  : 'setText'
+ - 567 :  : klass_index=190 name_and_type_index=568
+ - 568 :  : name_index=569 signature_index=108
+ - 569 :  : 'setEditable'
+ - 570 :  : klass_index=559 name_and_type_index=571
+ - 571 :  : name_index=572 signature_index=563
+ - 572 :  : 'getLastName'
+ - 573 :  : klass_index=559 name_and_type_index=574
+ - 574 :  : name_index=575 signature_index=563
+ - 575 :  : 'getMiddleName'
+ - 576 :  : klass_index=559 name_and_type_index=577
+ - 577 :  : name_index=578 signature_index=563
+ - 578 :  : 'getSSN'
+ - 579 :  : klass_index=1 name_and_type_index=580
+ - 580 :  : name_index=22 signature_index=10
+ - 581 :  : klass_index=190 name_and_type_index=253
+ - 582 :  : klass_index=190 name_and_type_index=261
+ - 583 :  : klass_index=559 name_and_type_index=584
+ - 584 :  : name_index=585 signature_index=586
+ - 585 :  : 'getDOB'
+ - 586 :  : '()Ljava/sql/Date;'
+ - 587 :  : klass_index=588 name_and_type_index=590
+ - 588 :  : 'java/sql/Date'
+ - 589 :  : 'java/sql/Date'
+ - 590 :  : name_index=591 signature_index=563
+ - 591 :  : 'toString'
+ - 592 :  : klass_index=559 name_and_type_index=593
+ - 593 :  : name_index=594 signature_index=563
+ - 594 :  : 'getSex'
+ - 595 :  : klass_index=268 name_and_type_index=596
+ - 596 :  : name_index=597 signature_index=598
+ - 597 :  : 'equals'
+ - 598 :  : '(Ljava/lang/Object;)Z'
+ - 599 :  : klass_index=274 name_and_type_index=600
+ - 600 :  : name_index=601 signature_index=108
+ - 601 :  : 'setEnabled'
+ - 602 :  : klass_index=559 name_and_type_index=603
+ - 603 :  : name_index=604 signature_index=563
+ - 604 :  : 'getAddress'
+ - 605 :  : klass_index=559 name_and_type_index=606
+ - 606 :  : name_index=607 signature_index=563
+ - 607 :  : 'getCity'
+ - 608 :  : klass_index=609 name_and_type_index=611
+ - 609 :  : 'java/util/Arrays'
+ - 610 :  : 'java/util/Arrays'
+ - 611 :  : name_index=612 signature_index=613
+ - 612 :  : 'asList'
+ - 613 :  : '([Ljava/lang/Object;)Ljava/util/List;'
+ - 614 :  : klass_index=615 name_and_type_index=428
+ - 615 :  : 'java/util/List'
+ - 616 :  : 'java/util/List'
+ - 617 :  : klass_index=559 name_and_type_index=618
+ - 618 :  : name_index=619 signature_index=563
+ - 619 :  : 'getState'
+ - 620 :  : klass_index=615 name_and_type_index=424
+ - 621 :  : klass_index=559 name_and_type_index=622
+ - 622 :  : name_index=623 signature_index=563
+ - 623 :  : 'getZipCode'
+ - 624 :  : klass_index=559 name_and_type_index=625
+ - 625 :  : name_index=626 signature_index=563
+ - 626 :  : 'getPhone'
+ - 627 :  : klass_index=559 name_and_type_index=628
+ - 628 :  : name_index=629 signature_index=563
+ - 629 :  : 'getAltPhone'
+ - 630 :  : klass_index=559 name_and_type_index=631
+ - 631 :  : name_index=632 signature_index=563
+ - 632 :  : 'getEmail'
+ - 633 :  : klass_index=1 name_and_type_index=634
+ - 634 :  : name_index=635 signature_index=64
+ - 635 :  : 'populateAllergiesButtons'
+ - 636 :  : klass_index=559 name_and_type_index=637
+ - 637 :  : name_index=638 signature_index=563
+ - 638 :  : 'getNotes'
+ - 639 :  : klass_index=439 name_and_type_index=565
+ - 640 :  : "Edit" {0x7d47c7d0}
+ - 641 :  : 'Edit'
+ - 642 :  : "Survey" {0x7d47c808}
+ - 643 :  : 'Survey'
+ - 644 :  : 'Profile$5'
+ - 645 :  : 'Profile$5'
+ - 646 :  : klass_index=644 name_and_type_index=68
+ - 647 :  : 'Profile$6'
+ - 648 :  : 'Profile$6'
+ - 649 :  : klass_index=647 name_and_type_index=50
+ - 650 :  : 'Profile$7'
+ - 651 :  : 'Profile$7'
+ - 652 :  : klass_index=650 name_and_type_index=68
+ - 653 :  : klass_index=654 name_and_type_index=480
+ - 654 :  : 'java/text/ParseException'
+ - 655 :  : 'java/text/ParseException'
+ - 656 :  : 'patientStateIndex'
+ - 657 :  : 'I'
+ - 658 :  : 'statesList'
+ - 659 :  : 'Ljava/util/List;'
+ - 660 :  : 'i'
+ - 661 :  : 'launchSurvey'
+ - 662 :  : 'e'
+ - 663 :  : 'Ljava/text/ParseException;'
+ - 664 :  : 'LocalVariableTypeTable'
+ - 665 :  : 'Ljava/util/List<Ljava/lang/String;>;'
+ - 666 :  : '[Ljava/lang/String;'
+ - 667 :  : klass_index=559 name_and_type_index=668
+ - 668 :  : name_index=99 signature_index=669
+ - 669 :  : '()Ljava/util/ArrayList;'
+ - 670 :  : klass_index=88 name_and_type_index=671
+ - 671 :  : name_index=672 signature_index=673
+ - 672 :  : 'iterator'
+ - 673 :  : '()Ljava/util/Iterator;'
+ - 674 :  : klass_index=675 name_and_type_index=677
+ - 675 :  : 'java/util/Iterator'
+ - 676 :  : 'java/util/Iterator'
+ - 677 :  : name_index=678 signature_index=679
+ - 678 :  : 'next'
+ - 679 :  : '()Ljava/lang/Object;'
+ - 680 :  : 'Allergen'
+ - 681 :  : 'Allergen'
+ - 682 :  : klass_index=680 name_and_type_index=683
+ - 683 :  : name_index=684 signature_index=426
+ - 684 :  : 'getAllergenID'
+ - 685 :  : klass_index=431 name_and_type_index=686
+ - 686 :  : name_index=687 signature_index=108
+ - 687 :  : 'setSelected'
+ - 688 :  : klass_index=675 name_and_type_index=689
+ - 689 :  : name_index=690 signature_index=691
+ - 690 :  : 'hasNext'
+ - 691 :  : '()Z'
+ - 692 :  : 'allergen'
+ - 693 :  : 'LAllergen;'
+ - 694 :  : 'createProfile'
+ - 695 :  : klass_index=696 name_and_type_index=698
+ - 696 :  : 'java/lang/System'
+ - 697 :  : 'java/lang/System'
+ - 698 :  : name_index=699 signature_index=700
+ - 699 :  : 'out'
+ - 700 :  : 'Ljava/io/PrintStream;'
+ - 701 :  : klass_index=190 name_and_type_index=702
+ - 702 :  : name_index=703 signature_index=563
+ - 703 :  : 'getText'
+ - 704 :  : klass_index=705 name_and_type_index=707
+ - 705 :  : 'java/io/PrintStream'
+ - 706 :  : 'java/io/PrintStream'
+ - 707 :  : name_index=708 signature_index=166
+ - 708 :  : 'println'
+ - 709 :  : klass_index=268 name_and_type_index=710
+ - 710 :  : name_index=711 signature_index=691
+ - 711 :  : 'isEmpty'
+ - 712 :  : klass_index=238 name_and_type_index=713
+ - 713 :  : name_index=714 signature_index=715
+ - 714 :  : 'getModel'
+ - 715 :  : '()Lorg/jdatepicker/DateModel;'
+ - 716 :  : klass_index=717 name_and_type_index=719
+ - 717 :  : 'org/jdatepicker/DateModel'
+ - 718 :  : 'org/jdatepicker/DateModel'
+ - 719 :  : name_index=720 signature_index=679
+ - 720 :  : 'getValue'
+ - 721 :  : klass_index=274 name_and_type_index=722
+ - 722 :  : name_index=714 signature_index=723
+ - 723 :  : '()Ljavax/swing/ComboBoxModel;'
+ - 724 :  : klass_index=725 name_and_type_index=727
+ - 725 :  : 'javax/swing/ComboBoxModel'
+ - 726 :  : 'javax/swing/ComboBoxModel'
+ - 727 :  : name_index=728 signature_index=679
+ - 728 :  : 'getSelectedItem'
+ - 729 :  : klass_index=83 name_and_type_index=730
+ - 730 :  : name_index=731 signature_index=108
+ - 731 :  : 'setExpectRS'
+ - 732 :  : "INSERT INTO dbo.PATIENT (firstName, lastName, middleName, SSN, DOB, address, phone, email)VALUES (?, ?, ?, ?, ?, ?, ?, ?)" {0x7d4abdc8}
+ - 733 :  : 'INSERT INTO dbo.PATIENT (firstName, lastName, middleName, SSN, DOB, address, phone, email)VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+ - 734 :  : klass_index=83 name_and_type_index=735
+ - 735 :  : name_index=736 signature_index=166
+ - 736 :  : 'setquery'
+ - 737 :  : klass_index=83 name_and_type_index=738
+ - 738 :  : name_index=739 signature_index=166
+ - 739 :  : 'SetParameter'
+ - 740 :  : klass_index=268 name_and_type_index=741
+ - 741 :  : name_index=742 signature_index=743
+ - 742 :  : 'valueOf'
+ - 743 :  : '(Ljava/lang/Object;)Ljava/lang/String;'
+ - 744 :  : 'java/util/Date'
+ - 745 :  : 'java/util/Date'
+ - 746 :  : klass_index=744 name_and_type_index=747
+ - 747 :  : name_index=748 signature_index=749
+ - 748 :  : 'getTime'
+ - 749 :  : '()J'
+ - 750 :  : klass_index=588 name_and_type_index=751
+ - 751 :  : name_index=51 signature_index=752
+ - 752 :  : '(J)V'
+ - 753 :  : klass_index=83 name_and_type_index=754
+ - 754 :  : name_index=739 signature_index=755
+ - 755 :  : '(Ljava/sql/Date;)V'
+ - 756 :  : klass_index=83 name_and_type_index=757
+ - 757 :  : name_index=758 signature_index=759
+ - 758 :  : 'executeQuery'
+ - 759 :  : '()Ljava/sql/ResultSet;'
+ - 760 :  : klass_index=100 name_and_type_index=761
+ - 761 :  : name_index=762 signature_index=45
+ - 762 :  : 'dispose'
+ - 763 :  : klass_index=431 name_and_type_index=764
+ - 764 :  : name_index=765 signature_index=691
+ - 765 :  : 'isSelected'
+ - 766 :  : klass_index=431 name_and_type_index=702
+ - 767 :  : klass_index=680 name_and_type_index=768
+ - 768 :  : name_index=769 signature_index=563
+ - 769 :  : 'getAllergenName'
+ - 770 :  : klass_index=771 name_and_type_index=773
+ - 771 :  : 'java/lang/Integer'
+ - 772 :  : 'java/lang/Integer'
+ - 773 :  : name_index=742 signature_index=774
+ - 774 :  : '(I)Ljava/lang/Integer;'
+ - 775 :  : klass_index=88 name_and_type_index=776
+ - 776 :  : name_index=154 signature_index=598
+ - 777 :  : "SELECT patientID from dbo.PATIENT WHERE firstName = ? AND lastName = ? AND middleName = ?" {0x7d4abef0}
+ - 778 :  : 'SELECT patientID from dbo.PATIENT WHERE firstName = ? AND lastName = ? AND middleName = ?'
+ - 779 :  : klass_index=780 name_and_type_index=782
+ - 780 :  : 'java/sql/ResultSet'
+ - 781 :  : 'java/sql/ResultSet'
+ - 782 :  : name_index=678 signature_index=691
+ - 783 :  : klass_index=780 name_and_type_index=784
+ - 784 :  : name_index=785 signature_index=786
+ - 785 :  : 'getInt'
+ - 786 :  : '(I)I'
+ - 787 :  : "INSERT INTO dbo.ALLERGENS (allergenID, patientID, active) VALUES (?, ?, ?)" {0x7d4abfd8}
+ - 788 :  : 'INSERT INTO dbo.ALLERGENS (allergenID, patientID, active) VALUES (?, ?, ?)'
+ - 789 :  : klass_index=771 name_and_type_index=790
+ - 790 :  : name_index=791 signature_index=426
+ - 791 :  : 'intValue'
+ - 792 :  : klass_index=83 name_and_type_index=793
+ - 793 :  : name_index=739 signature_index=116
+ - 794 :  : klass_index=83 name_and_type_index=795
+ - 795 :  : name_index=739 signature_index=108
+ - 796 :  : "Fields Incomplete" {0x7d4ac0a0}
+ - 797 :  : 'Fields Incomplete'
+ - 798 :  : "Fill in empty feilds." {0x7d4ac0f8}
+ - 799 :  : 'Fill in empty feilds.'
+ - 800 :  : klass_index=801 name_and_type_index=803
+ - 801 :  : 'javax/swing/JOptionPane'
+ - 802 :  : 'javax/swing/JOptionPane'
+ - 803 :  : name_index=804 signature_index=805
+ - 804 :  : 'showMessageDialog'
+ - 805 :  : '(Ljava/awt/Component;Ljava/lang/Object;Ljava/lang/String;I)V'
+ - 806 :  : klass_index=807 name_and_type_index=480
+ - 807 :  : 'java/lang/Exception'
+ - 808 :  : 'java/lang/Exception'
+ - 809 :  : 'utilDate'
+ - 810 :  : 'Ljava/util/Date;'
+ - 811 :  : 'sqlDate'
+ - 812 :  : 'Ljava/sql/Date;'
+ - 813 :  : 'allergenButton'
+ - 814 :  : 'Ljavax/swing/JRadioButton;'
+ - 815 :  : 'rs'
+ - 816 :  : 'Ljava/sql/ResultSet;'
+ - 817 :  : 'patientID'
+ - 818 :  : 'x'
+ - 819 :  : 'Ljava/lang/Integer;'
+ - 820 :  : 'Ljava/lang/Exception;'
+ - 821 :  : 'editProfile'
+ - 822 :  : "UPDATE dbo.PATIENT SET firstName=?, lastName=?, middleName=?, SSN=?, DOB=?, address=?, phone=?, email=? WHERE lastName = ? AND firstName = ? AND middleName = ?" {0x7d49bed8}
+ - 823 :  : 'UPDATE dbo.PATIENT SET firstName=?, lastName=?, middleName=?, SSN=?, DOB=?, address=?, phone=?, email=? WHERE lastName = ? AND firstName = ? AND middleName = ?'
+ - 824 :  : klass_index=88 name_and_type_index=825
+ - 825 :  : name_index=826 signature_index=598
+ - 826 :  : 'contains'
+ - 827 :  : klass_index=559 name_and_type_index=828
+ - 828 :  : name_index=829 signature_index=426
+ - 829 :  : 'getPatientID'
+ - 830 :  : "DELETE FROM dbo.ALLERGENS WHERE patientID = ? AND allergenID = ?" {0x7d4ac158}
+ - 831 :  : 'DELETE FROM dbo.ALLERGENS WHERE patientID = ? AND allergenID = ?'
+ - 832 :  : 'y'
+ - 833 :  : "SELECT allergenID, allergenName FROM dbo.PATIENT_ALLERGEN_MAP WHERE active = 1" {0x7d417570}
+ - 834 :  : 'SELECT allergenID, allergenName FROM dbo.PATIENT_ALLERGEN_MAP WHERE active = 1'
+ - 835 :  : klass_index=680 name_and_type_index=73
+ - 836 :  : klass_index=680 name_and_type_index=837
+ - 837 :  : name_index=838 signature_index=116
+ - 838 :  : 'setAllergenID'
+ - 839 :  : klass_index=780 name_and_type_index=840
+ - 840 :  : name_index=841 signature_index=842
+ - 841 :  : 'getString'
+ - 842 :  : '(I)Ljava/lang/String;'
+ - 843 :  : klass_index=680 name_and_type_index=844
+ - 844 :  : name_index=845 signature_index=166
+ - 845 :  : 'setAllergenName'
+ - 846 :  : klass_index=431 name_and_type_index=165
+ - 847 :  : klass_index=431 name_and_type_index=142
+ - 848 :  : klass_index=431 name_and_type_index=110
+ - 849 :  : 'Xoffset'
+ - 850 :  : 'Yoffset'
+ - 851 :  : 'button'
+ - 852 :  : 'getAllergyList'
+ - 853 :  : 'java/lang/StringBuilder'
+ - 854 :  : 'java/lang/StringBuilder'
+ - 855 :  : klass_index=853 name_and_type_index=165
+ - 856 :  : klass_index=853 name_and_type_index=857
+ - 857 :  : name_index=858 signature_index=859
+ - 858 :  : 'append'
+ - 859 :  : '(Ljava/lang/String;)Ljava/lang/StringBuilder;'
+ - 860 :  : klass_index=853 name_and_type_index=590
+ - 861 :  : 'access$0'
+ - 862 :  : '(LProfile;)Ljavax/swing/JFrame;'
+ - 863 :  : 'SourceFile'
+ - 864 :  : 'Profile.java'
+ - 865 :  : 'InnerClasses'
+ - 866 :  : 'javax/swing/JFormattedTextField$AbstractFormatter'
+ - 867 :  : 'javax/swing/JFormattedTextField$AbstractFormatter'
+ - 868 :  : 'javax/swing/JFormattedTextField'
+ - 869 :  : 'javax/swing/JFormattedTextField'
+ - 870 :  : 'AbstractFormatter'
+ - 871 :  : '(I)Ljava/lang/StringBuilder;'
+ - 872 :  : name_index=858 signature_index=871
+ - 873 :  : klass_index=853 name_and_type_index=872
+ - 874 :  : 'print'
+ - 875 :  : name_index=874 signature_index=166
+ - 876 :  : klass_index=705 name_and_type_index=875
+ - 877 :  : "SELECT allergenID, allergenName FROM dbo.PATIENT_ALLERGEN_MAP WHERE active = 1" {0x7d417570}
+
+
+R11=0x000000006de10aa0
+0x000000006de10aa0 is pointing to unknown location
+
+R12=0x00000000000001d2
+0x00000000000001d2 is pointing to unknown location
+
+R13=0x000000000810dfd0
+0x000000000810dfd0 is pointing to unknown location
+
+R14=0x000000006d890000
+0x000000006d890000 is pointing to unknown location
+
+R15=0x0000000000000000
+0x0000000000000000 is pointing to unknown location
+
+
+Top of Stack: (sp=0x000000000673f040)
+0x000000000673f040:   0000000000591000 0000000000217e10
+0x000000000673f050:   000000000673f1b0 000000000673f850
+0x000000000673f060:   000000000673f3a0 000000006dcd0995
+0x000000000673f070:   0000000006ab6000 0000000000591000
+0x000000000673f080:   00000000005ba5f0 0000000000007fd8
+0x000000000673f090:   000000000673f3e0 000007fefd52133c
+0x000000000673f0a0:   000000000673f3e0 000000000673f410
+0x000000000673f0b0:   0000000006ab6000 00000007d67e9548
+0x000000000673f0c0:   0000000006ab6000 000007fefd52133c
+0x000000000673f0d0:   0000000000000000 000000006dcedd09
+0x000000000673f0e0:   0000000000591030 0000000000217e10
+0x000000000673f0f0:   0000000000000000 000000006d8eb6f8
+0x000000000673f100:   0000000000000000 000000006dcee6a3
+0x000000000673f110:   0000000000591000 0000000000217e10
+0x000000000673f120:   000000000673f280 000000000673f850
+0x000000000673f130:   0000000000000000 000000006dcee262 
+
+Instructions: (pc=0x000000006dcee5e7)
+0x000000006dcee5d7:   00 00 48 8b 41 08 c7 41 10 00 00 00 00 48 8b d9
+0x000000006dcee5e7:   48 8b 10 80 7a 12 28 74 30 48 8d 15 41 e0 14 00 
+
+
+Stack: [0x0000000006640000,0x0000000006740000],  sp=0x000000000673f040,  free space=1020k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x45e5e7]
+
+VM_Operation (0x000000000718f950): GetOrSetLocal, mode: safepoint, requested by thread 0x000000000699f000
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x000000000817e800 JavaThread "TimerQueue" daemon [_thread_blocked, id=1480, stack(0x0000000009f00000,0x000000000a000000)]
+  0x00000000080c4800 JavaThread "Abandoned connection cleanup thread" daemon [_thread_blocked, id=7372, stack(0x0000000008330000,0x0000000008430000)]
+  0x000000000021d000 JavaThread "DestroyJavaVM" [_thread_blocked, id=5380, stack(0x0000000002520000,0x0000000002620000)]
+  0x0000000006ab6000 JavaThread "AWT-EventQueue-0" [_thread_blocked, id=7628, stack(0x0000000007e30000,0x0000000007f30000)]
+  0x0000000006a10800 JavaThread "AWT-Windows" daemon [_thread_in_native, id=2188, stack(0x0000000007d30000,0x0000000007e30000)]
+  0x0000000006a0f800 JavaThread "AWT-Shutdown" [_thread_blocked, id=3624, stack(0x0000000007c30000,0x0000000007d30000)]
+  0x0000000006a0e800 JavaThread "Java2D Disposer" daemon [_thread_blocked, id=5812, stack(0x0000000007b30000,0x0000000007c30000)]
+  0x00000000069e4000 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=1840, stack(0x0000000007670000,0x0000000007770000)]
+  0x00000000069bc800 JavaThread "CompilerThread1" daemon [_thread_blocked, id=4688, stack(0x0000000007570000,0x0000000007670000)]
+  0x00000000069d2800 JavaThread "CompilerThread0" daemon [_thread_blocked, id=6300, stack(0x0000000007470000,0x0000000007570000)]
+  0x00000000069a8000 JavaThread "JDWP Command Reader" daemon [_thread_in_native, id=1904, stack(0x0000000007370000,0x0000000007470000)]
+  0x00000000069a6800 JavaThread "JDWP Event Helper Thread" daemon [_thread_blocked, id=7800, stack(0x0000000007270000,0x0000000007370000)]
+  0x000000000699f000 JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_blocked, id=2436, stack(0x0000000007090000,0x0000000007190000)]
+  0x0000000006997000 JavaThread "Attach Listener" daemon [_thread_blocked, id=5400, stack(0x0000000006c40000,0x0000000006d40000)]
+  0x000000000698f800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=4680, stack(0x0000000006b40000,0x0000000006c40000)]
+  0x0000000000635000 JavaThread "Finalizer" daemon [_thread_blocked, id=2476, stack(0x0000000006840000,0x0000000006940000)]
+  0x0000000000633800 JavaThread "Reference Handler" daemon [_thread_blocked, id=6492, stack(0x0000000006740000,0x0000000006840000)]
+
+Other Threads:
+=>0x000000000062f800 VMThread [stack: 0x0000000006640000,0x0000000006740000] [id=7644]
+  0x00000000069bd000 WatcherThread [stack: 0x0000000007770000,0x0000000007870000] [id=7828]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000000000021af00] Threads_lock - owner thread: 0x000000000062f800
+
+Heap
+ PSYoungGen      total 37888K, used 22057K [0x00000007d5c00000, 0x00000007d8640000, 0x0000000800000000)
+  eden space 32512K, 61% used [0x00000007d5c00000,0x00000007d6f8a3d8,0x00000007d7bc0000)
+  from space 5376K, 38% used [0x00000007d7bc0000,0x00000007d7dc0280,0x00000007d8100000)
+  to   space 5376K, 0% used [0x00000007d8100000,0x00000007d8100000,0x00000007d8640000)
+ PSOldGen        total 86528K, used 0K [0x0000000781400000, 0x0000000786880000, 0x00000007d5c00000)
+  object space 86528K, 0% used [0x0000000781400000,0x0000000781400000,0x0000000786880000)
+ PSPermGen       total 21248K, used 19120K [0x000000077c200000, 0x000000077d6c0000, 0x0000000781400000)
+  object space 21248K, 89% used [0x000000077c200000,0x000000077d4ac208,0x000000077d6c0000)
+
+Dynamic libraries:
+0x0000000000400000 - 0x000000000042e000 	C:\Program Files\Java\jdk1.6.0_23\bin\javaw.exe
+0x0000000077730000 - 0x00000000778da000 	C:\windows\SYSTEM32\ntdll.dll
+0x0000000077610000 - 0x000000007772f000 	C:\windows\system32\kernel32.dll
+0x000007fefd520000 - 0x000007fefd58a000 	C:\windows\system32\KERNELBASE.dll
+0x00000000751c0000 - 0x0000000075249000 	C:\windows\System32\SYSFER.DLL
+0x000007fefe400000 - 0x000007fefe4db000 	C:\windows\system32\ADVAPI32.dll
+0x000007fefd870000 - 0x000007fefd90f000 	C:\windows\system32\msvcrt.dll
+0x000007fefe270000 - 0x000007fefe28f000 	C:\windows\SYSTEM32\sechost.dll
+0x000007fefe140000 - 0x000007fefe26d000 	C:\windows\system32\RPCRT4.dll
+0x0000000077510000 - 0x000000007760a000 	C:\windows\system32\USER32.dll
+0x000007fefe0d0000 - 0x000007fefe137000 	C:\windows\system32\GDI32.dll
+0x000007fefe4e0000 - 0x000007fefe4ee000 	C:\windows\system32\LPK.dll
+0x000007fefdd70000 - 0x000007fefde3a000 	C:\windows\system32\USP10.dll
+0x000007fefe330000 - 0x000007fefe35e000 	C:\windows\system32\IMM32.DLL
+0x000007fefe780000 - 0x000007fefe889000 	C:\windows\system32\MSCTF.dll
+0x000000006d890000 - 0x000000006df80000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\server\jvm.dll
+0x000007fefb1f0000 - 0x000007fefb22b000 	C:\windows\system32\WINMM.dll
+0x000000006d800000 - 0x000000006d80e000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\verify.dll
+0x000000006d450000 - 0x000000006d477000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\java.dll
+0x000000006d3b0000 - 0x000000006d3ba000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\hpi.dll
+0x0000000077900000 - 0x0000000077907000 	C:\windows\system32\PSAPI.DLL
+0x000000006d4c0000 - 0x000000006d4f4000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\jdwp.dll
+0x000000006d6d0000 - 0x000000006d6d8000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\npt.dll
+0x000000006d850000 - 0x000000006d862000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\zip.dll
+0x000000006d310000 - 0x000000006d319000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\dt_socket.dll
+0x000007fefe890000 - 0x000007fefe8dd000 	C:\windows\system32\WS2_32.dll
+0x000007fefdd60000 - 0x000007fefdd68000 	C:\windows\system32\NSI.dll
+0x000007fefafa0000 - 0x000007fefafb5000 	C:\windows\system32\NLAapi.dll
+0x000007fef93e0000 - 0x000007fef93f5000 	C:\windows\system32\napinsp.dll
+0x000007fef93c0000 - 0x000007fef93d9000 	C:\windows\system32\pnrpnsp.dll
+0x000007fefcbe0000 - 0x000007fefcc35000 	C:\windows\System32\mswsock.dll
+0x000007fefcb20000 - 0x000007fefcb7b000 	C:\windows\system32\DNSAPI.dll
+0x000007fef93b0000 - 0x000007fef93bb000 	C:\windows\System32\winrnr.dll
+0x000007fef93a0000 - 0x000007fef93b0000 	C:\windows\system32\wshbth.dll
+0x000007fefaae0000 - 0x000007fefab07000 	C:\windows\system32\IPHLPAPI.DLL
+0x000007fefaad0000 - 0x000007fefaadb000 	C:\windows\system32\WINNSI.DLL
+0x000007fefa470000 - 0x000007fefa4c3000 	C:\windows\System32\fwpuclnt.dll
+0x000007fef9430000 - 0x000007fef9438000 	C:\windows\system32\rasadhlp.dll
+0x000007fefc660000 - 0x000007fefc667000 	C:\windows\System32\wshtcpip.dll
+0x000000006d0a0000 - 0x000000006d263000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\awt.dll
+0x000007fefa6a0000 - 0x000007fefa711000 	C:\windows\system32\WINSPOOL.DRV
+0x000007fefe570000 - 0x000007fefe773000 	C:\windows\system32\ole32.dll
+0x000007fefe8e0000 - 0x000007feff66a000 	C:\windows\system32\SHELL32.dll
+0x000007fefe4f0000 - 0x000007fefe561000 	C:\windows\system32\SHLWAPI.dll
+0x000007fefc070000 - 0x000007fefc264000 	C:\windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.18837_none_fa3b1e3d17594757\COMCTL32.dll
+0x000007fefb6d0000 - 0x000007fefb6e8000 	C:\windows\system32\DWMAPI.DLL
+0x000007fefbe70000 - 0x000007fefbec6000 	C:\windows\system32\uxtheme.dll
+0x000007fefd310000 - 0x000007fefd31f000 	C:\windows\system32\CRYPTBASE.dll
+0x000000006d340000 - 0x000000006d3a6000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\fontmanager.dll
+0x000000006d6a0000 - 0x000000006d6b7000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\net.dll
+0x000007fefcd90000 - 0x000007fefcd97000 	C:\windows\System32\wship6.dll
+0x000007fefcda0000 - 0x000007fefcdb8000 	C:\windows\system32\CRYPTSP.dll
+0x000007fefca30000 - 0x000007fefca77000 	C:\windows\system32\rsaenh.dll
+0x000007fefd840000 - 0x000007fefd85e000 	C:\windows\system32\USERENV.dll
+0x000007fefd4c0000 - 0x000007fefd4cf000 	C:\windows\system32\profapi.dll
+0x000000006d6c0000 - 0x000000006d6cb000 	C:\Program Files\Java\jdk1.6.0_23\jre\bin\nio.dll
+0x000007fefd910000 - 0x000007fefd9e8000 	C:\windows\system32\OLEAUT32.DLL
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:51559 -Dfile.encoding=Cp1252 
+java_command: LoginFrame
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+CLASSPATH=C:\Program Files\IBM\SQLLIB\java\db2java.zip;C:\Program Files\IBM\SQLLIB\java\db2jcc.jar;C:\Program Files\IBM\SQLLIB\java\db2jcc_license_cisuz.jar;C:\Program Files\IBM\SQLLIB\java\db2jcc_license_cu.jar;C:\Program Files\IBM\SQLLIB\java\bin;C:\Program Files\IBM\SQLLIB\java\common.jar;
+PATH=C:\Program Files\Java\jdk1.6.0_23\jre\bin;C:/Program Files (x86)/Java/jre1.6.0_33/bin/client;C:/Program Files (x86)/Java/jre1.6.0_33/bin;C:/Program Files (x86)/Java/jre1.6.0_33/lib/i386;C:\Apps\Oracle\product\11.2.0\client_1\bin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\JBHunt\Client Engineering\System Tools;C:\Program Files (x86)\HP\HPCA\Agent;C:\Program Files\JBHunt\Applications\Common;C:\Program Files\JBHunt\Applications\Common\Dll;C:\Program Files\IBM\SQLLIB\BIN;C:\Program Files\IBM\SQLLIB\BIN\FUNCTION;c:\Program Files (x86)\Avaya Modular Messaging\Common;c:\Program Files (x86)\Common Files\Avaya Modular Messaging;C:\Progra~1\apache-maven-2.2.1\bin;C:\Program Files\TortoiseSVN\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\Apache\svn-win32-1.8.8\bin;;C:\Program Files (x86)\Eclipse\JEE_3.7.1;
+USERNAME=jisazb1
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 60 Stepping 3, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7601 Service Pack 1
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 60 stepping 3, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht
+
+Memory: 4k page, physical 8305308k(3430968k free), swap 16608760k(12064312k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (19.0-b09) for windows-amd64 JRE (1.6.0_23-b05), built on Nov 13 2010 02:43:42 by "java_re" with MS VC++ 8.0 (VS2005)
+
+time: Mon Apr 25 11:39:00 2016
+elapsed time: 105 seconds
+

@@ -66,6 +66,7 @@ public class Profile {
 	private ArrayList<Allergen> allergens;
 	private JTextPane notes;
 	private ArrayList<Integer> allergenIDs;
+	private ArrayList<Allergen> patientAllergens;
 
 	private MaskFormatter phoneFormatter;
 	private MaskFormatter zipFormatter;
@@ -604,6 +605,7 @@ public class Profile {
 		panel.add(lblDrugAllergies);
 		
 		addAllergiesButtons();
+		populateAllergiesButtons(patient);
 		
 		JSeparator separator3 = new JSeparator();
 		separator3.setBounds(50, allergenButtons.get(allergenButtons.size()-1).getY() + 40, 600, 1);
@@ -657,7 +659,7 @@ public class Profile {
 		
 		createBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				editProfile();
+				editProfile(patient);
 			}
 		});
 		} catch(SQLException es){
@@ -680,12 +682,20 @@ public class Profile {
 		PlainDocument altphonedoc = (PlainDocument) altPhone.getDocument();
 		altphonedoc.setDocumentFilter(new IntegerFilter());
 	}
+	private void populateAllergiesButtons(Patient patient) {
+		for(Allergen allergen: patient.getAllergens()){
+			allergenButtons.get(allergen.getAllergenID()-1).setSelected(true);
+		}
+		
+	}
+
 	/* The create function below needs to be specifically implemented for the fields contained within the patient
 	 * profile.  I don't know if the database is currently set up to handle these, nor do I know what order they
 	 * would even be in for so I am leaving it all commented out until we sort that out.
 	 */
 
 	
+
 	public void createProfile()
 	{
 		
@@ -730,9 +740,10 @@ public class Profile {
 						
 						for(Integer x: allergenIDs){
 							dao.setExpectRS(false);
-							dao.setquery("INSERT INTO dbo.ALLERGENS (allergenID, patientID) VALUES (?, ?)");
+							dao.setquery("INSERT INTO dbo.ALLERGENS (allergenID, patientID, active) VALUES (?, ?, ?)");
 							dao.SetParameter(x);
 							dao.SetParameter(patientID);
+							dao.SetParameter(true);
 							dao.executeQuery();
 						}
 			}
@@ -747,8 +758,12 @@ public class Profile {
 		}
 	}
 	
-	public void editProfile()
+	public void editProfile(Patient patient)
 	{
+		ArrayList<Integer> allergenIDs = new ArrayList<Integer>();
+		for(Allergen allergen: patient.getAllergens()){
+			allergenIDs.add(allergen.getAllergenID());
+		}
 
 		try{
 			// Checking for empty fields
@@ -768,6 +783,27 @@ public class Profile {
 						dao.SetParameter(middleName.getText());
 						dao.executeQuery();			
 						frmNewPatient.dispose();
+						
+						for(int i = 0; i < allergenButtons.size(); i++){
+							if(allergenButtons.get(i).isSelected() && !allergenIDs.contains(i+1)){
+								dao.setquery("INSERT INTO dbo.ALLERGENS (allergenID, patientID, active) VALUES (?, ?, ?)");
+								dao.SetParameter(allergens.get(i).getAllergenID());
+								dao.SetParameter(patient.getPatientID());
+								dao.SetParameter(true);
+								dao.executeQuery();
+							}
+							
+							
+							boolean seleted = !allergenButtons.get(i).isSelected();
+							boolean contains = patient.getAllergens().contains(i+1);
+							
+							if(!allergenButtons.get(i).isSelected() && allergenIDs.contains(i+1)){
+								dao.setquery("DELETE FROM dbo.ALLERGENS WHERE patientID = ? AND allergenID = ?");
+								dao.SetParameter(patient.getPatientID());
+								dao.SetParameter(allergens.get(i).getAllergenID());
+								dao.executeQuery();
+							}
+						}
 			}
 			else{
 				//FIELDS EMPTY M8

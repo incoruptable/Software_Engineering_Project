@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -160,7 +161,7 @@ public class PatientSearch {
 				if(me.getClickCount() == 2){
 					try {
 						ResultSet rs;
-						dao.setquery("SELECT * FROM dbo.PatientTable WHERE lastName = ? AND SSN = ? AND phone = ?");
+						dao.setquery("SELECT patientID, lastName, firstName, middleName, SSN, address, email, phone, DOB FROM dbo.PATIENT WHERE lastName = ? AND SSN = ? AND phone = ?");
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString());
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString());
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 5).toString());
@@ -169,20 +170,35 @@ public class PatientSearch {
 						rs = dao.executeQuery();
 						
 						if(rs.next()) {
-							selectedPatient.setFirstName(rs.getString(1));
+							selectedPatient.setPatientID(rs.getInt(1));
 							selectedPatient.setLastName(rs.getString(2));
-							selectedPatient.setMiddleName(rs.getString(3));
-							selectedPatient.setSSN(rs.getString(4));
-							selectedPatient.setDOB(rs.getDate(5));
+							selectedPatient.setFirstName(rs.getString(3));
+							selectedPatient.setMiddleName(rs.getString(4));
+							selectedPatient.setSSN(rs.getString(5));
 							selectedPatient.setAddress(rs.getString(6));
-							selectedPatient.setCity(rs.getString(7));
-							selectedPatient.setState(rs.getString(8));
-							selectedPatient.setZipCode(rs.getString(9));
-							selectedPatient.setPhone(rs.getString(10));
-							selectedPatient.setAltPhone(rs.getString(11));
-							selectedPatient.setEmail(rs.getString(12));
-							selectedPatient.setAllergies(rs.getString(13));
-							selectedPatient.setNotes(rs.getString(14));
+							selectedPatient.setEmail(rs.getString(7));
+							selectedPatient.setPhone(rs.getString(8));
+							selectedPatient.setDOB(rs.getDate(9));
+							
+							
+							dao.setquery("SELECT allergenID FROM dbo.ALLERGENS WHERE patientID = ?");
+							dao.SetParameter(selectedPatient.getPatientID());
+							rs = dao.executeQuery();
+							
+							ArrayList<Allergen> allergens = new ArrayList<Allergen>();
+							while(rs.next()){
+								Allergen allergen = new Allergen();
+								dao.setquery("SELECT allergenID, allergenName FROM dbo.PATIENT_ALLERGEN_MAP WHERE allergenID = ?");
+								dao.SetParameter(rs.getInt(1));
+								ResultSet rs2 = dao.executeQuery();
+								if(rs2.next()){
+									allergen.setAllergenID(rs2.getInt(1));
+									allergen.setAllergenName(rs2.getString(2));
+									allergens.add(allergen);
+								}
+							}
+							selectedPatient.setAllergens(allergens);
+							
 							Profile profile = new Profile(selectedPatient);
 							profile.CreateProfilePopUpWithPatient(selectedPatient);
 						}
@@ -234,7 +250,7 @@ public class PatientSearch {
 	private void searchOnLastName(String param) throws SQLException {
 		ResultSet rs;
 		if(!param.isEmpty()){
-			dao.setquery("SELECT firstName, lastName, SSN, DOB, address, phone, email FROM dbo.PatientTable WHERE lastName = ?");
+			dao.setquery("SELECT firstName, lastName, SSN, DOB, address, phone, email FROM dbo.PATIENT WHERE lastName = ?");
 			dao.SetParameter(param);
 			dao.setExpectRS(true);
 			rs = dao.executeQuery();
@@ -263,7 +279,7 @@ public class PatientSearch {
 	private void searchOnSSN(String param) throws SQLException {
 		ResultSet rs;
 		if(!param.isEmpty()){
-			dao.setquery("SELECT firstName, lastName, SSN, DOB, address, phone, email FROM dbo.PatientTable WHERE SSN = ?");
+			dao.setquery("SELECT firstName, lastName, SSN, DOB, address, phone, email FROM dbo.PATIENT WHERE SSN = ?");
 			dao.SetParameter(param);
 			dao.setExpectRS(true);
 			rs = dao.executeQuery();

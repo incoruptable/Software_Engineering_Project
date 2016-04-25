@@ -72,4 +72,10 @@ public class DAO {
 		paramNumber = 1;
 		return rs;
 	}
+
+	public void SetParameter(boolean b) throws SQLException {
+		stmt.setBoolean(paramNumber, b);
+		paramNumber++;
+		
+	}
 }
