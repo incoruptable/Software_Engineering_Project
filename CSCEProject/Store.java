@@ -28,6 +28,4 @@ public class Store {
 	public void setStorePhone(String storePhone) {
 		this.storePhone = storePhone;
 	}
-	
-	
 }

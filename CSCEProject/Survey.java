@@ -3,7 +3,9 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import java.awt.BorderLayout;
@@ -31,6 +33,8 @@ public class Survey {
 	private Patient patient;
 	private ArrayList<String> shotNames;
 	private ArrayList<Shot> shots;
+	private ArrayList<JLabel> questions;
+	private ArrayList<YesorNoBox> boxes;
 	private Shot selectedShot;
 	
 	private JFrame frmSurvey;
@@ -40,6 +44,61 @@ public class Survey {
 	private JButton btnComplete;
 	private JButton btnCancel;
 	private DAO dao;
+	
+	
+	class YesorNoBox {
+		
+		private ArrayList<JRadioButton> buttons;
+		private JRadioButton yesButton;
+		private JRadioButton noButton;
+		
+		public YesorNoBox(int height){
+			buttons = new ArrayList<JRadioButton>();
+			yesButton = new JRadioButton("Yes");
+			yesButton.setBackground(Color.WHITE);
+			yesButton.setBounds(10, height + 50, 100, 20);
+			yesButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(yesButton.isSelected()){
+						noButton.setSelected(false);
+					}
+					else
+						yesButton.setSelected(true);
+				}
+				
+			});
+			
+			noButton = new JRadioButton("No");
+			noButton.setBackground(Color.WHITE);
+			noButton.setBounds(110, height + 50, 100, 20);
+			noButton.setSelected(true);
+			noButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(noButton.isSelected()){
+						yesButton.setSelected(false);
+					}
+					else
+						noButton.setSelected(true);
+				}
+				
+			});
+			
+			buttons.add(yesButton);
+			buttons.add(noButton);
+		}
+		
+		public JRadioButton getNoButton(){
+			return buttons.get(1);
+		}
+		
+		public JRadioButton getYesButton(){
+			return buttons.get(0);
+		}
+	};
 	
 	/**
 	 * Launch the application
@@ -73,6 +132,8 @@ public class Survey {
 		dao = new DAO();
 		shots = new ArrayList<Shot>();
 		shotNames = new ArrayList<String>();
+		questions = new ArrayList<JLabel>();
+		boxes = new ArrayList<YesorNoBox>();
 		
 		this.setQCount();
 		this.getShots();
@@ -135,10 +196,6 @@ public class Survey {
 				} catch (Exception e){
 					e.printStackTrace();
 				}
-				btnComplete.setBounds(252, frmSurvey.getHeight() - 25, 125, 20);
-				btnCancel.setBounds(387, frmSurvey.getHeight() - 25, 75, 20);
-				panel.add(btnComplete);
-				panel.add(btnCancel);
 				btnGenerate.setEnabled(false);
 				btnExit.setEnabled(false);
 				resizeFrame(sCount);
@@ -153,17 +210,25 @@ public class Survey {
 		
 		btnComplete.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {
-				// This will make all the checks for whether a shot should be administered (Check Allergies)
+				surveyDone();
+				for(YesorNoBox box: boxes){
+					if(box.getYesButton().isSelected()){
+						JOptionPane.showMessageDialog(null, "Patient can't receive shot. One or more questions have been answered yes.", "Patient Incompatible", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+				try {
+					dao.setquery("");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
 		btnCancel.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {
-				panel.remove(btnComplete);
-				panel.remove(btnCancel);
-				frmSurvey.repaint();
-				btnGenerate.setEnabled(true);
-				btnExit.setEnabled(true);
+				surveyDone();
 			}
 		});
 				
@@ -243,33 +308,58 @@ public class Survey {
 			qSet = rs.getString(1);
 		}
 				
-		for (int i = 1; i <= qCount; i++){
-			String qNum = new String();
-			qNum = "" + i;
-			
-			// Checking if current question number is included
-			if(qSet.contains(qNum)) {
-				String questionText = new String();
-				dao.setquery("SELECT qText FROM dbo.SURVEY_QUESTIONS WHERE questionID = ?");
-				dao.SetParameter(i);
-				dao.setExpectRS(true);
-				ResultSet qrs = dao.executeQuery();
-				while(qrs.next()){
-					questionText = qrs.getString(1);
+		if(!qSet.isEmpty()){	
+			for (int i = 1; i <= qCount; i++){
+				String qNum = new String();
+				qNum = "" + String.valueOf(i);
+				
+				// Checking if current question number is included
+				if(qSet.contains(qNum)) {
+					String questionText = new String();
+					dao.setquery("SELECT qText FROM dbo.SURVEY_QUESTIONS WHERE questionID = ?");
+					dao.SetParameter(i);
+					dao.setExpectRS(true);
+					ResultSet qrs = dao.executeQuery();
+					while(qrs.next()){
+						questionText = qrs.getString(1);
+					}
+					
+					JLabel question = new JLabel("<html>" + questionText + "</html>");
+					question.setFont(new Font("Tahoma", Font.BOLD, 12));
+					question.setHorizontalAlignment(SwingConstants.CENTER);
+					question.setBounds(10, 75 + offset, 400 , 45);
+					questions.add(question);
+					YesorNoBox box = new YesorNoBox(75 + offset);
+					
+					boxes.add(box);
+					panel.add(box.getYesButton());
+					panel.add(box.getNoButton());
+					panel.add(question);
+					
+					offset += 75;
 				}
 				
-				JLabel question = new JLabel(questionText);
-				question.setFont(new Font("Tahoma", Font.BOLD, 12));
-				question.setHorizontalAlignment(SwingConstants.CENTER);
-				question.setBounds(50, 75 + offset, 400, 20);
-				panel.add(question);
-				
-				offset += 25;
 			}
-
-		
+			btnComplete.setBounds(252, boxes.get(boxes.size()-1).getYesButton().getY() + 50, 125, 20);
+			btnCancel.setBounds(387, boxes.get(boxes.size()-1).getYesButton().getY() + 50, 75, 20);
+			panel.add(btnComplete);
+			panel.add(btnCancel);
 		}
 	} 	
-
+	private void surveyDone(){
+		for(JLabel question: questions){
+			panel.remove(question);
+		}
+		for(YesorNoBox box: boxes){
+			panel.remove(box.getYesButton());
+			panel.remove(box.getNoButton());
+		}
+		panel.remove(btnComplete);
+		panel.remove(btnCancel);
+		resizeFrame(0);
+		frmSurvey.repaint();
+		btnGenerate.setEnabled(true);
+		btnExit.setEnabled(true);
+	}
 }
 
