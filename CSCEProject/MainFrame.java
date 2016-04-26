@@ -142,7 +142,7 @@ public class MainFrame {
 		panel.add(btnLogout);
 		
 		JLabel logo = new JLabel("");
-		logo.setIcon(new ImageIcon("LogoPlaceholder.png"));
+		logo.setIcon(new ImageIcon("VIMSLogo_Transparent.png"));
 		logo.setBackground(Color.LIGHT_GRAY);
 		logo.setBounds(25, 25, 400, 100);
 		panel.add(logo);
