@@ -81,7 +81,7 @@ public class LoginFrame extends JFrame {
 		sign_in.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Sign in", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		
 		JLabel logo = new JLabel("");
-		logo.setIcon(new ImageIcon("LogoPlaceholder.png"));
+		logo.setIcon(new ImageIcon("VIMS_Small_Transparent.png"));
 		logo.setBackground(Color.LIGHT_GRAY);
 		logo.setBounds(90, 15, 200, 50);
 		panel.add(logo);
