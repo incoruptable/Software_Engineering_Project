@@ -3,6 +3,7 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
@@ -33,6 +34,9 @@ public class Survey {
 	private ArrayList<String> shotNames;
 	private ArrayList<Shot> shots;
 	private ArrayList<JLabel> questions;
+	private ArrayList<YesorNoBox> boxes;
+	private ArrayList<Store> stores;
+	private ArrayList<String> storeNames;
 	private Shot selectedShot;
 	
 	private JFrame frmSurvey;
@@ -41,8 +45,8 @@ public class Survey {
 	private JButton btnGenerate;
 	private JButton btnComplete;
 	private JButton btnCancel;
+	private JComboBox invComboBox;
 	private DAO dao;
-	private ArrayList<YesorNoBox> yesOrNoBoxes;
 	
 	
 	class YesorNoBox {
@@ -56,9 +60,10 @@ public class Survey {
 			yesButton = new JRadioButton("Yes");
 			yesButton.setBackground(Color.WHITE);
 			yesButton.setBounds(10, height + 50, 100, 20);
-			yesButton.setSelected(true);
 			yesButton.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
 					if(yesButton.isSelected()){
 						noButton.setSelected(false);
 					}
@@ -71,8 +76,11 @@ public class Survey {
 			noButton = new JRadioButton("No");
 			noButton.setBackground(Color.WHITE);
 			noButton.setBounds(110, height + 50, 100, 20);
+			noButton.setSelected(true);
 			noButton.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
 					if(noButton.isSelected()){
 						yesButton.setSelected(false);
 					}
@@ -81,6 +89,7 @@ public class Survey {
 				}
 				
 			});
+			
 			buttons.add(yesButton);
 			buttons.add(noButton);
 		}
@@ -127,11 +136,13 @@ public class Survey {
 		shots = new ArrayList<Shot>();
 		shotNames = new ArrayList<String>();
 		questions = new ArrayList<JLabel>();
-		yesOrNoBoxes = new ArrayList<YesorNoBox>();
+		boxes = new ArrayList<YesorNoBox>();
+		stores = new ArrayList<Store>();
+		storeNames = new ArrayList<String>();
 		
 		this.setQCount();
 		this.getShots();
-		
+		this.getStores();
 		frmSurvey = new JFrame();
 		frmSurvey.setTitle("Patient: " + patient.getFirstName() + " " + patient.getLastName() + "  (" + patient.getSSN() + ")");
 		frmSurvey.setResizable(false);
@@ -145,7 +156,7 @@ public class Survey {
 		frmSurvey.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JComboBox invComboBox = new JComboBox(shotNames.toArray(new String[shotNames.size()]));
+		invComboBox = new JComboBox(shotNames.toArray(new String[shotNames.size()]));
 		invComboBox.setEditable(true);
 		invComboBox.setSelectedItem("Select Shot (" + qCount + ")");
 		invComboBox.setEditable(false);
@@ -178,6 +189,8 @@ public class Survey {
 		btnExit.setBounds(387, 25, 75, 20);
 		panel.add(btnExit);
 		
+		
+		
 		btnComplete = new JButton("Complete");
 
 		btnCancel = new JButton("Cancel");
@@ -204,25 +217,84 @@ public class Survey {
 		
 		btnComplete.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {
-				// This will make all the checks for whether a shot should be administered (Check Allergies)
+				surveyDone();
+				for(YesorNoBox box: boxes){
+					if(box.getYesButton().isSelected()){
+						JOptionPane.showMessageDialog(null, "Patient can't receive shot. One or more questions have been answered yes.", "Patient Incompatible", JOptionPane.ERROR_MESSAGE);
+						frmSurvey.dispose();
+						return;
+					}
+				}
+				try {
+					dao.setquery("SELECT allergenID FROM dbo.ALLERGENS WHERE patientID = ?");
+					dao.setExpectRS(true);
+					dao.SetParameter(patient.getPatientID());
+					ResultSet rs = dao.executeQuery();
+					ArrayList<Integer> allergenIDs = new ArrayList<Integer>();
+					while(rs.next()){
+						allergenIDs.add(rs.getInt(1));
+					}
+					dao.setquery("SELECT allergenName FROM dbo.PATIENT_ALLERGEN_MAP WHERE allergenID = ? ");
+					boolean returns = false;
+					for(Integer x: allergenIDs){
+						dao.SetParameter(x);
+						rs = dao.executeQuery();
+						if(rs.next()){
+							JOptionPane.showMessageDialog(null, "Patient can't receive shot. He is allergic to " + rs.getString(1) + ".", "Patient Incompatible", JOptionPane.ERROR_MESSAGE);
+							returns = true;
+						}
+					}
+					if(returns){
+						frmSurvey.dispose();
+						return;
+					}
+					
+					JButton administerBtn = new JButton("Administer Shot");
+					administerBtn.setBounds(37, 112, 150, 49);
+					panel.add(administerBtn);
+					
+					final JComboBox storeComboBox = new JComboBox(storeNames.toArray(new String[storeNames.size()]));
+					storeComboBox.setEditable(true);
+					storeComboBox.setSelectedItem("Select Location");
+					storeComboBox.setBounds(37, 25, 200, 20);
+					panel.remove(invComboBox);
+					panel.remove(btnGenerate);
+					panel.add(storeComboBox);
+					
+					frmSurvey.repaint();
+					administerBtn.addActionListener(new ActionListener(){
+					
+
+						@Override
+						public void actionPerformed(ActionEvent arg0) {
+							try {
+								if(storeComboBox.getSelectedIndex() >= 0){
+									dao.setquery("UPDATE dbo.STORE_INVENTORY SET qtyAvailable = qtyAvailable-1 WHERE storeID = ? AND shotID = ?");
+									dao.setExpectRS(false);
+									dao.SetParameter(stores.get(storeComboBox.getSelectedIndex()).getStoreID());
+									dao.SetParameter(selectedShot.getShotID());
+									dao.executeQuery();
+									frmSurvey.dispose();
+								}
+								else{
+									JOptionPane.showMessageDialog(null, "Please select a store.", "Can't Administer", JOptionPane.ERROR_MESSAGE);
+								}
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							}
+					});
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
 		btnCancel.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent arg0) {
-				for(JLabel question: questions){
-					panel.remove(question);
-				}
-				for(YesorNoBox box: yesOrNoBoxes){
-					panel.remove(box.getNoButton());
-					panel.remove(box.getYesButton());
-				}
-				panel.remove(btnComplete);
-				panel.remove(btnCancel);
-				resizeFrame(0);
-				frmSurvey.repaint();
-				btnGenerate.setEnabled(true);
-				btnExit.setEnabled(true);
+				surveyDone();
 			}
 		});
 				
@@ -324,21 +396,56 @@ public class Survey {
 					question.setBounds(10, 75 + offset, 400 , 45);
 					questions.add(question);
 					YesorNoBox box = new YesorNoBox(75 + offset);
-					yesOrNoBoxes.add(box);
+					
+					boxes.add(box);
 					panel.add(box.getYesButton());
 					panel.add(box.getNoButton());
 					panel.add(question);
 					
 					offset += 75;
 				}
+				
 			}
-			btnComplete.setBounds(252, yesOrNoBoxes.get(yesOrNoBoxes.size()-1).getYesButton().getY() + 50, 125, 20);
-			btnCancel.setBounds(387, yesOrNoBoxes.get(yesOrNoBoxes.size()-1).getYesButton().getY() + 50, 75, 20);
+			btnComplete.setBounds(252, boxes.get(boxes.size()-1).getYesButton().getY() + 50, 125, 20);
+			btnCancel.setBounds(387, boxes.get(boxes.size()-1).getYesButton().getY() + 50, 75, 20);
 			panel.add(btnComplete);
 			panel.add(btnCancel);
-		
 		}
 	} 	
-
+	private void surveyDone(){
+		for(JLabel question: questions){
+			panel.remove(question);
+		}
+		for(YesorNoBox box: boxes){
+			panel.remove(box.getYesButton());
+			panel.remove(box.getNoButton());
+		}
+		panel.remove(btnComplete);
+		panel.remove(btnCancel);
+		resizeFrame(0);
+		frmSurvey.repaint();
+		btnGenerate.setEnabled(true);
+		btnExit.setEnabled(true);
+	}
+	
+	private void getStores(){
+		try {
+		dao.setquery("SELECT * FROM dbo.STORES WHERE active = 1");
+		dao.setExpectRS(true);
+		ResultSet rs = dao.executeQuery();
+		while(rs.next()){
+			Store store = new Store();
+			store.setStoreID(rs.getInt(1));
+			store.setStoreName(rs.getString(2));
+			store.setStoreAddress(rs.getString(3));
+			store.setStorePhone(rs.getString(4));
+			
+			stores.add(store);
+			storeNames.add(store.getStoreName());
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
-

@@ -1,7 +1,9 @@
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Patient {
 	
+	private int patientID;
 	private String firstName;
 	private String lastName;
 	private String middleName;
@@ -19,6 +21,8 @@ public class Patient {
 	
 	private String allergies;
 	private String notes;
+	private ArrayList<Allergen> allergens;
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -108,6 +112,18 @@ public class Patient {
 	}
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+	public int getPatientID() {
+		return patientID;
+	}
+	public void setPatientID(int patientID) {
+		this.patientID = patientID;
+	}
+	public ArrayList<Allergen> getAllergens() {
+		return allergens;
+	}
+	public void setAllergens(ArrayList<Allergen> allergens) {
+		this.allergens = allergens;
 	}
 	
 	
