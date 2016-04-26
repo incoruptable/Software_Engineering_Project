@@ -146,9 +146,6 @@ public class Inventory {
 		panel.add(quantity);
 		quantity.setColumns(10);
 		
-		PlainDocument doc = (PlainDocument) quantity.getDocument();
-		doc.setDocumentFilter(new IntegerFilter());
-		
 
 		JLabel lblNotes = new JLabel("Notes");
 		lblNotes.setHorizontalAlignment(SwingConstants.CENTER);

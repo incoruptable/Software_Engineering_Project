@@ -67,6 +67,7 @@ public class Profile {
 	private JTextPane notes;
 	private ArrayList<Integer> allergenIDs;
 	private ArrayList<Allergen> patientAllergens;
+	private JComboBox sex;
 
 	private MaskFormatter phoneFormatter;
 	private MaskFormatter zipFormatter;
@@ -210,7 +211,7 @@ public class Profile {
 		panel.add(lblSex);
 		
 		String[] sexOptions = {"Male", "Female"};	
-		JComboBox sex = new JComboBox(sexOptions);
+		sex = new JComboBox(sexOptions);
 		sex.setSelectedIndex(-1);
 		sex.setBounds(515, 105, 75, 20);
 		panel.add(sex);
@@ -483,7 +484,7 @@ public class Profile {
 		panel.add(lblSex);
 		
 		String[] sexOptions = {"Male", "Female"};	
-		JComboBox sex = new JComboBox(sexOptions);
+		sex = new JComboBox(sexOptions);
 		if("Male".equals(patient.getSex())) {
 			sex.setSelectedIndex(0);
 		}
@@ -705,8 +706,8 @@ public class Profile {
 			// Checking for empty fields
 			if(!firstName.getText().isEmpty() && !lastName.getText().isEmpty() && !ssn.getText().isEmpty() && datePicker.getModel().getValue() != null && !address.getText().isEmpty() && !city.getText().isEmpty() && state.getModel().getSelectedItem() != null && !zipCode.getText().isEmpty() && !phone.getText().isEmpty() && !email.getText().isEmpty()){
 						dao.setExpectRS(false);
-						dao.setquery("INSERT INTO dbo.PATIENT (firstName, lastName, middleName, SSN, DOB, address, phone, email)" +
-								"VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+						dao.setquery("INSERT INTO dbo.PATIENT (firstName, lastName, middleName, SSN, DOB, address, phone, email, sex, city, state, zipCode, altPhone, notes)" +
+								"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
@@ -717,6 +718,12 @@ public class Profile {
 						dao.SetParameter(address.getText());
 						dao.SetParameter(String.valueOf(phone.getText()));
 						dao.SetParameter(email.getText());
+						dao.SetParameter(String.valueOf(sex.getSelectedItem()));
+						dao.SetParameter(city.getText());
+						dao.SetParameter(String.valueOf(state.getSelectedItem()));
+						dao.SetParameter(zipCode.getText());
+						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(notes.getText());
 						dao.executeQuery();
 						frmNewPatient.dispose();
 						
@@ -769,7 +776,7 @@ public class Profile {
 			// Checking for empty fields
 			if(!firstName.getText().isEmpty() && !lastName.getText().isEmpty() && !ssn.getText().isEmpty() && !address.getText().isEmpty() && !city.getText().isEmpty() && state.getModel().getSelectedItem() != null && !zipCode.getText().isEmpty() && !phone.getText().isEmpty() && !email.getText().isEmpty()){
 						dao.setExpectRS(false);
-						dao.setquery("UPDATE dbo.PATIENT SET firstName=?, lastName=?, middleName=?, SSN=?, DOB=?, address=?, phone=?, email=? WHERE lastName = ? AND firstName = ? AND middleName = ?");
+						dao.setquery("UPDATE dbo.PATIENT SET firstName=?, lastName=?, middleName=?, SSN=?, DOB=?, address=?, phone=?, email=?, sex = ?, city = ?, state = ?, zipCode = ?, altPhone = ?, notes = ? WHERE lastName = ? AND firstName = ? AND middleName = ?");
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(middleName.getText());
@@ -778,6 +785,12 @@ public class Profile {
 						dao.SetParameter(address.getText());
 						dao.SetParameter(String.valueOf(phone.getText()));
 						dao.SetParameter(email.getText());
+						dao.SetParameter(String.valueOf(sex.getSelectedItem()));
+						dao.SetParameter(city.getText());
+						dao.SetParameter(String.valueOf(state.getSelectedItem()));
+						dao.SetParameter(zipCode.getText());
+						dao.SetParameter(altPhone.getText());
+						dao.SetParameter(notes.getText());
 						dao.SetParameter(lastName.getText());
 						dao.SetParameter(firstName.getText());
 						dao.SetParameter(middleName.getText());

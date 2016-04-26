@@ -23,7 +23,7 @@ public class IntegerFilter extends DocumentFilter {
 
 	   private boolean test(String text) {
 	      try {
-	         Integer.parseInt(text);
+	         Long.parseLong(text);
 	         return true;
 	      } catch (NumberFormatException e) {
 	         return false;

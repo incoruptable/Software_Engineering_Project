@@ -161,7 +161,7 @@ public class PatientSearch {
 				if(me.getClickCount() == 2){
 					try {
 						ResultSet rs;
-						dao.setquery("SELECT patientID, lastName, firstName, middleName, SSN, address, email, phone, DOB FROM dbo.PATIENT WHERE lastName = ? AND SSN = ? AND phone = ?");
+						dao.setquery("SELECT patientID, lastName, firstName, middleName, SSN, address, email, phone, DOB, sex, city, state, zipCode, altPhone, notes FROM dbo.PATIENT WHERE lastName = ? AND SSN = ? AND phone = ?");
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 1).toString());
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 2).toString());
 						dao.SetParameter(resultTable.getValueAt(resultTable.getSelectedRow(), 5).toString());
@@ -179,7 +179,12 @@ public class PatientSearch {
 							selectedPatient.setEmail(rs.getString(7));
 							selectedPatient.setPhone(rs.getString(8));
 							selectedPatient.setDOB(rs.getDate(9));
-							
+							selectedPatient.setSex(rs.getString(10));
+							selectedPatient.setCity(rs.getString(11));
+							selectedPatient.setState(rs.getString(12));
+							selectedPatient.setZipCode(rs.getString(13));
+							selectedPatient.setAltPhone(rs.getString(14));
+							selectedPatient.setNotes(rs.getString(15));
 							
 							dao.setquery("SELECT allergenID FROM dbo.ALLERGENS WHERE patientID = ?");
 							dao.SetParameter(selectedPatient.getPatientID());
